@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/chenasraf/text-transform.nvim/compare/v0.1.0...v0.1.1) (2023-05-14)
+
+
+### Bug Fixes
+
+* try fix keymap ([4e3b541](https://github.com/chenasraf/text-transform.nvim/commit/4e3b5418a8c90dca7a21d25035b8c24b0a91271a))
+
 ## [0.1.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.0.1...v0.1.0) (2023-05-14)
 
 
