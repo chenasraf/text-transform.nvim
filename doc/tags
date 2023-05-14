@@ -1,2 +1,2 @@
-YourPluginName.options	neovim-plugin-boilerplate.txt	/*YourPluginName.options*
-YourPluginName.setup()	neovim-plugin-boilerplate.txt	/*YourPluginName.setup()*
+TextTransform.options	text-transform.txt	/*TextTransform.options*
+TextTransform.setup()	text-transform.txt	/*TextTransform.setup()*

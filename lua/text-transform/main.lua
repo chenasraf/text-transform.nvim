@@ -1,7 +1,7 @@
-local D = require("your-plugin-name.util.debug")
+local D = require("text-transform.util.debug")
 
 -- internal methods
-local YourPluginName = {}
+local TextTransform = {}
 
 -- state
 local S = {
@@ -11,17 +11,17 @@ local S = {
 
 ---Toggle the plugin by calling the `enable`/`disable` methods respectively.
 ---@private
-function YourPluginName.toggle()
+function TextTransform.toggle()
     if S.enabled then
-        return YourPluginName.disable()
+        return TextTransform.disable()
     end
 
-    return YourPluginName.enable()
+    return TextTransform.enable()
 end
 
 ---Initializes the plugin.
 ---@private
-function YourPluginName.enable()
+function TextTransform.enable()
     if S.enabled then
         return S
     end
@@ -33,7 +33,7 @@ end
 
 ---Disables the plugin and reset the internal state.
 ---@private
-function YourPluginName.disable()
+function TextTransform.disable()
     if not S.enabled then
         return S
     end
@@ -46,4 +46,4 @@ function YourPluginName.disable()
     return S
 end
 
-return YourPluginName
+return TextTransform
