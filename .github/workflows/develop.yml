@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  group: github.head_ref
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: lint
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: JohnnyMorganz/stylua-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
+          args: --check .
+
+  documentation:
+    runs-on: ubuntu-latest
+    name: documentation
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: setup neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: v0.8.3
+
+      - name: generate documentation
+        run: make documentation-ci
+
+      - name: check docs diff
+        run: exit $(git status --porcelain doc | wc -l | tr -d " ")
+
