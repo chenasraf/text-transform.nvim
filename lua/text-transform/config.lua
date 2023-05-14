@@ -7,6 +7,7 @@ local TextTransform = {}
 TextTransform.options = {
     -- Prints useful logs about what event are triggered, and reasons actions are executed.
     debug = false,
+    -- Keymap to trigger the transform.
     keymap = {
         "<Leader>~",
     },

@@ -48,9 +48,9 @@ _[GIF version of the showcase video for mobile users](SHOWCASE_GIF_LINK)_
 
 ```lua
 -- stable version
-use {"text-transform.nvim", tag = "*" }
+use { "chenasraf/text-transform.nvim", tag = "*" }
 -- dev version
-use {"text-transform.nvim"}
+use { "chenasraf/text-transform.nvim" }
 ```
 
 </td>
@@ -65,9 +65,9 @@ use {"text-transform.nvim"}
 
 ```lua
 -- stable version
-Plug "text-transform.nvim", { "tag": "*" }
+Plug "chenasraf/text-transform.nvim", { "tag": "*" }
 -- dev version
-Plug "text-transform.nvim"
+Plug "chenasraf/text-transform.nvim"
 ```
 
 </td>
@@ -82,9 +82,9 @@ Plug "text-transform.nvim"
 
 ```lua
 -- stable version
-require("lazy").setup({{"text-transform.nvim", version = "*"}})
+require("lazy").setup({{ "chenasraf/text-transform.nvim", version = "*" }})
 -- dev version
-require("lazy").setup({"text-transform.nvim"})
+require("lazy").setup({ "chenasraf/text-transform.nvim" })
 ```
 
 </td>
