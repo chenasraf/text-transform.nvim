@@ -154,10 +154,10 @@ vim.cmd("amenu Transforms.&kebab-case :lua ReplaceCurrentWord(KebabCase)<CR>")
 vim.cmd("amenu Transforms.&dot\\.case :lua ReplaceCurrentWord(DotCase)<CR>")
 vim.cmd("amenu Transforms.&Title\\ Case :lua ReplaceCurrentWord(TitleCase)<CR>")
 
-for i in TextTransform.config.keymap do
+for kmap in _G.TextTransform.config.keymap do
     vim.keymap.set(
         { "n", "v" },
-        _G.TextTransform.config.keymap[i],
+        kmap,
         "<cmd>popup Transforms<CR>",
         { silent = true }
     )
