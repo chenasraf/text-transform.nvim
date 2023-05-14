@@ -77,7 +77,8 @@ jobs:
     name: release
     if: ${{ github.ref == 'refs/heads/master' }}
     needs:
-      - tests
+      - lint
+      - documentation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
