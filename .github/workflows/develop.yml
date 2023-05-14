@@ -44,7 +44,7 @@ jobs:
         run: exit $(git status --porcelain doc | wc -l | tr -d " ")
   release:
     name: release
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/develop' }}
     permissions: write-all
     needs:
       - lint
