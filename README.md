@@ -23,6 +23,7 @@ _[GIF version of the showcase video for mobile users](SHOWCASE_GIF_LINK)_
 > Write short sentences describing your plugin features
 
 - FEATURE 1
+- FEATURE 2
 - FEATURE ..
 - FEATURE N
 
