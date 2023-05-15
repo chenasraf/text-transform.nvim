@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.1.1...v0.2.0) (2023-05-15)
+
+
+### Features
+
+* separate keymap for n/v mode ([26ad542](https://github.com/chenasraf/text-transform.nvim/commit/26ad542ff739af562cf4783580e24cf0e0b1c1d3))
+
 ## [0.1.1](https://github.com/chenasraf/text-transform.nvim/compare/v0.1.0...v0.1.1) (2023-05-14)
 
 
