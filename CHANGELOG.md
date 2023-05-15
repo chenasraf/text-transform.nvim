@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/chenasraf/text-transform.nvim/compare/v0.2.0...v0.2.1) (2023-05-15)
+
+
+### Bug Fixes
+
+* selection transforms ([3857dec](https://github.com/chenasraf/text-transform.nvim/commit/3857dec40f622374525e2b17c50a99d4d4b4b87d))
+
 ## [0.2.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.1.1...v0.2.0) (2023-05-15)
 
 
