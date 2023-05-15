@@ -118,7 +118,7 @@ function TextTransform.replace_selection(transform)
   -- print(vim.inspect(vim.fn.getpos("'<")), vim.inspect(vim.fn.getpos("'>")),
   -- start_line, start_col, end_line, end_col)
   local lines = vim.fn.getline(start_line, end_line)
-  print(vim.inspect(lines))
+  -- print(vim.inspect(lines))
 
   -- transform all included lines
   local transformed = ""
