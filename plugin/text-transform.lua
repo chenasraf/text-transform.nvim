@@ -1,11 +1,11 @@
 -- You can use this loaded variable to enable conditional parts of your plugin.
-if _G.TextTransformLoaded then
-  return
-end
+-- if _G.TextTransformLoaded then
+-- return
+-- end
 
 _G.TextTransformLoaded = true
 
-local function into_words(str)
+function TextTransform.into_words(str)
   local words = {}
   local word = ""
 
@@ -38,12 +38,8 @@ local function into_words(str)
   return words
 end
 
-function IntoWords(string)
-  print(vim.inspect(into_words(string)))
-end
-
-function CamelCase(string)
-  local words = into_words(string)
+function TextTransform.camel_case(string)
+  local words = TextTransform.into_words(string)
   local camel_case = ""
   for i, word in ipairs(words) do
     if i == 1 then
@@ -55,8 +51,8 @@ function CamelCase(string)
   return camel_case
 end
 
-function SnakeCase(string)
-  local words = into_words(string)
+function TextTransform.snake_case(string)
+  local words = TextTransform.into_words(string)
   local snake_case = ""
   for i, word in ipairs(words) do
     if i == 1 then
@@ -68,8 +64,8 @@ function SnakeCase(string)
   return snake_case
 end
 
-function PascalCase(string)
-  local words = into_words(string)
+function TextTransform.pascal_case(string)
+  local words = TextTransform.into_words(string)
   local pascal_case = ""
   for _, word in ipairs(words) do
     pascal_case = pascal_case .. word:sub(1, 1):upper() .. word:sub(2):lower()
@@ -77,8 +73,8 @@ function PascalCase(string)
   return pascal_case
 end
 
-function KebabCase(string)
-  local words = into_words(string)
+function TextTransform.kebab_case(string)
+  local words = TextTransform.into_words(string)
   local kebab_case = ""
   for i, word in ipairs(words) do
     if i == 1 then
@@ -90,8 +86,8 @@ function KebabCase(string)
   return kebab_case
 end
 
-function DotCase(string)
-  local words = into_words(string)
+function TextTransform.dot_case(string)
+  local words = TextTransform.into_words(string)
   local dot_case = ""
   for i, word in ipairs(words) do
     if i == 1 then
@@ -103,8 +99,8 @@ function DotCase(string)
   return dot_case
 end
 
-function TitleCase(string)
-  local words = into_words(string)
+function TextTransform.title_case(string)
+  local words = TextTransform.into_words(string)
   local title_case = ""
   for i, word in ipairs(words) do
     title_case = title_case .. word:sub(1, 1):upper() .. word:sub(2):lower()
@@ -115,13 +111,40 @@ function TitleCase(string)
   return title_case
 end
 
-function ReplaceCurrentSelection(transform)
-  local selection = vim.fn.getline("'<", "'>")
-  local transformed = transform(selection)
-  vim.fn.setline("'<", transformed)
+function TextTransform.replace_selection(transform)
+  -- get the current visual selection, and transform the line, only replacing the selected text itself
+  local _, start_line, start_col = unpack(vim.fn.getpos("'<"))
+  local _, end_line, end_col = unpack(vim.fn.getpos("'>"))
+  -- print(vim.inspect(vim.fn.getpos("'<")), vim.inspect(vim.fn.getpos("'>")),
+    -- start_line, start_col, end_line, end_col)
+  local lines = vim.fn.getline(start_line, end_line)
+  print(vim.inspect(lines))
+
+  -- transform all included lines
+  local transformed = ""
+
+  if #lines == 1 then
+    transformed = lines[1]:sub(1, start_col - 1) .. transform(lines[1]:sub(start_col, end_col)) .. lines[1]:sub(end_col + 1)
+  else
+    transformed = lines[1]:sub(1, start_col - 1) .. transform(lines[1]:sub(start_col)) .. "\n"
+    for i = 2, #lines - 1 do
+      transformed = transformed .. transform(lines[i]) .. "\n"
+    end
+    transformed = transformed .. transform(lines[#lines]:sub(1, end_col)) .. lines[#lines]:sub(end_col + 1)
+  end
+
+  -- replace the lines with the transformed lines
+  vim.fn.setline(start_line, transformed)
+  for i = start_line + 1, end_line do
+    vim.fn.setline(i, "")
+  end
+
+  -- move the cursor to the end of the transformed text
+  vim.fn.cursor(end_line, end_col)
+
 end
 
-function ReplaceCurrentWord(transform)
+function TextTransform.replace_word(transform)
   local word = vim.fn.expand("<cword>")
   local transformed = transform(word)
   vim.cmd("normal ciw" .. transformed)
@@ -131,12 +154,12 @@ local should_test = false
 
 if should_test then
   local map = {
-    ["CamelCase"] = CamelCase,
-    ["SnakeCase"] = SnakeCase,
-    ["PascalCase"] = PascalCase,
-    ["KebabCase"] = KebabCase,
-    ["DotCase"] = DotCase,
-    ["TitleCase"] = TitleCase,
+    ["CamelCase"]  = TextTransform.camel_case,
+    ["SnakeCase"]  = TextTransform.snake_case,
+    ["PascalCase"] = TextTransform.pascal_case,
+    ["KebabCase"]  = TextTransform.kebab_case,
+    ["DotCase"]    = TextTransform.dot_case,
+    ["TitleCase"]  = TextTransform.title_case,
   }
 
   for k, tst in pairs(map) do

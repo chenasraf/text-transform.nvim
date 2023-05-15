@@ -2,25 +2,25 @@
 
 USAGE="\033[0;37m[INFO] - usage: USERNAME=my-github-username PLUGIN_NAME=my-awesome-plugin REPOSITORY_NAME=my-awesome-plugin.nvim make setup\n\033[0m"
 
-echo -e $USAGE
+echo -e "$USAGE"
 
 if [[ -z "$USERNAME" ]]; then
     echo -e "\t> No USERNAME provided, what's your GitHub/GitLab username?"
-    read USERNAME
+    read -r USERNAME
 fi
 
 if [[ -z "$REPOSITORY_NAME" ]]; then
-    REPOSITORY_NAME=$(basename -s .git `git config --get remote.origin.url`)
+    REPOSITORY_NAME=$(basename -s .git "$(git config --get remote.origin.url)")
 
     read -rp $'\t> No REPOSITORY_NAME provided, is \033[1;32m'"$REPOSITORY_NAME"$'\033[0m good? [Y/n]\n' yn
     case $yn in
         [Yy]* );;
-        [Nn]* ) 
+        [Nn]* )
             echo -e "\t> Enter your repository name"
-            read REPOSITORY_NAME
+            read -r REPOSITORY_NAME
             ;;
-        * ) 
-            echo -e $USAGE
+        * )
+            echo -e "$USAGE"
             exit 1;;
     esac
 fi
@@ -32,12 +32,12 @@ if [[ -z "$PLUGIN_NAME" ]]; then
         [Yy]* )
             PLUGIN_NAME=$DEFAULT_REPOSITORY_NAME
             ;;
-        [Nn]* ) 
+        [Nn]* )
             echo -e "\t> Enter your plugin name"
-            read PLUGIN_NAME
+            read -r PLUGIN_NAME
             ;;
-        * ) 
-            echo -e $USAGE
+        * )
+            echo -e "$USAGE"
             exit 1;;
     esac
 fi
@@ -45,8 +45,8 @@ fi
 echo -e "Username:    \033[1;32m$USERNAME\033[0m\nRepository:  \033[1;32m$REPOSITORY_NAME\033[0m\nPlugin:      \033[1;32m$PLUGIN_NAME\033[0m\n\n\tRenaming placeholder files..."
 
 rm -rf doc
-mv plugin/your-plugin-name.lua plugin/$PLUGIN_NAME.lua
-mv lua/your-plugin-name lua/$PLUGIN_NAME
+mv plugin/your-plugin-name.lua "plugin/$PLUGIN_NAME.lua"
+mv lua/your-plugin-name "lua/$PLUGIN_NAME"
 mv README_TEMPLATE.md README.md
 
 echo -e "\tReplacing placeholder names..."

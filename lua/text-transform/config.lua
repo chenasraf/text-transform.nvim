@@ -27,20 +27,20 @@ function TextTransform.setup(options)
   TextTransform.options = vim.tbl_deep_extend("keep", options, TextTransform.options)
 
   -- use input from current word in editor
-  vim.cmd("amenu TransformsSelection.&camelCase :lua ReplaceCurrentSelection(CamelCase)<CR>")
-  vim.cmd("amenu TransformsSelection.&snake_case :lua ReplaceCurrentSelection(SnakeCase)<CR>")
-  vim.cmd("amenu TransformsSelection.&PascalCase :lua ReplaceCurrentSelection(PascalCase)<CR>")
-  vim.cmd("amenu TransformsSelection.&kebab-case :lua ReplaceCurrentSelection(KebabCase)<CR>")
-  vim.cmd("amenu TransformsSelection.&dot\\.case :lua ReplaceCurrentSelection(DotCase)<CR>")
-  vim.cmd("amenu TransformsSelection.&Title\\ Case :lua ReplaceCurrentSelection(TitleCase)<CR>")
+  vim.cmd("amenu TransformsSelection.&camelCase    :lua TextTransform.replace_selection(TextTransform.camel_case)<CR>")
+  vim.cmd("amenu TransformsSelection.&snake_case   :lua TextTransform.replace_selection(TextTransform.snake_case)<CR>")
+  vim.cmd("amenu TransformsSelection.&PascalCase   :lua TextTransform.replace_selection(TextTransform.pascal_case)<CR>")
+  vim.cmd("amenu TransformsSelection.&kebab-case   :lua TextTransform.replace_selection(TextTransform.kebab_case)<CR>")
+  vim.cmd("amenu TransformsSelection.&dot\\.case   :lua TextTransform.replace_selection(TextTransform.dot_case)<CR>")
+  vim.cmd("amenu TransformsSelection.&Title\\ Case :lua TextTransform.replace_selection(TextTransform.title_case)<CR>")
 
   -- use input from current word in editor
-  vim.cmd("amenu TransformsWord.&camelCase :lua ReplaceCurrentWord(CamelCase)<CR>")
-  vim.cmd("amenu TransformsWord.&snake_case :lua ReplaceCurrentWord(SnakeCase)<CR>")
-  vim.cmd("amenu TransformsWord.&PascalCase :lua ReplaceCurrentWord(PascalCase)<CR>")
-  vim.cmd("amenu TransformsWord.&kebab-case :lua ReplaceCurrentWord(KebabCase)<CR>")
-  vim.cmd("amenu TransformsWord.&dot\\.case :lua ReplaceCurrentWord(DotCase)<CR>")
-  vim.cmd("amenu TransformsWord.&Title\\ Case :lua ReplaceCurrentWord(TitleCase)<CR>")
+  vim.cmd("amenu TransformsWord.&camelCase    :lua TextTransform.replace_word(TextTransform.camel_case)<CR>")
+  vim.cmd("amenu TransformsWord.&snake_case   :lua TextTransform.replace_word(TextTransform.snake_case)<CR>")
+  vim.cmd("amenu TransformsWord.&PascalCase   :lua TextTransform.replace_word(TextTransform.pascal_case)<CR>")
+  vim.cmd("amenu TransformsWord.&kebab-case   :lua TextTransform.replace_word(TextTransform.kebab_case)<CR>")
+  vim.cmd("amenu TransformsWord.&dot\\.case   :lua TextTransform.replace_word(TextTransform.dot_case)<CR>")
+  vim.cmd("amenu TransformsWord.&Title\\ Case :lua TextTransform.replace_word(TextTransform.title_case)<CR>")
 
   vim.keymap.set(
     "n",
