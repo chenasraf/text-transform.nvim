@@ -116,7 +116,7 @@ function TextTransform.replace_selection(transform)
   local _, start_line, start_col = unpack(vim.fn.getpos("'<"))
   local _, end_line, end_col = unpack(vim.fn.getpos("'>"))
   -- print(vim.inspect(vim.fn.getpos("'<")), vim.inspect(vim.fn.getpos("'>")),
-    -- start_line, start_col, end_line, end_col)
+  -- start_line, start_col, end_line, end_col)
   local lines = vim.fn.getline(start_line, end_line)
   print(vim.inspect(lines))
 
@@ -124,13 +124,17 @@ function TextTransform.replace_selection(transform)
   local transformed = ""
 
   if #lines == 1 then
-    transformed = lines[1]:sub(1, start_col - 1) .. transform(lines[1]:sub(start_col, end_col)) .. lines[1]:sub(end_col + 1)
+    transformed = lines[1]:sub(1, start_col - 1)
+      .. transform(lines[1]:sub(start_col, end_col))
+      .. lines[1]:sub(end_col + 1)
   else
     transformed = lines[1]:sub(1, start_col - 1) .. transform(lines[1]:sub(start_col)) .. "\n"
     for i = 2, #lines - 1 do
       transformed = transformed .. transform(lines[i]) .. "\n"
     end
-    transformed = transformed .. transform(lines[#lines]:sub(1, end_col)) .. lines[#lines]:sub(end_col + 1)
+    transformed = transformed
+      .. transform(lines[#lines]:sub(1, end_col))
+      .. lines[#lines]:sub(end_col + 1)
   end
 
   -- replace the lines with the transformed lines
@@ -141,7 +145,6 @@ function TextTransform.replace_selection(transform)
 
   -- move the cursor to the end of the transformed text
   vim.fn.cursor(end_line, end_col)
-
 end
 
 function TextTransform.replace_word(transform)
@@ -154,12 +157,12 @@ local should_test = false
 
 if should_test then
   local map = {
-    ["CamelCase"]  = TextTransform.camel_case,
-    ["SnakeCase"]  = TextTransform.snake_case,
+    ["CamelCase"] = TextTransform.camel_case,
+    ["SnakeCase"] = TextTransform.snake_case,
     ["PascalCase"] = TextTransform.pascal_case,
-    ["KebabCase"]  = TextTransform.kebab_case,
-    ["DotCase"]    = TextTransform.dot_case,
-    ["TitleCase"]  = TextTransform.title_case,
+    ["KebabCase"] = TextTransform.kebab_case,
+    ["DotCase"] = TextTransform.dot_case,
+    ["TitleCase"] = TextTransform.title_case,
   }
 
   for k, tst in pairs(map) do
