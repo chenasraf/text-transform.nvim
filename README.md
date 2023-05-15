@@ -106,7 +106,7 @@ To get started, [install](#-installation) the plugin via your favorite package m
 
 1. Either make a selection using Visual mode, or just have your cursor stand on a desired word.
 
-   Then, use the mapped key (default: <kbd><Leader>~</kbd>) to open the transform options in a
+   Then, use the mapped key (default: <kbd>&lt;Leader&gt;~</kbd>) to open the transform options in a
    popup.
 
 1. Select the desired transform and you're done!
