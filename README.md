@@ -7,7 +7,9 @@
 </p>
 
 <div align="center">
-    ![Demonstration](https://github.com/chenasraf/text-transform.nvim/assets/167217/e73f0e27-d72d-4aa6-bfa7-6f691aba9713)
+  
+![Demonstration](https://github.com/chenasraf/text-transform.nvim/assets/167217/e73f0e27-d72d-4aa6-bfa7-6f691aba9713)
+  
 </div>
 
 ## ⚡️ Features
