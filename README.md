@@ -7,25 +7,12 @@
 </p>
 
 <div align="center">
-    > Drag your video (<10MB) here to host it for free on GitHub.
-</div>
-
-<div align="center">
-
-> Videos don't work on GitHub mobile, so a GIF alternative can help users.
-
-_[GIF version of the showcase video for mobile users](SHOWCASE_GIF_LINK)_
-
+    ![Demonstration](https://github.com/chenasraf/text-transform.nvim/assets/167217/e73f0e27-d72d-4aa6-bfa7-6f691aba9713)
 </div>
 
 ## ⚡️ Features
 
-> Write short sentences describing your plugin features
-
-- FEATURE 1
-- FEATURE 2
-- FEATURE ..
-- FEATURE N
+> Transform the current word or selection between multiple case types. Need to easily replace myVar with my_var or vice versa? This plugin is for you!
 
 ## 📋 Installation
 
