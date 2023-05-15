@@ -7,12 +7,15 @@ Your plugin configuration with its default values.
 Default values:
 >
   TextTransform.options = {
-      -- Prints useful logs about what event are triggered, and reasons actions are executed.
-      debug = false,
-      -- Keymap to trigger the transform.
-      keymap = {
-          "<Leader>~",
-      },
+    -- Prints useful logs about what event are triggered, and reasons actions are executed.
+    debug = false,
+    -- Keymap to trigger the transform.
+    keymap = {
+      -- Normal mode keymap.
+      ["n"] = "<Leader>~",
+      -- Visual mode keymap.
+      ["v"] = "<Leader>~",
+    },
   }
 
 <

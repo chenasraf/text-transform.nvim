@@ -5,12 +5,15 @@ local TextTransform = {}
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 TextTransform.options = {
-    -- Prints useful logs about what event are triggered, and reasons actions are executed.
-    debug = false,
-    -- Keymap to trigger the transform.
-    keymap = {
-        "<Leader>~",
-    },
+  -- Prints useful logs about what event are triggered, and reasons actions are executed.
+  debug = false,
+  -- Keymap to trigger the transform.
+  keymap = {
+    -- Normal mode keymap.
+    ["n"] = "<Leader>~",
+    -- Visual mode keymap.
+    ["v"] = "<Leader>~",
+  },
 }
 
 --- Define your text-transform setup.
@@ -19,22 +22,40 @@ TextTransform.options = {
 ---
 ---@usage `require("text-transform").setup()` (add `{}` with your |TextTransform.options| table)
 function TextTransform.setup(options)
-    options = options or {}
+  options = options or {}
 
-    TextTransform.options = vim.tbl_deep_extend("keep", options, TextTransform.options)
-    -- use input from current word in editor
-    vim.cmd("amenu Transforms.&camelCase :lua ReplaceCurrentWord(CamelCase)<CR>")
-    vim.cmd("amenu Transforms.&snake_case :lua ReplaceCurrentWord(SnakeCase)<CR>")
-    vim.cmd("amenu Transforms.&PascalCase :lua ReplaceCurrentWord(PascalCase)<CR>")
-    vim.cmd("amenu Transforms.&kebab-case :lua ReplaceCurrentWord(KebabCase)<CR>")
-    vim.cmd("amenu Transforms.&dot\\.case :lua ReplaceCurrentWord(DotCase)<CR>")
-    vim.cmd("amenu Transforms.&Title\\ Case :lua ReplaceCurrentWord(TitleCase)<CR>")
+  TextTransform.options = vim.tbl_deep_extend("keep", options, TextTransform.options)
 
-    for kmap in TextTransform.options.keymap do
-        vim.keymap.set({ "n", "v" }, kmap, "<cmd>popup Transforms<CR>", { silent = true })
-    end
+  -- use input from current word in editor
+  vim.cmd("amenu TransformsSelection.&camelCase :lua ReplaceCurrentSelection(CamelCase)<CR>")
+  vim.cmd("amenu TransformsSelection.&snake_case :lua ReplaceCurrentSelection(SnakeCase)<CR>")
+  vim.cmd("amenu TransformsSelection.&PascalCase :lua ReplaceCurrentSelection(PascalCase)<CR>")
+  vim.cmd("amenu TransformsSelection.&kebab-case :lua ReplaceCurrentSelection(KebabCase)<CR>")
+  vim.cmd("amenu TransformsSelection.&dot\\.case :lua ReplaceCurrentSelection(DotCase)<CR>")
+  vim.cmd("amenu TransformsSelection.&Title\\ Case :lua ReplaceCurrentSelection(TitleCase)<CR>")
 
-    return TextTransform.options
+  -- use input from current word in editor
+  vim.cmd("amenu TransformsWord.&camelCase :lua ReplaceCurrentWord(CamelCase)<CR>")
+  vim.cmd("amenu TransformsWord.&snake_case :lua ReplaceCurrentWord(SnakeCase)<CR>")
+  vim.cmd("amenu TransformsWord.&PascalCase :lua ReplaceCurrentWord(PascalCase)<CR>")
+  vim.cmd("amenu TransformsWord.&kebab-case :lua ReplaceCurrentWord(KebabCase)<CR>")
+  vim.cmd("amenu TransformsWord.&dot\\.case :lua ReplaceCurrentWord(DotCase)<CR>")
+  vim.cmd("amenu TransformsWord.&Title\\ Case :lua ReplaceCurrentWord(TitleCase)<CR>")
+
+  vim.keymap.set(
+    "n",
+    TextTransform.options.keymap.n,
+    "<cmd>popup TransformsWord<CR>",
+    { silent = true }
+  )
+  vim.keymap.set(
+    "v",
+    TextTransform.options.keymap.v,
+    "<cmd>popup TransformsSelection<CR>",
+    { silent = true }
+  )
+
+  return TextTransform.options
 end
 
 return TextTransform
