@@ -1,7 +1,7 @@
 -- You can use this loaded variable to enable conditional parts of your plugin.
--- if _G.TextTransformLoaded then
--- return
--- end
+if _G.TextTransformLoaded then
+  return
+end
 
 _G.TextTransformLoaded = true
 
@@ -111,6 +111,19 @@ function TextTransform.title_case(string)
   return title_case
 end
 
+function TextTransform.const_case(string)
+  local words = TextTransform.into_words(string)
+  local const_case = ""
+  for i, word in ipairs(words) do
+    if i == 1 then
+      const_case = const_case .. word:upper()
+    else
+      const_case = const_case .. "_" .. word:upper()
+    end
+  end
+  return const_case
+end
+
 function TextTransform.replace_selection(transform)
   -- get the current visual selection, and transform the line, only replacing the selected text itself
   local _, start_line, start_col = unpack(vim.fn.getpos("'<"))
@@ -125,16 +138,16 @@ function TextTransform.replace_selection(transform)
 
   if #lines == 1 then
     transformed = lines[1]:sub(1, start_col - 1)
-      .. transform(lines[1]:sub(start_col, end_col))
-      .. lines[1]:sub(end_col + 1)
+        .. transform(lines[1]:sub(start_col, end_col))
+        .. lines[1]:sub(end_col + 1)
   else
     transformed = lines[1]:sub(1, start_col - 1) .. transform(lines[1]:sub(start_col)) .. "\n"
     for i = 2, #lines - 1 do
       transformed = transformed .. transform(lines[i]) .. "\n"
     end
     transformed = transformed
-      .. transform(lines[#lines]:sub(1, end_col))
-      .. lines[#lines]:sub(end_col + 1)
+        .. transform(lines[#lines]:sub(1, end_col))
+        .. lines[#lines]:sub(end_col + 1)
   end
 
   -- replace the lines with the transformed lines
@@ -163,6 +176,7 @@ if should_test then
     ["KebabCase"] = TextTransform.kebab_case,
     ["DotCase"] = TextTransform.dot_case,
     ["TitleCase"] = TextTransform.title_case,
+    ["ConstCase"] = TextTransform.title_case,
   }
 
   for k, tst in pairs(map) do
