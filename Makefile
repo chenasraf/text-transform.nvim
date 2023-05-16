@@ -31,10 +31,6 @@ documentation-ci: deps documentation
 lint:
 	stylua .
 
-# setup
-setup:
-	./scripts/setup.sh
-
 # precommit
 precommit:
 	stylua .
