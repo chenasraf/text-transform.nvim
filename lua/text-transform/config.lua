@@ -37,8 +37,8 @@ function TextTransform.setup(options)
   }
 
   for k, v in pairs(map) do
-    vim.cmd("amenu TransformsWord." .. k .. " :lua TextTransform.replace_selection(" .. v .. ")<CR>")
-    vim.cmd("amenu TransformsSelection." .. k .. " :lua TextTransform.replace_word(" .. v .. ")<CR>")
+    vim.cmd("amenu TransformsWord." .. k .. " :lua TextTransform.replace_word(" .. v .. ")<CR>")
+    vim.cmd("amenu TransformsSelection." .. k .. " :lua TextTransform.replace_selection(" .. v .. ")<CR>")
   end
 
   vim.keymap.set(
