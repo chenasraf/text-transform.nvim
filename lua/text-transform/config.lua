@@ -45,6 +45,9 @@ function TextTransform.setup(options)
   vim.cmd(
     "amenu TransformsSelection.&Title\\ Case :lua TextTransform.replace_selection(TextTransform.title_case)<CR>"
   )
+  vim.cmd(
+    "amenu TransformsSelection.C&ONST_CASE\\ Case :lua TextTransform.replace_selection(TextTransform.const_case)<CR>"
+  )
 
   -- use input from current word in editor
   vim.cmd(
@@ -64,6 +67,9 @@ function TextTransform.setup(options)
   )
   vim.cmd(
     "amenu TransformsWord.&Title\\ Case :lua TextTransform.replace_word(TextTransform.title_case)<CR>"
+  )
+  vim.cmd(
+    "amenu TransformsWord.C&ONST_CASE\\ Case :lua TextTransform.replace_word(TextTransform.const_case)<CR>"
   )
 
   vim.keymap.set(
