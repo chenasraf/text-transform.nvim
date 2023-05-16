@@ -117,7 +117,7 @@ To get started, [install](#-installation) the plugin via your favorite package m
 <details>
 <summary>Click to unfold the full list of options with their default values</summary>
 
-> **Note**: The options are also available in Neovim by calling `:h text-transform.options`
+> **Note**: The options are also available in Neovim by calling `:h TextTransform.options`
 
 ```lua
 require("text-transform").setup({
