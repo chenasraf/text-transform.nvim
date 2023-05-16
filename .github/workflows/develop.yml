@@ -1,10 +1,10 @@
-name: Release
+name: Dev Release
 
 on:
   push:
-    branches: [develop]
+    branches: [ develop ]
   pull_request:
-    types: [opened, synchronize]
+    types: [ opened, synchronize ]
 
 concurrency:
   group: github.head_ref
@@ -43,7 +43,7 @@ jobs:
       - name: check docs diff
         run: exit $(git status --porcelain doc | wc -l | tr -d " ")
   release:
-    name: release
+    name: dev-release
     if: ${{ github.ref == 'refs/heads/develop' }}
     permissions: write-all
     needs:
