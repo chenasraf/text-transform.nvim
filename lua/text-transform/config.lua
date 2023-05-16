@@ -27,18 +27,20 @@ function TextTransform.setup(options)
   TextTransform.options = vim.tbl_deep_extend("keep", options, TextTransform.options)
 
   map = {
-    ["&camelCase"]    = "TextTransform.camel_case",
-    ["&snake_case"]   = "TextTransform.snake_case",
-    ["&PascalCase"]   = "TextTransform.pascal_case",
-    ["&kebab-case"]   = "TextTransform.kebab_case",
-    ["&dot\\.case"]   = "TextTransform.dot_case",
+    ["&camelCase"] = "TextTransform.camel_case",
+    ["&snake_case"] = "TextTransform.snake_case",
+    ["&PascalCase"] = "TextTransform.pascal_case",
+    ["&kebab-case"] = "TextTransform.kebab_case",
+    ["&dot\\.case"] = "TextTransform.dot_case",
     ["&Title\\ Case"] = "TextTransform.title_case",
-    ["C&ONST_CASE"]   = "TextTransform.const_case",
+    ["C&ONST_CASE"] = "TextTransform.const_case",
   }
 
   for k, v in pairs(map) do
     vim.cmd("amenu TransformsWord." .. k .. " :lua TextTransform.replace_word(" .. v .. ")<CR>")
-    vim.cmd("amenu TransformsSelection." .. k .. " :lua TextTransform.replace_selection(" .. v .. ")<CR>")
+    vim.cmd(
+      "amenu TransformsSelection." .. k .. " :lua TextTransform.replace_selection(" .. v .. ")<CR>"
+    )
   end
 
   vim.keymap.set(
