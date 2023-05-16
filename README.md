@@ -25,6 +25,7 @@ with my_var or vice versa? This plugin is for you!
 | `kebab-case`   | `my_var`, `myVar`, `MyVar`  | `my-var` |
 | `dot.case`     | `my_var`, `my-var`, `MyVar` | `my.var` |
 | `Title Case`   | `my_var`, `my-var`, `MyVar` | `My Var` |
+| `CONST_CASE`   | `my_var`, `my-var`, `MyVar` | `MY_VAR` |
 
 ## 📋 Installation
 

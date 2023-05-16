@@ -26,7 +26,7 @@ function TextTransform.setup(options)
 
   TextTransform.options = vim.tbl_deep_extend("keep", options, TextTransform.options)
 
-  map = {
+  local map = {
     ["&camelCase"] = "TextTransform.camel_case",
     ["&snake_case"] = "TextTransform.snake_case",
     ["&PascalCase"] = "TextTransform.pascal_case",
