@@ -138,16 +138,16 @@ function TextTransform.replace_selection(transform)
 
   if #lines == 1 then
     transformed = lines[1]:sub(1, start_col - 1)
-        .. transform(lines[1]:sub(start_col, end_col))
-        .. lines[1]:sub(end_col + 1)
+      .. transform(lines[1]:sub(start_col, end_col))
+      .. lines[1]:sub(end_col + 1)
   else
     transformed = lines[1]:sub(1, start_col - 1) .. transform(lines[1]:sub(start_col)) .. "\n"
     for i = 2, #lines - 1 do
       transformed = transformed .. transform(lines[i]) .. "\n"
     end
     transformed = transformed
-        .. transform(lines[#lines]:sub(1, end_col))
-        .. lines[#lines]:sub(end_col + 1)
+      .. transform(lines[#lines]:sub(1, end_col))
+      .. lines[#lines]:sub(end_col + 1)
   end
 
   -- replace the lines with the transformed lines
