@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/chenasraf/text-transform.nvim/compare/v0.3.0...v0.3.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* into_words dot split ([f79799c](https://github.com/chenasraf/text-transform.nvim/commit/f79799cd912436e48ee2bcde7a5d98042337f8ae))
+
 ## [0.3.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.2.1...v0.3.0) (2023-05-16)
 
 
