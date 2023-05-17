@@ -14,6 +14,8 @@ test:
 deps:
 	@mkdir -p deps
 	git clone --depth 1 https://github.com/echasnovski/mini.nvim deps/mini.nvim
+	echo "#!/usr/bin/env bash\n\nmake precommit" > .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
 
 # installs deps before running tests, useful for the CI.
 test-ci: deps test
@@ -29,6 +31,14 @@ documentation-ci: deps documentation
 lint:
 	stylua .
 
-# setup
-setup:
-	./scripts/setup.sh
+# precommit
+precommit:
+	stylua .
+	git add .
+	make lint
+	# make test
+	make documentation
+	git add doc
+
+clean:
+	rm -rf deps

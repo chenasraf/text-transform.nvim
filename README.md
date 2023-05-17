@@ -17,6 +17,9 @@
 Transform the current word or selection between multiple case types. Need to easily replace myVar
 with my_var or vice versa? This plugin is for you!
 
+- Works on current word in **Normal Mode**
+- Works on selection in **Visual Mode**
+
 | Transformation | Example Inputs              | Output   |
 | -------------- | --------------------------- | -------- |
 | `camelCase`    | `my_var`, `my-var`, `MyVar` | `myVar`  |
@@ -117,7 +120,7 @@ To get started, [install](#-installation) the plugin via your favorite package m
 <details>
 <summary>Click to unfold the full list of options with their default values</summary>
 
-> **Note**: The options are also available in Neovim by calling `:h text-transform.options`
+> **Note**: The options are also available in Neovim by calling `:h TextTransform.options`
 
 ```lua
 require("text-transform").setup({

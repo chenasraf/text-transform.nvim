@@ -36,6 +36,18 @@ function TextTransform.setup(opts)
   _G.TextTransform.config = require("text-transform.config").setup(opts)
 end
 
+TextTransform.into_words = M.into_words
+TextTransform.replace_word = M.replace_word
+TextTransform.replace_selection = M.replace_selection
+
+TextTransform.camel_case = M.camel_case
+TextTransform.snake_case = M.snake_case
+TextTransform.pascal_case = M.pascal_case
+TextTransform.kebab_case = M.kebab_case
+TextTransform.dot_case = M.dot_case
+TextTransform.title_case = M.title_case
+TextTransform.const_case = M.const_case
+
 _G.TextTransform = TextTransform
 
 return _G.TextTransform
