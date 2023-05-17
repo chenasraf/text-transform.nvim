@@ -51,31 +51,31 @@ function TextTransform.into_words(str)
   local words = {}
   local word = ""
 
-  local previous_is_upper = false
+  local previous_is_split_token = false
   for i = 1, #str do
     local char = str:sub(i, i)
-    -- split on uppercase letters
-    if char:match("%u") and not previous_is_upper then
+    -- split on uppercase letters or numbers
+    if char:match("%u") or char:match("%d") and not previous_is_split_token then
       if word ~= "" then
         table.insert(words, word)
       end
-      previous_is_upper = true
+      previous_is_split_token = true
       word = char
       -- split on underscores, hyphens, and spaces
-    elseif char:match("[%_%-%s]") then
+    elseif char:match("[%_%-%s%.]") then
       if word ~= "" then
         table.insert(words, word)
-        previous_is_upper = false
+        previous_is_split_token = false
       end
       word = ""
     else
       word = word .. char
-      previous_is_upper = char:match("%u")
+      previous_is_split_token = char:match("%u") or char:match("%d")
     end
   end
   if word ~= "" then
     table.insert(words, word)
-    previous_is_upper = false
+    previous_is_split_token = false
   end
   return words
 end

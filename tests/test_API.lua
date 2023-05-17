@@ -83,6 +83,33 @@ local function make_transform_test(fn_name, input, expected)
   end
 end
 
+T["into_words()"] = MiniTest.new_set()
+
+T["into_words()"]["should split two words with spaces"] = function()
+  child.lua([[require('text-transform').setup()]])
+  child.lua([[result = require('text-transform').into_words("helloWorld")]])
+  eq_type_global(child, "result", "table")
+  eq_global(child, "result[1]", "hello")
+  eq_global(child, "result[2]", "World")
+end
+
+T["into_words()"]["should split two words with dots"] = function()
+  child.lua([[require('text-transform').setup()]])
+  child.lua([[result = require('text-transform').into_words("hello.world")]])
+  eq_type_global(child, "result", "table")
+  eq_global(child, "result[1]", "hello")
+  eq_global(child, "result[2]", "world")
+end
+
+T["into_words()"]["should split two words with a number inside"] = function()
+  child.lua([[require('text-transform').setup()]])
+  child.lua([[result = require('text-transform').into_words("helloWorld123")]])
+  eq_type_global(child, "result", "table")
+  eq_global(child, "result[1]", "hello")
+  eq_global(child, "result[2]", "World")
+  eq_global(child, "result[3]", "123")
+end
+
 local map = {
   ["camel_case"] = {
     { "hello_world", "helloWorld" },
