@@ -37,7 +37,7 @@ T["into_words()"]["should split two words with no spaces"] = function()
   child.lua([[result = require('text-transform').into_words("helloWorld")]])
   eq_type_global(child, "result", "table")
   eq_global(child, "result[1]", "hello")
-  eq_global(child, "result[2]", "World")
+  eq_global(child, "result[2]", "world")
 end
 
 T["into_words()"]["should split two words with dots"] = function()
@@ -53,7 +53,7 @@ T["into_words()"]["should split two words with a number inside"] = function()
   child.lua([[result = require('text-transform').into_words("helloWorld123")]])
   eq_type_global(child, "result", "table")
   eq_global(child, "result[1]", "hello")
-  eq_global(child, "result[2]", "World")
+  eq_global(child, "result[2]", "world")
   eq_global(child, "result[3]", "123")
 end
 

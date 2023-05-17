@@ -38,6 +38,7 @@ local map = {
     { "hello.world", "helloWorld" },
     { "hello", "hello" },
     { "helloWorld123", "helloWorld123" },
+    { "HELLO_WORLD", "helloWorld" },
   },
   ["snake_case"] = {
     { "helloWorld", "hello_world" },
@@ -46,6 +47,7 @@ local map = {
     { "hello.world", "hello_world" },
     { "hello", "hello" },
     { "helloWorld123", "hello_world_123" },
+    { "HELLO_WORLD", "hello_world" },
   },
   ["pascal_case"] = {
     { "hello_world", "HelloWorld" },
@@ -54,6 +56,7 @@ local map = {
     { "hello.world", "HelloWorld" },
     { "hello", "Hello" },
     { "helloWorld123", "HelloWorld123" },
+    { "HELLO_WORLD", "HelloWorld" },
   },
   ["kebab_case"] = {
     { "helloWorld", "hello-world" },
@@ -62,6 +65,7 @@ local map = {
     { "hello.world", "hello-world" },
     { "hello", "hello" },
     { "helloWorld123", "hello-world-123" },
+    { "HELLO_WORLD", "hello-world" },
   },
   ["dot_case"] = {
     { "helloWorld", "hello.world" },
@@ -70,6 +74,7 @@ local map = {
     { "hello.world", "hello.world" },
     { "hello", "hello" },
     { "helloWorld123", "hello.world.123" },
+    { "HELLO_WORLD", "hello.world" },
   },
   ["const_case"] = {
     { "helloWorld", "HELLO_WORLD" },
@@ -78,6 +83,7 @@ local map = {
     { "hello.world", "HELLO_WORLD" },
     { "hello", "HELLO" },
     { "helloWorld123", "HELLO_WORLD_123" },
+    { "HELLO_WORLD", "HELLO_WORLD" },
   },
   ["title_case"] = {
     { "helloWorld", "Hello World" },
@@ -86,6 +92,7 @@ local map = {
     { "hello.world", "Hello World" },
     { "hello", "Hello" },
     { "helloWorld123", "Hello World 123" },
+    { "HELLO_WORLD", "Hello World" },
   },
 }
 
