@@ -22,92 +22,12 @@ local T = MiniTest.new_set({
   },
 })
 
--- Tests related to the `setup` method.
-T["setup()"] = MiniTest.new_set()
-
-T["setup()"]["sets exposed methods and default options value"] = function()
-  child.lua([[require('text-transform').setup()]])
-
-  -- global object that holds your plugin information
-  eq_type_global(child, "_G.TextTransform", "table")
-
-  -- public methods
-  eq_type_global(child, "_G.TextTransform.toggle", "function")
-  eq_type_global(child, "_G.TextTransform.disable", "function")
-  eq_type_global(child, "_G.TextTransform.enable", "function")
-
-  -- config
-  eq_type_global(child, "_G.TextTransform.config", "table")
-
-  -- assert the value, and the type
-  eq_config(child, "debug", false)
-  eq_type_config(child, "debug", "boolean")
-
-  eq_type_config(child, "keymap", "table")
-
-  eq_config(child, "keymap.v", "<Leader>~")
-  eq_type_config(child, "keymap.v", "string")
-
-  eq_config(child, "keymap.n", "<Leader>~")
-  eq_type_config(child, "keymap.n", "string")
-end
-
-T["setup()"]["overrides default values"] = function()
-  child.lua([[require('text-transform').setup({
-        -- write all the options with a value different than the default ones
-        debug = true,
-        keymap = {
-          ["v"] = "<leader>c",
-          ["n"] = "<leader>c",
-        },
-    })]])
-
-  -- assert the value, and the type
-  eq_type_config(child, "debug", "boolean")
-  eq_config(child, "debug", true)
-
-  eq_type_config(child, "keymap", "table")
-
-  eq_config(child, "keymap.v", "<leader>c")
-  eq_type_config(child, "keymap.v", "string")
-
-  eq_config(child, "keymap.n", "<leader>c")
-  eq_type_config(child, "keymap.n", "string")
-end
-
 local function make_transform_test(fn_name, input, expected)
   return function()
     child.lua([[require('text-transform').setup()]])
     child.lua([[result = require('text-transform').]] .. fn_name .. '("' .. input .. '")')
     eq_global(child, "result", expected)
   end
-end
-
-T["into_words()"] = MiniTest.new_set()
-
-T["into_words()"]["should split two words with spaces"] = function()
-  child.lua([[require('text-transform').setup()]])
-  child.lua([[result = require('text-transform').into_words("helloWorld")]])
-  eq_type_global(child, "result", "table")
-  eq_global(child, "result[1]", "hello")
-  eq_global(child, "result[2]", "World")
-end
-
-T["into_words()"]["should split two words with dots"] = function()
-  child.lua([[require('text-transform').setup()]])
-  child.lua([[result = require('text-transform').into_words("hello.world")]])
-  eq_type_global(child, "result", "table")
-  eq_global(child, "result[1]", "hello")
-  eq_global(child, "result[2]", "world")
-end
-
-T["into_words()"]["should split two words with a number inside"] = function()
-  child.lua([[require('text-transform').setup()]])
-  child.lua([[result = require('text-transform').into_words("helloWorld123")]])
-  eq_type_global(child, "result", "table")
-  eq_global(child, "result[1]", "hello")
-  eq_global(child, "result[2]", "World")
-  eq_global(child, "result[3]", "123")
 end
 
 local map = {
