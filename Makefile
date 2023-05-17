@@ -34,7 +34,7 @@ lint:
 # precommit
 precommit:
 	stylua .
-	git add .
+	# git add .
 	make lint
 	# make test
 	make documentation

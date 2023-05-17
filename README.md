@@ -145,10 +145,10 @@ desired transform function.
 
 Normally you wouldn't need to call this, as you would just use the keymap you used in `setup()`.
 
-| Command                                                          | Description                                        |
-| ---------------------------------------------------------------- | -------------------------------------------------- |
-| `:lua TextTransform.replace_word(TextTransform.camel_case)`      | Replaces selected word with camelCase version.     |
-| `:lua TextTransform.replace_selection(TextTransform.snake_case)` | Replaces visual selection with snake_case version. |
+| Command                                              | Description                                        |
+| ---------------------------------------------------- | -------------------------------------------------- |
+| `:lua TextTransform.replace_word("camel_case")`      | Replaces selected word with camelCase version.     |
+| `:lua TextTransform.replace_selection("snake_case")` | Replaces visual selection with snake_case version. |
 
 ## ⌨ Contributing
 
