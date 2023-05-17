@@ -26,6 +26,18 @@ function TextTransform.setup(options)
 
   TextTransform.options = vim.tbl_deep_extend("keep", options, TextTransform.options)
 
+  if vim.api.nvim_get_vvar("vim_did_enter") == 0 then
+    vim.defer_fn(function()
+      TextTransform._setup()
+    end, 0)
+  else
+    TextTransform._setup()
+  end
+
+  return TextTransform.options
+end
+
+function TextTransform._setup()
   local map = {
     ["&camelCase"] = "TextTransform.camel_case",
     ["&snake_case"] = "TextTransform.snake_case",
@@ -55,8 +67,6 @@ function TextTransform.setup(options)
     "<cmd>popup TransformsSelection<CR>",
     { silent = true }
   )
-
-  return TextTransform.options
 end
 
 return TextTransform
