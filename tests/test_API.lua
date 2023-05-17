@@ -83,30 +83,29 @@ local function make_transform_test(fn_name, input, expected)
   end
 end
 
-T["camel_case()"] = MiniTest.new_set()
-T["camel_case()"]["transforms string"] =
-  make_transform_test("camel_case", "hello_world", "helloWorld")
+local map = {
+  ["camel_case"] = {
+    { "hello_world", "helloWorld" },
+    { "hello world", "helloWorld" },
+    { "hello-world", "helloWorld" },
+    -- { "hello.world", "helloWorld" },
+    { "hello", "hello" },
+    { "helloWorld123", "helloWorld123" },
+  },
+  ["snake_case"] = { { "helloWorld", "hello_world" } },
+  ["pascal_case"] = { { "hello_world", "HelloWorld" } },
+  ["kebab_case"] = { { "helloWorld", "hello-world" } },
+  ["dot_case"] = { { "helloWorld", "hello.world" } },
+  ["const_case"] = { { "helloWorld", "HELLO_WORLD" } },
+  ["title_case"] = { { "helloWorld", "Hello World" } },
+}
 
-T["snake_case()"] = MiniTest.new_set()
-T["snake_case()"]["transforms string"] =
-  make_transform_test("snake_case", "helloWorld", "hello_world")
+for fn_name, cases in pairs(map) do
+  T[fn_name .. "()"] = MiniTest.new_set()
+  for _, case in ipairs(cases) do
+    local input, output = unpack(case)
+    T[fn_name .. "()"]["input: " .. input] = make_transform_test(fn_name, input, output)
+  end
+end
 
-T["pascal_case()"] = MiniTest.new_set()
-T["pascal_case()"]["transforms string"] =
-  make_transform_test("pascal_case", "hello_world", "HelloWorld")
-
-T["kebab_case()"] = MiniTest.new_set()
-T["kebab_case()"]["transforms string"] =
-  make_transform_test("kebab_case", "helloWorld", "hello-world")
-
-T["dot_case()"] = MiniTest.new_set()
-T["dot_case()"]["transforms string"] = make_transform_test("dot_case", "helloWorld", "hello.world")
-
-T["const_case()"] = MiniTest.new_set()
-T["const_case()"]["transforms string"] =
-  make_transform_test("const_case", "helloWorld", "HELLO_WORLD")
-
-T["title_case()"] = MiniTest.new_set()
-T["title_case()"]["transforms string"] =
-  make_transform_test("title_case", "helloWorld", "Hello World")
 return T
