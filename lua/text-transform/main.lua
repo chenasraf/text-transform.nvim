@@ -46,6 +46,7 @@ function TextTransform.disable()
   return S
 end
 
+--- Splits a string into words.
 function TextTransform.into_words(str)
   local words = {}
   local word = ""
@@ -79,6 +80,7 @@ function TextTransform.into_words(str)
   return words
 end
 
+--- Transforms a string into camelCase.
 function TextTransform.camel_case(string)
   local words = TextTransform.into_words(string)
   local camel_case = ""
@@ -92,6 +94,7 @@ function TextTransform.camel_case(string)
   return camel_case
 end
 
+--- Transforms a string into snake_case.
 function TextTransform.snake_case(string)
   local words = TextTransform.into_words(string)
   local snake_case = ""
@@ -105,6 +108,7 @@ function TextTransform.snake_case(string)
   return snake_case
 end
 
+--- Transforms a string into PascalCase.
 function TextTransform.pascal_case(string)
   local words = TextTransform.into_words(string)
   local pascal_case = ""
@@ -114,6 +118,7 @@ function TextTransform.pascal_case(string)
   return pascal_case
 end
 
+--- Transforms a string into kebab-case.
 function TextTransform.kebab_case(string)
   local words = TextTransform.into_words(string)
   local kebab_case = ""
@@ -127,6 +132,7 @@ function TextTransform.kebab_case(string)
   return kebab_case
 end
 
+--- Transforms a string into dot.case.
 function TextTransform.dot_case(string)
   local words = TextTransform.into_words(string)
   local dot_case = ""
@@ -140,6 +146,7 @@ function TextTransform.dot_case(string)
   return dot_case
 end
 
+--- Transforms a string into Title Case.
 function TextTransform.title_case(string)
   local words = TextTransform.into_words(string)
   local title_case = ""
@@ -152,6 +159,7 @@ function TextTransform.title_case(string)
   return title_case
 end
 
+--- Transforms a string into CONSTANT_CASE.
 function TextTransform.const_case(string)
   local words = TextTransform.into_words(string)
   local const_case = ""
@@ -165,6 +173,7 @@ function TextTransform.const_case(string)
   return const_case
 end
 
+--- Replaces the text at the given position with the given transform.
 function TextTransform.replace_at(start_line, start_col, end_line, end_col, transform)
   -- use the arguments to replace at the position
   local lines = vim.fn.getline(start_line, end_line)
@@ -192,6 +201,7 @@ function TextTransform.replace_at(start_line, start_col, end_line, end_col, tran
   end
 end
 
+--- Replaces the current visual selection with the given transform.
 function TextTransform.replace_selection(transform)
   -- get the current visual selection, and transform the line, only replacing the selected text itself
   local _, start_line, start_col = unpack(vim.fn.getpos("'<"))
@@ -204,12 +214,14 @@ function TextTransform.replace_selection(transform)
   vim.fn.cursor(end_line, end_col)
 end
 
+--- Replaces the current word with the given transform.
 function TextTransform.replace_word(transform)
   local word = vim.fn.expand("<cword>")
   local transformed = TextTransform[transform](word)
   vim.cmd("normal ciw" .. transformed)
 end
 
+--- Replaces each column selection with the given transform.
 function TextTransform.replace_columns(transform)
   -- get each cursor position and apply to each cursor's word
   local cursors = vim.fn.getpos("'<")

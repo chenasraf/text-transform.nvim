@@ -32,4 +32,66 @@ Usage~
 `require("text-transform").setup()` (add `{}` with your |TextTransform.options| table)
 
 
+==============================================================================
+------------------------------------------------------------------------------
+                                                    *TextTransform.into_words()*
+                       `TextTransform.into_words`({str})
+Splits a string into words.
+
+------------------------------------------------------------------------------
+                                                    *TextTransform.camel_case()*
+                      `TextTransform.camel_case`({string})
+Transforms a string into camelCase.
+
+------------------------------------------------------------------------------
+                                                    *TextTransform.snake_case()*
+                      `TextTransform.snake_case`({string})
+Transforms a string into snake_case.
+
+------------------------------------------------------------------------------
+                                                   *TextTransform.pascal_case()*
+                     `TextTransform.pascal_case`({string})
+Transforms a string into PascalCase.
+
+------------------------------------------------------------------------------
+                                                    *TextTransform.kebab_case()*
+                      `TextTransform.kebab_case`({string})
+Transforms a string into kebab-case.
+
+------------------------------------------------------------------------------
+                                                      *TextTransform.dot_case()*
+                       `TextTransform.dot_case`({string})
+Transforms a string into dot.case.
+
+------------------------------------------------------------------------------
+                                                    *TextTransform.title_case()*
+                      `TextTransform.title_case`({string})
+Transforms a string into Title Case.
+
+------------------------------------------------------------------------------
+                                                    *TextTransform.const_case()*
+                      `TextTransform.const_case`({string})
+Transforms a string into CONSTANT_CASE.
+
+------------------------------------------------------------------------------
+                                                    *TextTransform.replace_at()*
+`TextTransform.replace_at`({start_line}, {start_col}, {end_line}, {end_col}, {transform})
+Replaces the text at the given position with the given transform.
+
+------------------------------------------------------------------------------
+                                             *TextTransform.replace_selection()*
+                 `TextTransform.replace_selection`({transform})
+Replaces the current visual selection with the given transform.
+
+------------------------------------------------------------------------------
+                                                  *TextTransform.replace_word()*
+                   `TextTransform.replace_word`({transform})
+Replaces the current word with the given transform.
+
+------------------------------------------------------------------------------
+                                               *TextTransform.replace_columns()*
+                  `TextTransform.replace_columns`({transform})
+Replaces each column selection with the given transform.
+
+
  vim:tw=78:ts=8:noet:ft=help:norl:
