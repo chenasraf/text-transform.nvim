@@ -42,17 +42,71 @@ T["setup()"]["sets exposed methods and default options value"] = function()
   -- assert the value, and the type
   eq_config(child, "debug", false)
   eq_type_config(child, "debug", "boolean")
+
+  eq_type_config(child, "keymap", "table")
+
+  eq_config(child, "keymap.v", "<Leader>~")
+  eq_type_config(child, "keymap.v", "string")
+
+  eq_config(child, "keymap.n", "<Leader>~")
+  eq_type_config(child, "keymap.n", "string")
 end
 
 T["setup()"]["overrides default values"] = function()
   child.lua([[require('text-transform').setup({
         -- write all the options with a value different than the default ones
         debug = true,
+        keymap = {
+          ["v"] = "<leader>c",
+          ["n"] = "<leader>c",
+        },
     })]])
 
   -- assert the value, and the type
-  eq_config(child, "debug", true)
   eq_type_config(child, "debug", "boolean")
+  eq_config(child, "debug", true)
+
+  eq_type_config(child, "keymap", "table")
+
+  eq_config(child, "keymap.v", "<leader>c")
+  eq_type_config(child, "keymap.v", "string")
+
+  eq_config(child, "keymap.n", "<leader>c")
+  eq_type_config(child, "keymap.n", "string")
 end
 
+local function make_transform_test(fn_name, input, expected)
+  return function()
+    child.lua([[require('text-transform').setup()]])
+    child.lua([[result = require('text-transform').]] .. fn_name .. '("' .. input .. '")')
+    eq_global(child, "result", expected)
+  end
+end
+
+T["camel_case()"] = MiniTest.new_set()
+T["camel_case()"]["transforms string"] =
+  make_transform_test("camel_case", "hello_world", "helloWorld")
+
+T["snake_case()"] = MiniTest.new_set()
+T["snake_case()"]["transforms string"] =
+  make_transform_test("snake_case", "helloWorld", "hello_world")
+
+T["pascal_case()"] = MiniTest.new_set()
+T["pascal_case()"]["transforms string"] =
+  make_transform_test("pascal_case", "hello_world", "HelloWorld")
+
+T["kebab_case()"] = MiniTest.new_set()
+T["kebab_case()"]["transforms string"] =
+  make_transform_test("kebab_case", "helloWorld", "hello-world")
+
+T["dot_case()"] = MiniTest.new_set()
+T["dot_case()"]["transforms string"] = make_transform_test("dot_case", "helloWorld", "hello.world")
+
+T["const_case()"] = MiniTest.new_set()
+T["const_case()"]["transforms string"] =
+  make_transform_test("const_case", "helloWorld", "HELLO_WORLD")
+
+T["title_case()"] = MiniTest.new_set()
+T["title_case()"]["transforms string"] =
+  make_transform_test("title_case", "helloWorld", "Hello World")
 return T
