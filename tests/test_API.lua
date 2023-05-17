@@ -42,17 +42,139 @@ T["setup()"]["sets exposed methods and default options value"] = function()
   -- assert the value, and the type
   eq_config(child, "debug", false)
   eq_type_config(child, "debug", "boolean")
+
+  eq_type_config(child, "keymap", "table")
+
+  eq_config(child, "keymap.v", "<Leader>~")
+  eq_type_config(child, "keymap.v", "string")
+
+  eq_config(child, "keymap.n", "<Leader>~")
+  eq_type_config(child, "keymap.n", "string")
 end
 
 T["setup()"]["overrides default values"] = function()
   child.lua([[require('text-transform').setup({
         -- write all the options with a value different than the default ones
         debug = true,
+        keymap = {
+          ["v"] = "<leader>c",
+          ["n"] = "<leader>c",
+        },
     })]])
 
   -- assert the value, and the type
-  eq_config(child, "debug", true)
   eq_type_config(child, "debug", "boolean")
+  eq_config(child, "debug", true)
+
+  eq_type_config(child, "keymap", "table")
+
+  eq_config(child, "keymap.v", "<leader>c")
+  eq_type_config(child, "keymap.v", "string")
+
+  eq_config(child, "keymap.n", "<leader>c")
+  eq_type_config(child, "keymap.n", "string")
+end
+
+local function make_transform_test(fn_name, input, expected)
+  return function()
+    child.lua([[require('text-transform').setup()]])
+    child.lua([[result = require('text-transform').]] .. fn_name .. '("' .. input .. '")')
+    eq_global(child, "result", expected)
+  end
+end
+
+T["into_words()"] = MiniTest.new_set()
+
+T["into_words()"]["should split two words with spaces"] = function()
+  child.lua([[require('text-transform').setup()]])
+  child.lua([[result = require('text-transform').into_words("helloWorld")]])
+  eq_type_global(child, "result", "table")
+  eq_global(child, "result[1]", "hello")
+  eq_global(child, "result[2]", "World")
+end
+
+T["into_words()"]["should split two words with dots"] = function()
+  child.lua([[require('text-transform').setup()]])
+  child.lua([[result = require('text-transform').into_words("hello.world")]])
+  eq_type_global(child, "result", "table")
+  eq_global(child, "result[1]", "hello")
+  eq_global(child, "result[2]", "world")
+end
+
+T["into_words()"]["should split two words with a number inside"] = function()
+  child.lua([[require('text-transform').setup()]])
+  child.lua([[result = require('text-transform').into_words("helloWorld123")]])
+  eq_type_global(child, "result", "table")
+  eq_global(child, "result[1]", "hello")
+  eq_global(child, "result[2]", "World")
+  eq_global(child, "result[3]", "123")
+end
+
+local map = {
+  ["camel_case"] = {
+    { "hello_world", "helloWorld" },
+    { "hello world", "helloWorld" },
+    { "hello-world", "helloWorld" },
+    { "hello.world", "helloWorld" },
+    { "hello", "hello" },
+    { "helloWorld123", "helloWorld123" },
+  },
+  ["snake_case"] = {
+    { "helloWorld", "hello_world" },
+    { "hello world", "hello_world" },
+    { "hello-world", "hello_world" },
+    { "hello.world", "hello_world" },
+    { "hello", "hello" },
+    { "helloWorld123", "hello_world_123" },
+  },
+  ["pascal_case"] = {
+    { "hello_world", "HelloWorld" },
+    { "hello world", "HelloWorld" },
+    { "hello-world", "HelloWorld" },
+    { "hello.world", "HelloWorld" },
+    { "hello", "Hello" },
+    { "helloWorld123", "HelloWorld123" },
+  },
+  ["kebab_case"] = {
+    { "helloWorld", "hello-world" },
+    { "hello world", "hello-world" },
+    { "hello-world", "hello-world" },
+    { "hello.world", "hello-world" },
+    { "hello", "hello" },
+    { "helloWorld123", "hello-world-123" },
+  },
+  ["dot_case"] = {
+    { "helloWorld", "hello.world" },
+    { "hello world", "hello.world" },
+    { "hello-world", "hello.world" },
+    { "hello.world", "hello.world" },
+    { "hello", "hello" },
+    { "helloWorld123", "hello.world.123" },
+  },
+  ["const_case"] = {
+    { "helloWorld", "HELLO_WORLD" },
+    { "hello world", "HELLO_WORLD" },
+    { "hello-world", "HELLO_WORLD" },
+    { "hello.world", "HELLO_WORLD" },
+    { "hello", "HELLO" },
+    { "helloWorld123", "HELLO_WORLD_123" },
+  },
+  ["title_case"] = {
+    { "helloWorld", "Hello World" },
+    { "hello world", "Hello World" },
+    { "hello-world", "Hello World" },
+    { "hello.world", "Hello World" },
+    { "hello", "Hello" },
+    { "helloWorld123", "Hello World 123" },
+  },
+}
+
+for fn_name, cases in pairs(map) do
+  T[fn_name .. "()"] = MiniTest.new_set()
+  for _, case in ipairs(cases) do
+    local input, output = unpack(case)
+    T[fn_name .. "()"]["input: " .. input] = make_transform_test(fn_name, input, output)
+  end
 end
 
 return T

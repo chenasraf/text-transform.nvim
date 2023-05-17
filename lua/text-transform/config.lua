@@ -37,21 +37,39 @@ function TextTransform.setup(options)
   return TextTransform.options
 end
 
+local CAMEL_CASE = "&camelCase"
+local SNAKE_CASE = "&snake_case"
+local PASCAL_CASE = "&PascalCase"
+local KEBAB_CASE = "&kebab-case"
+local DOT_CASE = "&dot\\.case"
+local TITLE_CASE = "&Title\\ Case"
+local CONST_CASE = "C&ONST_CASE"
+
+-- TODO save frequency of use and order by frequency
+local default_ordered_keys =
+  { CAMEL_CASE, SNAKE_CASE, PASCAL_CASE, CONST_CASE, KEBAB_CASE, DOT_CASE, TITLE_CASE }
+
 function TextTransform._setup()
   local map = {
-    ["&camelCase"] = "TextTransform.camel_case",
-    ["&snake_case"] = "TextTransform.snake_case",
-    ["&PascalCase"] = "TextTransform.pascal_case",
-    ["&kebab-case"] = "TextTransform.kebab_case",
-    ["&dot\\.case"] = "TextTransform.dot_case",
-    ["&Title\\ Case"] = "TextTransform.title_case",
-    ["C&ONST_CASE"] = "TextTransform.const_case",
+    [CAMEL_CASE] = "camel_case",
+    [SNAKE_CASE] = "snake_case",
+    [PASCAL_CASE] = "pascal_case",
+    [KEBAB_CASE] = "kebab_case",
+    [DOT_CASE] = "dot_case",
+    [TITLE_CASE] = "title_case",
+    [CONST_CASE] = "const_case",
   }
 
-  for k, v in pairs(map) do
-    vim.cmd("amenu TransformsWord." .. k .. " :lua TextTransform.replace_word(" .. v .. ")<CR>")
+  ---@diagnostic disable-next-line: unused-local
+  for _i, k in pairs(default_ordered_keys) do
+    local v = map[k]
+    vim.cmd("amenu TransformsWord." .. k .. " :lua TextTransform.replace_word('" .. v .. "')<CR>")
     vim.cmd(
-      "amenu TransformsSelection." .. k .. " :lua TextTransform.replace_selection(" .. v .. ")<CR>"
+      "amenu TransformsSelection."
+        .. k
+        .. " :lua TextTransform.replace_selection('"
+        .. v
+        .. "')<CR>"
     )
   end
 
