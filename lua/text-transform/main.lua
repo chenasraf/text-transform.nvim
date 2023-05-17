@@ -46,15 +46,10 @@ function TextTransform.disable()
   return S
 end
 
-local function trim(s)
-  return s:match("^%s*(.-)%s*$")
-end
-
 --- Splits a string into words.
 function TextTransform.into_words(str)
   local words = {}
   local word = ""
-  str = trim(str)
 
   local previous_is_split_token = false
   for i = 1, #str do
@@ -66,15 +61,15 @@ function TextTransform.into_words(str)
     -- split on uppercase letters or numbers
     if is_split_token and not previous_is_split_token then
       if word ~= "" then
-        table.insert(words, trim(str):lower())
+        table.insert(words, word:lower())
       end
-      previous_is_split_token = is_split_token
+      previous_is_split_token = true
       word = char
       -- split on underscores, hyphens, and spaces
     elseif is_separator then
       if word ~= "" then
-        table.insert(words, trim(str):lower())
-        previous_is_split_token = is_split_token
+        table.insert(words, word:lower())
+        previous_is_split_token = false
       end
       word = ""
     else
@@ -83,7 +78,7 @@ function TextTransform.into_words(str)
     end
   end
   if word ~= "" then
-    table.insert(words, trim(str):lower())
+    table.insert(words, word:lower())
     previous_is_split_token = false
   end
   return words
@@ -231,9 +226,9 @@ function TextTransform.replace_columns(transform)
     -- get the line of this cursor
     local line = vim.fn.getline(line_num)
     -- match the surrounding word using start_col
-    local word = line:match("[%w%_%-%s%.]+", start_col)
+    local word = line:match("[%w%_%-%.]+", start_col)
     -- replace the word with the transformed word
-    TextTransform.replace_cursor_range(line_num, start_col, start_col + #word - 1, transform)
+    TextTransform.replace_cursor_range(line_num, start_col, start_col + #word, transform)
   end
 end
 

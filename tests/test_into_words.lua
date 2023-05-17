@@ -57,4 +57,12 @@ T["into_words()"]["should split two words with a number inside"] = function()
   eq_global(child, "result[3]", "123")
 end
 
+T["into_words()"]["should split two words and ignore trailing/leading spaces"] = function()
+  child.lua([[require('text-transform').setup()]])
+  child.lua([[result = require('text-transform').into_words("  hello world  ")]])
+  eq_type_global(child, "result", "table")
+  eq_global(child, "result[1]", "hello")
+  eq_global(child, "result[2]", "world")
+end
+
 return T
