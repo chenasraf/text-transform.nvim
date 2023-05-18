@@ -39,6 +39,7 @@ end
 TextTransform.into_words = M.into_words
 TextTransform.replace_word = M.replace_word
 TextTransform.replace_selection = M.replace_selection
+TextTransform.replace_columns = M.replace_columns
 
 TextTransform.camel_case = M.camel_case
 TextTransform.snake_case = M.snake_case

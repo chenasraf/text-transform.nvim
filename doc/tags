@@ -7,7 +7,7 @@ TextTransform.options	text-transform.txt	/*TextTransform.options*
 TextTransform.pascal_case()	text-transform.txt	/*TextTransform.pascal_case()*
 TextTransform.replace_at()	text-transform.txt	/*TextTransform.replace_at()*
 TextTransform.replace_columns()	text-transform.txt	/*TextTransform.replace_columns()*
-TextTransform.replace_selection()	text-transform.txt	/*TextTransform.replace_selection()*
+TextTransform.replace_cursor_range()	text-transform.txt	/*TextTransform.replace_cursor_range()*
 TextTransform.replace_word()	text-transform.txt	/*TextTransform.replace_word()*
 TextTransform.setup()	text-transform.txt	/*TextTransform.setup()*
 TextTransform.snake_case()	text-transform.txt	/*TextTransform.snake_case()*

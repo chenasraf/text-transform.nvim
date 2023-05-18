@@ -65,11 +65,7 @@ function TextTransform._setup()
     local v = map[k]
     vim.cmd("amenu TransformsWord." .. k .. " :lua TextTransform.replace_word('" .. v .. "')<CR>")
     vim.cmd(
-      "amenu TransformsSelection."
-        .. k
-        .. " :lua TextTransform.replace_selection('"
-        .. v
-        .. "')<CR>"
+      "amenu TransformsSelection." .. k .. " :lua TextTransform.replace_columns('" .. v .. "')<CR>"
     )
   end
 

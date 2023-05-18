@@ -54,27 +54,31 @@ function TextTransform.into_words(str)
   local previous_is_split_token = false
   for i = 1, #str do
     local char = str:sub(i, i)
+    local is_upper = char:match("%u")
+    local is_num = char:match("%d")
+    local is_separator = char:match("[%_%-%s%.]")
+    local is_split_token = is_upper or is_num
     -- split on uppercase letters or numbers
-    if char:match("%u") or char:match("%d") and not previous_is_split_token then
+    if is_split_token and not previous_is_split_token then
       if word ~= "" then
-        table.insert(words, word)
+        table.insert(words, word:lower())
       end
       previous_is_split_token = true
       word = char
       -- split on underscores, hyphens, and spaces
-    elseif char:match("[%_%-%s%.]") then
+    elseif is_separator then
       if word ~= "" then
-        table.insert(words, word)
+        table.insert(words, word:lower())
         previous_is_split_token = false
       end
       word = ""
     else
       word = word .. char
-      previous_is_split_token = char:match("%u") or char:match("%d")
+      previous_is_split_token = is_split_token
     end
   end
   if word ~= "" then
-    table.insert(words, word)
+    table.insert(words, word:lower())
     previous_is_split_token = false
   end
   return words
@@ -201,19 +205,6 @@ function TextTransform.replace_at(start_line, start_col, end_line, end_col, tran
   end
 end
 
---- Replaces the current visual selection with the given transform.
-function TextTransform.replace_selection(transform)
-  -- get the current visual selection, and transform the line, only replacing the selected text itself
-  local _, start_line, start_col = unpack(vim.fn.getpos("'<"))
-  local _, end_line, end_col = unpack(vim.fn.getpos("'>"))
-
-  -- transform all included lines
-  TextTransform.replace_at(start_line, start_col, end_line, end_col, transform)
-
-  -- move the cursor to the end of the transformed text
-  vim.fn.cursor(end_line, end_col)
-end
-
 --- Replaces the current word with the given transform.
 function TextTransform.replace_word(transform)
   local word = vim.fn.expand("<cword>")
@@ -221,24 +212,40 @@ function TextTransform.replace_word(transform)
   vim.cmd("normal ciw" .. transformed)
 end
 
---- Replaces each column selection with the given transform.
+--- Replaces each column in visual block mode selection with the given transform.
+--- Assumes that the each selection is 1 character and operates on the whole word under each cursor.
 function TextTransform.replace_columns(transform)
-  -- get each cursor position and apply to each cursor's word
-  local cursors = vim.fn.getpos("'<")
+  -- get all the multiple cursor positions
+  local _, start_line, start_col = unpack(vim.fn.getpos("'<"))
+  local _, end_line = unpack(vim.fn.getpos("'>"))
 
-  for _, cursor in ipairs(cursors) do
-    -- unpack the cursor values
-    local start_line, start_col, end_line, end_col = unpack(cursor)
-    local line = vim.fn.getline(start_line)
+  D.tprint({ start_line, start_col, end_line })
 
-    if start_col == end_col then
-      -- if the cursor is one length, get the word under the cursor
-      local word = line:match("%w+", start_col)
-      TextTransform.replace_at(start_line, start_col, start_line, start_col + #word, transform)
-    else
-      -- otherwise, get the word between the cursors
-      TextTransform.replace_at(start_line, start_col, end_line, end_col, transform)
-    end
+  -- for each cursor start_col, find the word under the cursor and transform it
+  for line_num = start_line, end_line do
+    -- get the line of this cursor
+    local line = vim.fn.getline(line_num)
+    -- match the surrounding word using start_col
+    local word = line:match("[%w%_%-]+", start_col)
+    -- replace the word with the transformed word
+    TextTransform.replace_cursor_range(line_num, start_col, start_col + #word - 1, transform)
+  end
+end
+
+--- Replaces each cursor selection range with the given transform.
+function TextTransform.replace_cursor_range(line, start_col, end_col, transform)
+  return TextTransform.replace_at(line, start_col, line, end_col, transform)
+end
+
+function TextTransform.replace_selection(transform)
+  -- determine if cursor is a 1-length column or a normal selection
+  local is_column = vim.fn.getpos("'<")[2] == vim.fn.getpos("'>")[2]
+
+  if is_column then
+    TextTransform.replace_columns(transform)
+  else
+    local _, start_line, start_col, end_col = unpack(vim.fn.getpos("'<"))
+    TextTransform.replace_cursor_range(start_line, start_col, end_col, transform)
   end
 end
 
