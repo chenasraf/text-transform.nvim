@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.3.1...v0.4.0) (2023-05-18)
+
+
+### Features
+
+* visual block mode support ([5765e3d](https://github.com/chenasraf/text-transform.nvim/commit/5765e3d72109c473b4f9ab8839d01f8c983d0dc2))
+
+
+### Bug Fixes
+
+* word edge detection ([9cd27ab](https://github.com/chenasraf/text-transform.nvim/commit/9cd27aba2b74b072d57edadecdd63646d84a82cf))
+* words split ([43cc07c](https://github.com/chenasraf/text-transform.nvim/commit/43cc07cde43e8a4caf6a9c7471f6e3e69e67c242))
+
 ## [0.3.1](https://github.com/chenasraf/text-transform.nvim/compare/v0.3.0...v0.3.1) (2023-05-17)
 
 
