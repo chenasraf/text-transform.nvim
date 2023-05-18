@@ -226,9 +226,9 @@ function TextTransform.replace_columns(transform)
     -- get the line of this cursor
     local line = vim.fn.getline(line_num)
     -- match the surrounding word using start_col
-    local word = line:match("[%w%_%-%.]+", start_col)
+    local word = line:match("[%w%_%-]+", start_col)
     -- replace the word with the transformed word
-    TextTransform.replace_cursor_range(line_num, start_col, start_col + #word, transform)
+    TextTransform.replace_cursor_range(line_num, start_col, start_col + #word - 1, transform)
   end
 end
 
