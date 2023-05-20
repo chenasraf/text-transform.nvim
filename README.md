@@ -36,7 +36,7 @@ with my_var or vice versa? This plugin is for you!
 | `Title Case`   | `my_var`, `my-var`, `MyVar` | `My Var` |
 | `CONST_CASE`   | `my_var`, `my-var`, `MyVar` | `MY_VAR` |
 
-## 📋 Installation
+## 🔽 Installation
 
 <div align="center">
 <table>
@@ -59,7 +59,7 @@ with my_var or vice versa? This plugin is for you!
 -- stable version
 use { "chenasraf/text-transform.nvim", tag = "*" }
 -- dev version
-use { "chenasraf/text-transform.nvim" }
+use { "chenasraf/text-transform.nvim", branch = "develop" }
 ```
 
 </td>
@@ -76,7 +76,7 @@ use { "chenasraf/text-transform.nvim" }
 -- stable version
 Plug "chenasraf/text-transform.nvim", { "tag": "*" }
 -- dev version
-Plug "chenasraf/text-transform.nvim"
+Plug "chenasraf/text-transform.nvim", { "branch": "develop" }
 ```
 
 </td>
@@ -93,7 +93,7 @@ Plug "chenasraf/text-transform.nvim"
 -- stable version
 require("lazy").setup({{ "chenasraf/text-transform.nvim", version = "*" }})
 -- dev version
-require("lazy").setup({ "chenasraf/text-transform.nvim" })
+require("lazy").setup({ "chenasraf/text-transform.nvim", branch = "develop" })
 ```
 
 </td>
@@ -102,7 +102,7 @@ require("lazy").setup({ "chenasraf/text-transform.nvim" })
 </table>
 </div>
 
-## ☄ Getting started
+## 🚀 Getting started
 
 To get started, [install](#-installation) the plugin via your favorite package manager.
 
@@ -121,7 +121,7 @@ To get started, [install](#-installation) the plugin via your favorite package m
 
 1. Select the desired transform and you're done!
 
-## ⚙ Configuration
+## ⚙️ Configuration
 
 <details>
 <summary>Click to unfold the full list of options with their default values</summary>
@@ -144,7 +144,7 @@ require("text-transform").setup({
 
 </details>
 
-## 🧰 Commands
+## 📝 Commands
 
 Use the following as example, you can mix &amp; match the different replacement functions with the
 desired transform function.
@@ -156,7 +156,7 @@ Normally you wouldn't need to call this, as you would just use the keymap you us
 | `:lua TextTransform.replace_word("camel_case")`      | Replaces selected word with camelCase version.     |
 | `:lua TextTransform.replace_selection("snake_case")` | Replaces visual selection with snake_case version. |
 
-## ⌨ Contributing
+## 💁🏻 Contributing
 
 I am developing this package on my free time, so any support, whether code, issues, or just stars is
 very helpful to sustaining its life. If you are feeling incredibly generous and would like to donate
