@@ -1,5 +1,11 @@
 local D = {}
 
+local function is_debug()
+  return _G.TextTransform ~= nil and
+      _G.TextTransform.config ~= nil and
+      _G.TextTransform.config.debug
+end
+
 ---prints only if debug is true.
 ---
 ---@param scope string: the scope from where this function is called.
@@ -7,7 +13,7 @@ local D = {}
 ---@param ... any: the arguments of the formatted string.
 ---@private
 function D.log(scope, str, ...)
-  if _G.TextTransform.config ~= nil and not _G.TextTransform.config.debug then
+  if not is_debug() then
     return
   end
 
@@ -35,7 +41,7 @@ end
 ---@param indent number?: the default indent value, starts at 0.
 ---@private
 function D.tprint(table, indent)
-  if _G.TextTransform.config ~= nil and not _G.TextTransform.config.debug then
+  if not is_debug() then
     return
   end
 

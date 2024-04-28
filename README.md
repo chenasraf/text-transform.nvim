@@ -18,7 +18,7 @@ Transform the current word or selection between multiple case types. Need to eas
 with my_var or vice versa? This plugin is for you!
 
 - Works on current word in **Normal Mode**
-  - Will replace the current word selectable by <kbd>cw</kbd>
+  - Will replace the current word selectable by <kbd>ciw</kbd>
 - Works on selection in **Visual Mode**
   - Will replace only inside the selection
 - Works on column selections in **Visual Block Mode**

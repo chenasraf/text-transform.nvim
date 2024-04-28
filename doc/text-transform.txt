@@ -1,12 +1,12 @@
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                         *TextTransform.options*
-                            `TextTransform.options`
+                                                                *config.options*
+                                `config.options`
 Your plugin configuration with its default values.
 
 Default values:
 >
-  TextTransform.options = {
+  config.options = {
     -- Prints useful logs about what event are triggered, and reasons actions are executed.
     debug = false,
     -- Keymap to trigger the transform.
@@ -18,81 +18,125 @@ Default values:
     },
   }
 
+  local function init()
+    local o = config.options
+    D.log("config", "Initializing TextTransform with %s", utils.dump(o))
+
+    vim.keymap.set("n", o.keymap.n, telescope_popup, { silent = true })
+    vim.keymap.set("v", o.keymap.v, telescope_popup, { silent = true })
+  end
+
 <
 
 ------------------------------------------------------------------------------
-                                                         *TextTransform.setup()*
-                        `TextTransform.setup`({options})
+                                                                *config.setup()*
+                           `config.setup`({options})
 Define your text-transform setup.
 
-Parameters~
+Parameters ~
 {options} `(table)` Module config table. See |TextTransform.options|.
 
-Usage~
+Usage ~
 `require("text-transform").setup()` (add `{}` with your |TextTransform.options| table)
 
 
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                    *TextTransform.into_words()*
-                       `TextTransform.into_words`({str})
-Splits a string into words.
-
-------------------------------------------------------------------------------
-                                                    *TextTransform.camel_case()*
-                      `TextTransform.camel_case`({string})
-Transforms a string into camelCase.
-
-------------------------------------------------------------------------------
-                                                    *TextTransform.snake_case()*
-                      `TextTransform.snake_case`({string})
-Transforms a string into snake_case.
-
-------------------------------------------------------------------------------
-                                                   *TextTransform.pascal_case()*
-                     `TextTransform.pascal_case`({string})
-Transforms a string into PascalCase.
-
-------------------------------------------------------------------------------
-                                                    *TextTransform.kebab_case()*
-                      `TextTransform.kebab_case`({string})
-Transforms a string into kebab-case.
-
-------------------------------------------------------------------------------
-                                                      *TextTransform.dot_case()*
-                       `TextTransform.dot_case`({string})
-Transforms a string into dot.case.
-
-------------------------------------------------------------------------------
-                                                    *TextTransform.title_case()*
-                      `TextTransform.title_case`({string})
-Transforms a string into Title Case.
-
-------------------------------------------------------------------------------
-                                                    *TextTransform.const_case()*
-                      `TextTransform.const_case`({string})
-Transforms a string into CONSTANT_CASE.
-
-------------------------------------------------------------------------------
-                                                    *TextTransform.replace_at()*
-`TextTransform.replace_at`({start_line}, {start_col}, {end_line}, {end_col}, {transform})
-Replaces the text at the given position with the given transform.
-
-------------------------------------------------------------------------------
-                                                  *TextTransform.replace_word()*
-                   `TextTransform.replace_word`({transform})
-Replaces the current word with the given transform.
-
-------------------------------------------------------------------------------
-                                               *TextTransform.replace_columns()*
-                  `TextTransform.replace_columns`({transform})
+                                                          *fn.replace_columns()*
+                     `fn.replace_columns`({transform_name})
 Replaces each column in visual block mode selection with the given transform.
 Assumes that the each selection is 1 character and operates on the whole word under each cursor.
 
+
+==============================================================================
 ------------------------------------------------------------------------------
-                                          *TextTransform.replace_cursor_range()*
-`TextTransform.replace_cursor_range`({line}, {start_col}, {end_col}, {transform})
-Replaces each cursor selection range with the given transform.
+                                                                 *fn.to_words()*
+                            `fn.to_words`({string})
+Splits a string into words.
+@param string string
+@return table
+
+------------------------------------------------------------------------------
+                                                          *fn.transform_words()*
+           `fn.transform_words`({words}, {with_word_cb}, {separator})
+Transforms a table of strings into a string using a callback and separator.
+The callback is called with the word, the index, and the table of words.
+The separator is added between each word.
+
+@param words table of strings
+@param with_word_cb function (word: string, index: number, words: table) -> string
+@param separator string|nil (optional)
+@return string
+
+------------------------------------------------------------------------------
+                                                            *fn.to_camel_case()*
+                          `fn.to_camel_case`({string})
+Transforms a string into camelCase.
+@param string string
+@return string
+
+------------------------------------------------------------------------------
+                                                            *fn.to_snake_case()*
+                          `fn.to_snake_case`({string})
+Transfroms a string into snake_case.
+@param string any
+@return string
+
+------------------------------------------------------------------------------
+                                                           *fn.to_pascal_case()*
+                         `fn.to_pascal_case`({string})
+Transforms a string into PascalCase.
+@param string string
+@return string
+
+------------------------------------------------------------------------------
+                                                            *fn.to_title_case()*
+                          `fn.to_title_case`({string})
+Transforms a string into Title Case.
+@param string string
+@return string
+
+------------------------------------------------------------------------------
+                                                            *fn.to_kebab_case()*
+                          `fn.to_kebab_case`({string})
+Transforms a string into kebab-case.
+@param string string
+@return string
+
+------------------------------------------------------------------------------
+                                                              *fn.to_dot_case()*
+                           `fn.to_dot_case`({string})
+Transforms a string into dot.case.
+@param string string
+@return string
+
+------------------------------------------------------------------------------
+                                                            *fn.to_const_case()*
+                          `fn.to_const_case`({string})
+Transforms a string into CONSTANT_CASE.
+@param string string
+@return string
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                 *utils.merge()*
+                           `utils.merge`({t1}, {t2})
+Merges two tables into one. Same as `vim.tbl_extend("keep", t1, t2)`.
+Mutates the first table.
+
+TODO accept multiple tables to merge
+
+@param t1 table
+@param t2 table
+@return table
+
+------------------------------------------------------------------------------
+                                                                  *utils.dump()*
+                              `utils.dump`({obj})
+Dumps the object into a string.
+@param obj any
+@return string
 
 
  vim:tw=78:ts=8:noet:ft=help:norl:
