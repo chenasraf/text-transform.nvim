@@ -152,20 +152,18 @@ require("text-transform").setup({
 
 ## 📝 Commands
 
-Use the following as example, you can mix &amp; match the different replacement functions with the
-desired transform function.
+The following commands are available for your use in your own mappings or for reference.
 
-Normally you wouldn't need to call this, as you would just use the keymap you used in `setup()`.
-
-| Command     | Description                           |
-| ----------- | ------------------------------------- |
-| `:TtCamel`  | Replaces selection with `camelCase`.  |
-| `:TtConst`  | Replaces selection with `CONST_CASE`. |
-| `:TtDot`    | Replaces selection with `dot.case`.   |
-| `:TtKebab`  | Replaces selection with `kebab-case`. |
-| `:TtPascal` | Replaces selection with `PascalCase`. |
-| `:TtSnake`  | Replaces selection with `snake_case`. |
-| `:TtTitle`  | Replaces selection with `Title Case`. |
+| Command                            | Description                                                                                            |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `:TtTelescope` \| `:TextTransform` | Pops up a Telescope window with the available converters which will directly act on the selected text. |
+| `:TtCamel`                         | Replaces selection with `camelCase`.                                                                   |
+| `:TtConst`                         | Replaces selection with `CONST_CASE`.                                                                  |
+| `:TtDot`                           | Replaces selection with `dot.case`.                                                                    |
+| `:TtKebab`                         | Replaces selection with `kebab-case`.                                                                  |
+| `:TtPascal`                        | Replaces selection with `PascalCase`.                                                                  |
+| `:TtSnake`                         | Replaces selection with `snake_case`.                                                                  |
+| `:TtTitle`                         | Replaces selection with `Title Case`.                                                                  |
 
 ## ⌨️⌨️ Keymaps
 
