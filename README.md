@@ -10,13 +10,12 @@
   
 ![Demo](https://github.com/chenasraf/text-transform.nvim/assets/167217/20c0106e-2c3b-4dd5-894e-23b313d8bc6b)
 
-  
 </div>
 
 ## ⚡️ Features
 
-Transform the current word or selection between multiple case types. Need to easily replace myVar
-with my_var or vice versa? This plugin is for you!
+Transform the current word or selection between multiple case types. Need to easily replace `myVar`
+with `my_var` or vice versa? This plugin is for you!
 
 - Works on current word in **Normal Mode**
   - Will replace the current word selectable by <kbd>ciw</kbd>
