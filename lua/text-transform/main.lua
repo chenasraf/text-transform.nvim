@@ -1,4 +1,3 @@
--- local config = require("text-transform.config")
 local utils = require("text-transform.util")
 local tt = require("text-transform.transformers")
 local replacers = require("text-transform.replacers")
@@ -11,7 +10,6 @@ local function merge(table)
   TextTransform = utils.merge(TextTransform, table)
 end
 
--- merge(config)
 merge(tt)
 merge(replacers)
 merge(state)
