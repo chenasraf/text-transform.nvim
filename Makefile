@@ -14,6 +14,8 @@ test:
 deps:
 	@mkdir -p deps
 	git clone --depth 1 https://github.com/echasnovski/mini.nvim deps/mini.nvim
+	git clone --depth 1 https://github.com/nvim-lua/plenary.nvim deps/plenary.nvim
+	git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim deps/telescope.nvim
 	echo "#!/usr/bin/env bash\n\nmake precommit" > .git/hooks/pre-commit
 	chmod +x .git/hooks/pre-commit
 
@@ -30,10 +32,6 @@ documentation-ci: deps documentation
 # performs a lint check and fixes issue if possible, following the config in `stylua.toml`.
 lint:
 	stylua .
-
-precommit-install:
-	echo "#!/usr/bin/env bash\n\nmake precommit" > .git/hooks/pre-commit
-	chmod +x .git/hooks/pre-commit
 
 # precommit
 precommit:

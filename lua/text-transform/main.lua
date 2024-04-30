@@ -11,6 +11,7 @@ end
 
 merge(tt)
 merge(replacers)
-TextTransform.state = state
+merge(state)
+-- TextTransform.state = state
 
 return TextTransform

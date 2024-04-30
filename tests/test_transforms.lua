@@ -25,7 +25,7 @@ local T = MiniTest.new_set({
 local function make_transform_test(fn_name, input, expected)
   return function()
     child.lua([[require('text-transform').setup()]])
-    child.lua([[result = require('text-transform').]] .. fn_name .. '("' .. input .. '")')
+    child.lua([[result = require('text-transform').to_]] .. fn_name .. '("' .. input .. '")')
     eq_global(child, "result", expected)
   end
 end

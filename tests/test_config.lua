@@ -1,4 +1,5 @@
 local helpers = dofile("tests/helpers.lua")
+local MiniTest = require("mini.test")
 
 -- See https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/test.lua for more documentation
 

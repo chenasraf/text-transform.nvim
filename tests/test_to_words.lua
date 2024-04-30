@@ -1,4 +1,5 @@
 local helpers = dofile("tests/helpers.lua")
+local MiniTest = require("mini.test")
 
 -- See https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/test.lua for more documentation
 
@@ -22,44 +23,44 @@ local T = MiniTest.new_set({
   },
 })
 
-T["into_words()"] = MiniTest.new_set()
+T["to_words()"] = MiniTest.new_set()
 
-T["into_words()"]["should split two words with spaces"] = function()
+T["to_words()"]["should split two words with spaces"] = function()
   child.lua([[require('text-transform').setup()]])
-  child.lua([[result = require('text-transform').into_words("hello world")]])
+  child.lua([[result = require('text-transform').to_words("hello world")]])
   eq_type_global(child, "result", "table")
   eq_global(child, "result[1]", "hello")
   eq_global(child, "result[2]", "world")
 end
 
-T["into_words()"]["should split two words with no spaces"] = function()
+T["to_words()"]["should split two words with no spaces"] = function()
   child.lua([[require('text-transform').setup()]])
-  child.lua([[result = require('text-transform').into_words("helloWorld")]])
+  child.lua([[result = require('text-transform').to_words("helloWorld")]])
   eq_type_global(child, "result", "table")
   eq_global(child, "result[1]", "hello")
   eq_global(child, "result[2]", "world")
 end
 
-T["into_words()"]["should split two words with dots"] = function()
+T["to_words()"]["should split two words with dots"] = function()
   child.lua([[require('text-transform').setup()]])
-  child.lua([[result = require('text-transform').into_words("hello.world")]])
+  child.lua([[result = require('text-transform').to_words("hello.world")]])
   eq_type_global(child, "result", "table")
   eq_global(child, "result[1]", "hello")
   eq_global(child, "result[2]", "world")
 end
 
-T["into_words()"]["should split two words with a number inside"] = function()
+T["to_words()"]["should split two words with a number inside"] = function()
   child.lua([[require('text-transform').setup()]])
-  child.lua([[result = require('text-transform').into_words("helloWorld123")]])
+  child.lua([[result = require('text-transform').to_words("helloWorld123")]])
   eq_type_global(child, "result", "table")
   eq_global(child, "result[1]", "hello")
   eq_global(child, "result[2]", "world")
   eq_global(child, "result[3]", "123")
 end
 
-T["into_words()"]["should split two words and ignore trailing/leading spaces"] = function()
+T["to_words()"]["should split two words and ignore trailing/leading spaces"] = function()
   child.lua([[require('text-transform').setup()]])
-  child.lua([[result = require('text-transform').into_words("  hello world  ")]])
+  child.lua([[result = require('text-transform').to_words("  hello world  ")]])
   eq_type_global(child, "result", "table")
   eq_global(child, "result[1]", "hello")
   eq_global(child, "result[2]", "world")

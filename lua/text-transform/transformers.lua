@@ -12,6 +12,7 @@ function transformers.to_words(string)
   local words = {}
   local word = ""
   local last_is_upper = false
+  local last_is_digit = false
   for i = 1, #string do
     local char = string:sub(i, i)
     if char:match(transformers.WORD_BOUNDRY) then
@@ -22,7 +23,19 @@ function transformers.to_words(string)
     else
       if not last_is_upper and char:match("%u") and word ~= "" then
         table.insert(words, word:lower())
+        last_is_upper = true
         word = ""
+      end
+      if char:match("%l") then
+        last_is_upper = false
+      end
+      if not last_is_digit and char:match("%d") and word ~= "" then
+        table.insert(words, word:lower())
+        last_is_digit = true
+        word = ""
+      end
+      if char:match("%D") then
+        last_is_digit = false
       end
       word = word .. char
       -- word = word .. string:sub(i)
