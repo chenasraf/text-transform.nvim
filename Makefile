@@ -31,14 +31,13 @@ documentation-ci: deps documentation
 lint:
 	stylua .
 
+precommit-install:
+	echo "#!/usr/bin/env bash\n\nmake precommit" > .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
+
 # precommit
 precommit:
-	stylua .
-	# git add .
-	make lint
-	# make test
-	make documentation
-	git add doc
+	./precommit.sh
 
 clean:
 	rm -rf deps
