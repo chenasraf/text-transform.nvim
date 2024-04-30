@@ -50,6 +50,23 @@ with my_var or vice versa? This plugin is for you!
 <tr>
 <td>
 
+[folke/lazy.nvim](https://github.com/folke/lazy.nvim)
+
+</td>
+<td>
+
+```lua
+-- stable version
+require("lazy").setup({{ "chenasraf/text-transform.nvim", version = "*" }})
+-- dev version
+require("lazy").setup({ "chenasraf/text-transform.nvim", branch = "develop" })
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
 [wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
 
 </td>
@@ -81,23 +98,7 @@ Plug "chenasraf/text-transform.nvim", { "branch": "develop" }
 
 </td>
 </tr>
-<tr>
-<td>
 
-[folke/lazy.nvim](https://github.com/folke/lazy.nvim)
-
-</td>
-<td>
-
-```lua
--- stable version
-require("lazy").setup({{ "chenasraf/text-transform.nvim", version = "*" }})
--- dev version
-require("lazy").setup({ "chenasraf/text-transform.nvim", branch = "develop" })
-```
-
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -134,12 +135,17 @@ rest to use the defaults.
 require("text-transform").setup({
   -- Prints useful logs about what event are triggered, and reasons actions are executed.
   debug = false,
-  -- Keymap to trigger the transform.
+  -- Keymap configurations
   keymap = {
-    -- Normal mode keymap.
-    ["n"] = "<Leader>~",
-    -- Visual mode keymap.
-    ["v"] = "<Leader>~",
+    -- Keymaps to open the telescope popup. Set to `false` or `nil` to disable keymapping for
+    -- the Telescope popup.
+    -- You can always customize your own keymapping manually.
+    telescope_popup = {
+      -- Opens the popup in normal mode
+      ["n"] = "<Leader>~",
+      -- Opens the popup in visual/visual block modes
+      ["v"] = "<Leader>~",
+    },
   },
 })
 ```
@@ -151,10 +157,56 @@ desired transform function.
 
 Normally you wouldn't need to call this, as you would just use the keymap you used in `setup()`.
 
-| Command                                              | Description                                        |
-| ---------------------------------------------------- | -------------------------------------------------- |
-| `:lua TextTransform.replace_word("camel_case")`      | Replaces selected word with camelCase version.     |
-| `:lua TextTransform.replace_selection("snake_case")` | Replaces visual selection with snake_case version. |
+| Command     | Description                           |
+| ----------- | ------------------------------------- |
+| `:TtCamel`  | Replaces selection with `camelCase`.  |
+| `:TtConst`  | Replaces selection with `CONST_CASE`. |
+| `:TtDot`    | Replaces selection with `dot.case`.   |
+| `:TtKebab`  | Replaces selection with `kebab-case`. |
+| `:TtPascal` | Replaces selection with `PascalCase`. |
+| `:TtSnake`  | Replaces selection with `snake_case`. |
+| `:TtTitle`  | Replaces selection with `Title Case`. |
+
+## ⌨️⌨️ Keymaps
+
+You can use the setup options to customize the default keymaps used to trigger the Telescope Popup.
+
+To disable these automated mappings, pass `nil` or `false` to the containing table (e.g.
+`telescope_popup`) or to the keys themselves.
+
+```lua
+-- Disable entirely
+require("text-transform").setup({
+  keymap = {
+    telescope_popup = nil,
+  },
+})
+-- Disable just one keymap
+require("text-transform").setup({
+  keymap = {
+    telescope_popup = {
+      ["v"] = nil,
+    },
+  },
+})
+```
+
+You can also create custom mappings to specific case conversions or to the Telescope popup yourself.
+
+```lua
+-- Trigger telescope popup
+local telescope = require('text-transform.telescope')
+vim.keymap.set("n", "<leader>~~", telescope.popup, { silent = true })
+
+-- Trigger case converters directly
+vim.keymap.set({ "n", "v" }, "<leader>Ccc", ":TtCamel",  { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>Cco", ":TtConst",  { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>Cdo", ":TtDot",    { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>Cke", ":TtKebab",  { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>Cpa", ":TtPascal", { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>Csn", ":TtSnake",  { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>Ctt", ":TtTitle",  { silent = true })
+```
 
 ## 💁🏻 Contributing
 
