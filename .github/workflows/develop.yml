@@ -41,7 +41,12 @@ jobs:
         run: make documentation-ci
 
       - name: check docs diff
-        run: exit $(git status --porcelain doc | wc -l | tr -d " ")
+        run: |
+          git status doc
+          ex=$(git status --porcelain doc | wc -l | tr -d " ")
+          if [[ $ex -ne 0 ]]; then git diff doc; fi
+          exit $ex
+
   tests:
     needs:
       - lint
