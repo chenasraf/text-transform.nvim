@@ -8,48 +8,50 @@ local function ensure_config()
 end
 
 -- methods
-local State = {
+local TextTransform = {
   -- Boolean determining if the plugin is enabled or not.
   enabled = false,
+  -- A table containing cursor position and visual selection details,
+  -- saved using `save_position()` and can be restored using `restore_positions()`
   positions = nil,
 }
 
----Toggle the plugin by calling the `enable`/`disable` methods respectively.
----@private
-function State.toggle()
-  if State.enabled then
-    return State.disable()
+--- Toggle the plugin by calling the `enable`/`disable` methods respectively.
+--- @private
+function TextTransform.toggle()
+  if TextTransform.enabled then
+    return TextTransform.disable()
   end
 
-  return State.enable()
+  return TextTransform.enable()
 end
 
----Initializes the plugin.
----@private
-function State.enable()
+--- Enables the plugin
+--- @private
+function TextTransform.enable()
   ensure_config()
 
-  if State.enabled then
-    return State
+  if TextTransform.enabled then
+    return TextTransform
   end
 
-  State.enabled = true
-  return State
+  TextTransform.enabled = true
+  return TextTransform
 end
 
 ---Disables the plugin and reset the internal state.
 ---@private
-function State.disable()
+function TextTransform.disable()
   ensure_config()
 
-  if not State.enabled then
-    return State
+  if not TextTransform.enabled then
+    return TextTransform
   end
 
   -- reset the state
-  State.enabled = false
-  State.positions = nil
-  return State
+  TextTransform.enabled = false
+  TextTransform.positions = nil
+  return TextTransform
 end
 
 local function get_mode_type(mode)
@@ -62,7 +64,9 @@ local function get_mode_type(mode)
   return mode_map[mode] or "normal"
 end
 
-function State.save_positions()
+--- Save the current cursor position, mode, and visual selection ranges
+--- @private
+function TextTransform.save_positions()
   local buf = vim.api.nvim_get_current_buf()
   local mode_info = vim.api.nvim_get_mode()
   local mode = get_mode_type(mode_info.mode)
@@ -104,12 +108,14 @@ function State.save_positions()
   }
 
   D.log("popup_menu", "State: %s", vim.inspect(state))
-  State.positions = state
+  TextTransform.positions = state
   return state
 end
 
-function State.restore_positions(state)
-  state = state or State.positions
+--- Restore the cursor position, mode, and visual selection ranges saved using `save_position()`,
+--- or a given modified state, if passed as the first argument
+function TextTransform.restore_positions(state)
+  state = state or TextTransform.positions
   vim.api.nvim_set_current_buf(state.buf)
   vim.fn.setpos(".", state.pos)
   D.log("popup_menu", "Restored mode %s, cursor %s", state.mode, vim.inspect(state.pos))
@@ -126,7 +132,7 @@ function State.restore_positions(state)
     vim.cmd(command)
     D.log("popup_menu", [[Restored visual mode %s using "%s"]], state.mode, command)
   end
-  State.positions = nil
+  TextTransform.positions = nil
 end
 
-return State
+return TextTransform

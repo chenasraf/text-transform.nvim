@@ -1,6 +1,5 @@
 local TextTransform = require("text-transform.main")
 local state = require("text-transform.state")
-local D = require("text-transform.util.debug")
 
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
@@ -28,6 +27,12 @@ local items = {
 --   )
 -- end
 
+--- Pops up a telescope menu, containing the available case transformers.
+--- When a transformer is selected, the cursor position/range/columns will be used to replace the
+--- words around the cursor or inside the selection.
+---
+--- The cursor positions/ranges are saved before opening the menu and restored once a selection is
+--- made.
 local popup_menu = function()
   state.save_positions()
 

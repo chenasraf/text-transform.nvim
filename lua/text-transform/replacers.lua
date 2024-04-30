@@ -3,13 +3,18 @@ local state = require("text-transform.state")
 local utils = require("text-transform.util")
 local t = require("text-transform.transformers")
 
-local fn = {}
+local TextTransform = {}
 
+--- Finds the boundaries of the surrounding word around `start_col` within `line`.
+--- @param line number
+--- @param start_col number
+--- @return number start_col, number end_col
 local function find_word_boundaries(line, start_col)
   local line_text = vim.fn.getline(line)
   -- dashes, underscores, and periods are considered part of a word
   local word_pat = "[A-Za-z0-9_.\\-]"
   local non_word_pat = "[^A-Za-z0-9_.\\-]"
+  -- TODO handle searching backwards
   local word_start_col = vim.fn.match(line_text:sub(start_col), word_pat) + start_col
   local word_end_col = vim.fn.match(line_text:sub(word_start_col), non_word_pat)
     + word_start_col
@@ -20,7 +25,7 @@ local function find_word_boundaries(line, start_col)
   return word_start_col, word_end_col
 end
 
-function fn.replace_range(start_line, start_col, end_line, end_col, transform_name)
+function TextTransform.replace_range(start_line, start_col, end_line, end_col, transform_name)
   D.log("replacers", "Replacing range with %s", transform_name)
   local transform = t["to_" .. transform_name]
   local lines = vim.fn.getline(start_line, end_line) --- @type any
@@ -46,7 +51,13 @@ function fn.replace_range(start_line, start_col, end_line, end_col, transform_na
   vim.fn.setline(start_line, transformed)
 end
 
-function fn.replace_word(transform_name, position)
+--- Replace the word under the cursor with the given transform.
+--- If `position` is provided, replace the word under the given position.
+--- Otherwise, attempts to find the word under the cursor.
+---
+--- @param transform_name string The transformer name
+--- @param position table|nil A table containing the position of the word to replace
+function TextTransform.replace_word(transform_name, position)
   D.log("replacers", "Replacing word with %s", transform_name)
   local word, line, col, start_col, end_col
   if not position then
@@ -64,27 +75,30 @@ function fn.replace_word(transform_name, position)
   if not position then
     vim.cmd("normal ciw" .. transformed)
   else
-    fn.replace_range(line, start_col, line, end_col, transform_name)
+    TextTransform.replace_range(line, start_col, line, end_col, transform_name)
   end
 end
 
 --- Replaces each column in visual block mode selection with the given transform.
 --- Assumes that the each selection is 1 character and operates on the whole word under each cursor.
-function fn.replace_columns(transform_name)
-  local selections = fn.get_visual_selection_details()
+function TextTransform.replace_columns(transform_name)
+  local selections = TextTransform.get_visual_selection_details()
   D.log("replacers", "Replacing columns with %s", transform_name)
   for _, sel in ipairs(selections) do
-    fn.replace_word(transform_name, { 0, sel.start_line, sel.start_col, 0 })
-    -- TODO replace with replace_word? if so, need to find how to get the word under a given position
-    -- fn.replace_range(sel.start_line, sel.start_col, sel.end_line, sel.end_col, transform_name)
+    TextTransform.replace_word(transform_name, { 0, sel.start_line, sel.start_col, 0 })
   end
 end
 
-function fn.replace_selection(transform_name)
+--- Replaces a selection with the given transform. This function attempts to infer the replacement
+--- type based on the cursor positiono and visual selections, and passes information to relevant
+--- range replacement functions.
+---
+--- @param transform_name string The transformer name
+function TextTransform.replace_selection(transform_name)
   D.log("replacers", "Replacing selection with %s", transform_name)
   -- determine if cursor is a 1-width column across multiple lines  or a normal selection
   -- local start_line, start_col, end_line, end_col = unpack(vim.fn.getpos("'<"))
-  local selections = fn.get_visual_selection_details()
+  local selections = TextTransform.get_visual_selection_details()
 
   D.log("replacers", "Selections: %s", utils.dump(selections))
   local is_multiline = #selections > 1
@@ -102,17 +116,28 @@ function fn.replace_selection(transform_name)
   )
 
   if is_single_cursor then
-    fn.replace_word(transform_name)
+    TextTransform.replace_word(transform_name)
   elseif is_column then
-    fn.replace_columns(transform_name)
+    TextTransform.replace_columns(transform_name)
   else
     for _, sel in pairs(selections) do
-      fn.replace_range(sel.start_line, sel.start_col, sel.end_line, sel.end_col, transform_name)
+      TextTransform.replace_range(
+        sel.start_line,
+        sel.start_col,
+        sel.end_line,
+        sel.end_col,
+        transform_name
+      )
     end
   end
 end
 
-function fn.get_visual_selection_details()
+--- Takes the saved positions and translates them into individual visual ranges, regardless of how
+--- the original selection was performed.
+---
+--- This allows to treat all ranges equally and allows to work on each selection without knowing
+--- the full information around the selection logic.
+function TextTransform.get_visual_selection_details()
   D.log(
     "replacers",
     "Getting visual selection details - mode: %s, is_visual: %s, is_block: %s",
@@ -174,4 +199,4 @@ function fn.get_visual_selection_details()
   end
 end
 
-return fn
+return TextTransform

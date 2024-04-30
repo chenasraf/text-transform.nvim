@@ -1,12 +1,19 @@
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                                *config.options*
-                                `config.options`
+                                                         *TextTransform.setup()*
+                         `TextTransform.setup`({opts})
+Setup TextTransform options and merge them with user provided ones.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                         *TextTransform.options*
+                            `TextTransform.options`
 Your plugin configuration with its default values.
 
 Default values:
 >
-  config.options = {
+  TextTransform.options = {
     -- Prints useful logs about what event are triggered, and reasons actions are executed.
     debug = false,
     -- Keymap to trigger the transform.
@@ -19,7 +26,7 @@ Default values:
   }
 
   local function init()
-    local o = config.options
+    local o = TextTransform.options
     D.log("config", "Initializing TextTransform with %s", utils.dump(o))
 
     vim.keymap.set("n", o.keymap.n, telescope_popup, { silent = true })
@@ -29,8 +36,8 @@ Default values:
 <
 
 ------------------------------------------------------------------------------
-                                                                *config.setup()*
-                           `config.setup`({options})
+                                                         *TextTransform.setup()*
+                        `TextTransform.setup`({options})
 Define your text-transform setup.
 
 Parameters ~
@@ -42,23 +49,97 @@ Usage ~
 
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                          *fn.replace_columns()*
-                     `fn.replace_columns`({transform_name})
+                                                        *find_word_boundaries()*
+                  `find_word_boundaries`({line}, {start_col})
+Finds the boundaries of the surrounding word around `start_col` within `line`.
+@param line number
+@param start_col number
+@return number start_col, number end_col
+
+------------------------------------------------------------------------------
+                                                  *TextTransform.replace_word()*
+           `TextTransform.replace_word`({transform_name}, {position})
+Replace the word under the cursor with the given transform.
+If `position` is provided, replace the word under the given position.
+Otherwise, attempts to find the word under the cursor.
+
+@param transform_name string The transformer name
+@param position table|nil A table containing the position of the word to replace
+
+------------------------------------------------------------------------------
+                                               *TextTransform.replace_columns()*
+               `TextTransform.replace_columns`({transform_name})
 Replaces each column in visual block mode selection with the given transform.
 Assumes that the each selection is 1 character and operates on the whole word under each cursor.
+
+------------------------------------------------------------------------------
+                                             *TextTransform.replace_selection()*
+              `TextTransform.replace_selection`({transform_name})
+Replaces a selection with the given transform. This function attempts to infer the replacement
+type based on the cursor positiono and visual selections, and passes information to relevant
+range replacement functions.
+
+@param transform_name string The transformer name
+
+------------------------------------------------------------------------------
+                                  *TextTransform.get_visual_selection_details()*
+                 `TextTransform.get_visual_selection_details`()
+Takes the saved positions and translates them into individual visual ranges, regardless of how
+the original selection was performed.
+
+This allows to treat all ranges equally and allows to work on each selection without knowing
+the full information around the selection logic.
 
 
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                       *transformers.to_words()*
-                       `transformers.to_words`({string})
+                                                        *TextTransform.toggle()*
+                            `TextTransform.toggle`()
+Toggle the plugin by calling the `enable`/`disable` methods respectively.
+@private
+
+------------------------------------------------------------------------------
+                                                        *TextTransform.enable()*
+                            `TextTransform.enable`()
+Enables the plugin
+@private
+
+------------------------------------------------------------------------------
+                                                *TextTransform.save_positions()*
+                        `TextTransform.save_positions`()
+Save the current cursor position, mode, and visual selection ranges
+@private
+
+------------------------------------------------------------------------------
+                                             *TextTransform.restore_positions()*
+                   `TextTransform.restore_positions`({state})
+Restore the cursor position, mode, and visual selection ranges saved using `save_position()`,
+or a given modified state, if passed as the first argument
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                  *popup_menu()*
+                                 `popup_menu`()
+Pops up a telescope menu, containing the available case transformers.
+When a transformer is selected, the cursor position/range/columns will be used to replace the
+words around the cursor or inside the selection.
+
+The cursor positions/ranges are saved before opening the menu and restored once a selection is
+made.
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                      *TextTransform.to_words()*
+                       `TextTransform.to_words`({string})
 Splits a string into words.
 @param string string
 @return table
 
 ------------------------------------------------------------------------------
-                                                *transformers.transform_words()*
-      `transformers.transform_words`({words}, {with_word_cb}, {separator})
+                                               *TextTransform.transform_words()*
+     `TextTransform.transform_words`({words}, {with_word_cb}, {separator})
 Transforms a table of strings into a string using a callback and separator.
 The callback is called with the word, the index, and the table of words.
 The separator is added between each word.
@@ -69,50 +150,50 @@ The separator is added between each word.
 @return string
 
 ------------------------------------------------------------------------------
-                                                  *transformers.to_camel_case()*
-                     `transformers.to_camel_case`({string})
+                                                 *TextTransform.to_camel_case()*
+                    `TextTransform.to_camel_case`({string})
 Transforms a string into camelCase.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                  *transformers.to_snake_case()*
-                     `transformers.to_snake_case`({string})
+                                                 *TextTransform.to_snake_case()*
+                    `TextTransform.to_snake_case`({string})
 Transfroms a string into snake_case.
 @param string any
 @return string
 
 ------------------------------------------------------------------------------
-                                                 *transformers.to_pascal_case()*
-                    `transformers.to_pascal_case`({string})
+                                                *TextTransform.to_pascal_case()*
+                    `TextTransform.to_pascal_case`({string})
 Transforms a string into PascalCase.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                  *transformers.to_title_case()*
-                     `transformers.to_title_case`({string})
+                                                 *TextTransform.to_title_case()*
+                    `TextTransform.to_title_case`({string})
 Transforms a string into Title Case.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                  *transformers.to_kebab_case()*
-                     `transformers.to_kebab_case`({string})
+                                                 *TextTransform.to_kebab_case()*
+                    `TextTransform.to_kebab_case`({string})
 Transforms a string into kebab-case.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                    *transformers.to_dot_case()*
-                      `transformers.to_dot_case`({string})
+                                                   *TextTransform.to_dot_case()*
+                     `TextTransform.to_dot_case`({string})
 Transforms a string into dot.case.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                  *transformers.to_const_case()*
-                     `transformers.to_const_case`({string})
+                                                 *TextTransform.to_const_case()*
+                    `TextTransform.to_const_case`({string})
 Transforms a string into CONSTANT_CASE.
 @param string string
 @return string

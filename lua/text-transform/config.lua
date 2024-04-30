@@ -1,13 +1,13 @@
 local telescope_popup = require("text-transform.telescope")
 local D = require("text-transform.util.debug")
 local utils = require("text-transform.util")
-local config = {}
+local TextTransform = {}
 
 --- Your plugin configuration with its default values.
 ---
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
-config.options = {
+TextTransform.options = {
   -- Prints useful logs about what event are triggered, and reasons actions are executed.
   debug = false,
   -- Keymap to trigger the transform.
@@ -20,7 +20,7 @@ config.options = {
 }
 
 local function init()
-  local o = config.options
+  local o = TextTransform.options
   D.log("config", "Initializing TextTransform with %s", utils.dump(o))
 
   vim.keymap.set("n", o.keymap.n, telescope_popup, { silent = true })
@@ -32,10 +32,10 @@ end
 ---@param options table Module config table. See |TextTransform.options|.
 ---
 ---@usage `require("text-transform").setup()` (add `{}` with your |TextTransform.options| table)
-function config.setup(options)
+function TextTransform.setup(options)
   options = options or {}
 
-  config.options = utils.merge(config.options, options)
+  TextTransform.options = utils.merge(TextTransform.options, options)
 
   if vim.api.nvim_get_vvar("vim_did_enter") == 0 then
     vim.defer_fn(function()
@@ -45,7 +45,7 @@ function config.setup(options)
     init()
   end
 
-  return config.options
+  return TextTransform.options
 end
 
-return config
+return TextTransform

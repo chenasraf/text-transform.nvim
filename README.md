@@ -24,7 +24,7 @@ with my_var or vice versa? This plugin is for you!
 - Works on column selections in **Visual Block Mode**
   - Will detect if the block is a single column or multiple columns
     - If it's a single column, will replace the word under each cursor
-    - If it's a selection with length, will replace only inside the selection range
+    - If it's a selection with length, will replace only inside the selection ranges
 
 | Transformation | Example Inputs              | Output   |
 | -------------- | --------------------------- | -------- |
@@ -123,10 +123,12 @@ To get started, [install](#-installation) the plugin via your favorite package m
 
 ## ⚙️ Configuration
 
-<details>
-<summary>Click to unfold the full list of options with their default values</summary>
-
 > **Note**: The options are also available in Neovim by calling `:h TextTransform.options`
+
+The following are the default options when none are configured by the user.
+
+To merge any new config into the default, you can override only the keys you need, and leave the
+rest to use the defaults.
 
 ```lua
 require("text-transform").setup({
@@ -141,8 +143,6 @@ require("text-transform").setup({
   },
 })
 ```
-
-</details>
 
 ## 📝 Commands
 
