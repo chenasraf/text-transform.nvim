@@ -35,7 +35,7 @@ lint:
 
 # precommit
 precommit:
-	./precommit.sh
+	./scripts/precommit.sh
 
 clean:
 	rm -rf deps
