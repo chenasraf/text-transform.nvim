@@ -1,4 +1,4 @@
-local telescope_popup = require("text-transform.telescope")
+local telescope = require("text-transform.telescope")
 local commands = require("text-transform.commands")
 local D = require("text-transform.util.debug")
 local utils = require("text-transform.util")
@@ -32,10 +32,10 @@ local function init()
   if o.keymap.telescope_popup then
     local keys = o.keymap.telescope_popup
     if keys.n then
-      vim.keymap.set("n", keys.n, telescope_popup, { silent = true })
+      vim.keymap.set("n", keys.n, telescope.popup, { silent = true })
     end
     if keys.v then
-      vim.keymap.set("v", keys.v, telescope_popup, { silent = true })
+      vim.keymap.set("v", keys.v, telescope.popup, { silent = true })
     end
   end
 end

@@ -19,6 +19,25 @@ local items = {
   { label = "CONST_CASE", value = "const_case" },
 }
 
+local default_frequency = {
+  camel_case = 7,
+  snake_case = 6,
+  pascal_case = 5,
+  kebab_case = 4,
+  dot_case = 3,
+  title_case = 2,
+  const_case = 1,
+}
+
+-- local frequency_file = vim.fn.stdpath("config") .. "/text-transform-frequency.json"
+-- local frequency
+-- if vim.fn.filereadable(frequency_file) == 0 then
+--   frequency = default_frequency
+--   vim.fn.writefile({ vim.fn.json_encode(frequency) }, frequency_file)
+-- else
+--   frequency = vim.fn.json_decode(vim.fn.readfile(frequency_file))
+-- end
+
 ---@diagnostic disable-next-line: unused-local
 -- for _i, k in pairs(default_ordered_keys) do
 --   local v = map[k]
@@ -46,6 +65,7 @@ function TextTransform.popup()
           value = entry.value,
           display = entry.label,
           ordinal = entry.label,
+          -- ordinal = frequency[entry.value] or 0,
         }
       end,
     }),
