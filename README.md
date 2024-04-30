@@ -8,7 +8,8 @@
 
 <div align="center">
   
-![Demonstration](https://github.com/chenasraf/text-transform.nvim/assets/167217/e73f0e27-d72d-4aa6-bfa7-6f691aba9713)
+![Demo](https://github.com/chenasraf/text-transform.nvim/assets/167217/20c0106e-2c3b-4dd5-894e-23b313d8bc6b)
+
   
 </div>
 
