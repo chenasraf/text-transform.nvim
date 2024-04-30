@@ -59,7 +59,7 @@ with `my_var` or vice versa? This plugin is for you!
 -- stable version
 require("lazy").setup({{ "chenasraf/text-transform.nvim", version = "*" }})
 -- dev version
-require("lazy").setup({ "chenasraf/text-transform.nvim", branch = "develop" })
+require("lazy").setup({ "chenasraf/text-transform.nvim", tag = "dev" })
 ```
 
 </td>
@@ -74,9 +74,9 @@ require("lazy").setup({ "chenasraf/text-transform.nvim", branch = "develop" })
 
 ```lua
 -- stable version
-use { "chenasraf/text-transform.nvim", tag = "*" }
+use { "chenasraf/text-transform.nvim", tag = "stable" }
 -- dev version
-use { "chenasraf/text-transform.nvim", branch = "develop" }
+use { "chenasraf/text-transform.nvim", tag = "dev" }
 ```
 
 </td>
@@ -91,9 +91,9 @@ use { "chenasraf/text-transform.nvim", branch = "develop" }
 
 ```lua
 -- stable version
-Plug "chenasraf/text-transform.nvim", { "tag": "*" }
+Plug "chenasraf/text-transform.nvim", { "tag": "stable" }
 -- dev version
-Plug "chenasraf/text-transform.nvim", { "branch": "develop" }
+Plug "chenasraf/text-transform.nvim", { "tag": "dev" }
 ```
 
 </td>
