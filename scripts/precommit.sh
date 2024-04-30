@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2181
+# shellcheck disable=SC2181,SC2086
 
 # Stylua check
 diffs=$(stylua --check --output-format=json .)
@@ -10,8 +10,8 @@ if [[ "$?" -ne 0 ]]; then
   filelist="$(echo "$diffs" | jq -r '.file')"
 
   # Format & add to git
-  stylua "$filelist"
-  git add "$filelist"
+  stylua $filelist
+  git add $filelist
 fi
 
 # Run lints

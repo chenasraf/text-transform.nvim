@@ -21,25 +21,31 @@ function transformers.to_words(string)
       end
       word = ""
     else
-      if not last_is_upper and char:match("%u") and word ~= "" then
-        table.insert(words, word:lower())
-        last_is_upper = true
-        word = ""
+      if
+        (char:match("%d") and not last_is_digit)
+        or (char:match("%u") and not last_is_upper and word ~= "")
+        or (char:match("%l") and last_is_digit)
+      then
+        if word ~= "" then
+          table.insert(words, word:lower())
+          word = ""
+        end
       end
-      if char:match("%l") then
-        last_is_upper = false
-      end
-      if not last_is_digit and char:match("%d") and word ~= "" then
-        table.insert(words, word:lower())
+
+      -- Update flags based on current character type
+      if char:match("%d") then
         last_is_digit = true
-        word = ""
-      end
-      if char:match("%D") then
+        last_is_upper = false
+      elseif char:match("%u") then
+        last_is_upper = true
+        last_is_digit = false
+      else -- Lowercase or any non-digit/non-uppercase
+        last_is_upper = false
         last_is_digit = false
       end
+
+      -- Append current character to the current word
       word = word .. char
-      -- word = word .. string:sub(i)
-      -- break
     end
     D.log("transformers", "i %d char %s word %s words %s", i, char, word, utils.dump(words))
   end
