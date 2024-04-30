@@ -45,12 +45,13 @@ T["setup()"]["sets exposed methods and default options value"] = function()
   eq_config(child, "debug", false)
 
   eq_type_config(child, "keymap", "table")
+  eq_type_config(child, "keymap.telescope_popup", "table")
 
-  eq_type_config(child, "keymap.v", "string")
-  eq_config(child, "keymap.v", "<Leader>~")
+  eq_type_config(child, "keymap.telescope_popup.v", "string")
+  eq_config(child, "keymap.telescope_popup.v", "<Leader>~")
 
-  eq_type_config(child, "keymap.n", "string")
-  eq_config(child, "keymap.n", "<Leader>~")
+  eq_type_config(child, "keymap.telescope_popup.n", "string")
+  eq_config(child, "keymap.telescope_popup.n", "<Leader>~")
 end
 
 T["setup()"]["overrides default values"] = function()
