@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.5.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.4.0...v0.5.0) (2024-04-30)
+
+
+### Features
+
+* add commands ([500edc6](https://github.com/chenasraf/text-transform.nvim/commit/500edc66e6ac0a649108749ad290f2a370cf4219))
+* add telescope command ([6e409f0](https://github.com/chenasraf/text-transform.nvim/commit/6e409f0a44e50b3ef65f426e36b7824ee2d95d7a))
+
+
+### Bug Fixes
+
+* precommit ([a669a99](https://github.com/chenasraf/text-transform.nvim/commit/a669a998f47de6c33e9667d40ce3a219d60af69b))
+* telescope ([7ef73f2](https://github.com/chenasraf/text-transform.nvim/commit/7ef73f26d13f72454d0388bdca4541f7f4aa78e2))
+* telescope command ([69542d7](https://github.com/chenasraf/text-transform.nvim/commit/69542d7e1c6c88832611fb3c0f1d46102c133bd1))
+* uppercase logic ([a669a99](https://github.com/chenasraf/text-transform.nvim/commit/a669a998f47de6c33e9667d40ce3a219d60af69b))
+* word break/transform ([a53e0d6](https://github.com/chenasraf/text-transform.nvim/commit/a53e0d6d64051d5fea6d102529c403e4cbd0cce2))
+
 ## [0.4.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.3.1...v0.4.0) (2023-05-18)
 
 
