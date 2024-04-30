@@ -57,6 +57,17 @@ local items = {
 function TextTransform.popup()
   state.save_positions()
 
+  local filtered = {}
+  local config = _G.TextTransform.options
+
+  for _, item in ipairs(items) do
+    if not config.replacers[item.value] or not config.replacers[item.value].enabled then
+      goto continue
+    end
+    table.insert(filtered, item)
+    ::continue::
+  end
+
   local picker = pickers.new(dropdown, {
     prompt_title = "Change Case",
     finder = finders.new_table({
