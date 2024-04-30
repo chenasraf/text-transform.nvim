@@ -19,16 +19,16 @@ local items = {
   { label = "CONST_CASE", value = "const_case" },
 }
 
-local default_frequency = {
-  camel_case = 7,
-  snake_case = 6,
-  pascal_case = 5,
-  kebab_case = 4,
-  dot_case = 3,
-  title_case = 2,
-  const_case = 1,
-}
-
+-- local default_frequency = {
+--   camel_case = 7,
+--   snake_case = 6,
+--   pascal_case = 5,
+--   kebab_case = 4,
+--   dot_case = 3,
+--   title_case = 2,
+--   const_case = 1,
+-- }
+--
 -- local frequency_file = vim.fn.stdpath("config") .. "/text-transform-frequency.json"
 -- local frequency
 -- if vim.fn.filereadable(frequency_file) == 0 then

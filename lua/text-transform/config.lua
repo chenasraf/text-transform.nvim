@@ -9,7 +9,7 @@ local TextTransform = {}
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 TextTransform.options = {
-  -- Prints useful logs about what event are triggered, and reasons actions are executed.
+  -- Prints information about internals of the plugin. Very verbose, only useful for debugging.
   debug = false,
   -- Keymap configurations
   keymap = {
