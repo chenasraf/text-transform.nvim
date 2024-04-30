@@ -1,12 +1,5 @@
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                         *TextTransform.setup()*
-                         `TextTransform.setup`({opts})
-Setup TextTransform options and merge them with user provided ones.
-
-
-==============================================================================
-------------------------------------------------------------------------------
                                                  *TextTransform.init_commands()*
                         `TextTransform.init_commands`()
 Initializes user commands

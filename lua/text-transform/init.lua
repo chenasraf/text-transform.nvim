@@ -1,11 +1,12 @@
-local D = require("text-transform.util.debug")
-local TextTransform = require("text-transform.main")
+local M = require("text-transform.main")
+local utils = require("text-transform.util")
 
---- Setup TextTransform options and merge them with user provided ones.
+local TextTransform = {}
+
 function TextTransform.setup(opts)
   _G.TextTransform.config = require("text-transform.config").setup(opts)
 end
 
-_G.TextTransform = TextTransform
+_G.TextTransform = utils.merge(M, TextTransform)
 
 return _G.TextTransform

@@ -9,7 +9,6 @@ TextTransform.replace_word()	text-transform.txt	/*TextTransform.replace_word()*
 TextTransform.restore_positions()	text-transform.txt	/*TextTransform.restore_positions()*
 TextTransform.save_positions()	text-transform.txt	/*TextTransform.save_positions()*
 TextTransform.setup()	text-transform.txt	/*TextTransform.setup()*
-TextTransform.setup()	text-transform.txt	/*TextTransform.setup()*
 TextTransform.to_camel_case()	text-transform.txt	/*TextTransform.to_camel_case()*
 TextTransform.to_const_case()	text-transform.txt	/*TextTransform.to_const_case()*
 TextTransform.to_dot_case()	text-transform.txt	/*TextTransform.to_dot_case()*
