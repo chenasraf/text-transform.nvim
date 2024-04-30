@@ -11,7 +11,9 @@ local function find_word_boundaries(line, start_col)
   local word_pat = "[A-Za-z0-9_.\\-]"
   local non_word_pat = "[^A-Za-z0-9_.\\-]"
   local word_start_col = vim.fn.match(line_text:sub(start_col), word_pat) + start_col
-  local word_end_col = vim.fn.match(line_text:sub(word_start_col), non_word_pat) + word_start_col - 1
+  local word_end_col = vim.fn.match(line_text:sub(word_start_col), non_word_pat)
+    + word_start_col
+    - 1
   D.log("replacers", "Found word boundaries: %s", vim.inspect({ word_start_col, word_end_col }))
   D.log("replacers", "Word text: %s", line_text:sub(word_start_col, word_end_col))
   D.log("replacers", "Line text: %s", line_text)
@@ -56,7 +58,7 @@ function fn.replace_word(transform_name, position)
   end
   D.log("replacers", "Found word %s", word)
   D.log("replacers", "Using transformer %s", transform_name)
-  local transformer = t['to_' .. transform_name]
+  local transformer = t["to_" .. transform_name]
   local transformed = transformer(word)
   D.log("replacers", "New value %s", transformed)
   if not position then
@@ -87,9 +89,17 @@ function fn.replace_selection(transform_name)
   D.log("replacers", "Selections: %s", utils.dump(selections))
   local is_multiline = #selections > 1
   local is_column = is_multiline and selections[1].start_col == selections[#selections].end_col
-  local is_single_cursor = not is_multiline and not is_column and selections[1].start_col == selections[1].end_col
+  local is_single_cursor = not is_multiline
+    and not is_column
+    and selections[1].start_col == selections[1].end_col
 
-  D.log("replacers", "is_multiline: %s, is_column: %s, is_word: %s", is_multiline, is_column, is_single_cursor)
+  D.log(
+    "replacers",
+    "is_multiline: %s, is_column: %s, is_word: %s",
+    is_multiline,
+    is_column,
+    is_single_cursor
+  )
 
   if is_single_cursor then
     fn.replace_word(transform_name)
@@ -104,8 +114,11 @@ end
 
 function fn.get_visual_selection_details()
   D.log(
-    "replacers", "Getting visual selection details - mode: %s, is_visual: %s, is_block: %s",
-    state.positions.mode, utils.is_visual_mode(), utils.is_block_visual_mode()
+    "replacers",
+    "Getting visual selection details - mode: %s, is_visual: %s, is_block: %s",
+    state.positions.mode,
+    utils.is_visual_mode(),
+    utils.is_block_visual_mode()
   )
   -- Check if currently in visual mode; if not, return the cursor position
   if not utils.is_visual_mode() and not utils.is_block_visual_mode() then
@@ -115,8 +128,8 @@ function fn.get_visual_selection_details()
         start_line = pos[2],
         end_line = pos[2],
         start_col = pos[3],
-        end_col = pos[3]
-      }
+        end_col = pos[3],
+      },
     }
   end
 
@@ -155,8 +168,8 @@ function fn.get_visual_selection_details()
         start_line = start_line,
         end_line = end_line,
         start_col = start_col,
-        end_col = end_col
-      }
+        end_col = end_col,
+      },
     }
   end
 end

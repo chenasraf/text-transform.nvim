@@ -21,12 +21,12 @@ function utils.dump(obj)
 end
 
 function utils.is_block_visual_mode()
-  return state.positions.mode == 'block'
+  return state.positions.mode == "block"
   -- return vim.fn.mode() == "V" or vim.fn.mode() == "\22"
 end
 
 function utils.is_visual_mode()
-  return state.positions.mode == 'visual'
+  return state.positions.mode == "visual"
   -- return vim.fn.mode() == 'v'
 end
 

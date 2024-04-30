@@ -2,19 +2,19 @@ local TextTransform = require("text-transform.main")
 local state = require("text-transform.state")
 local D = require("text-transform.util.debug")
 
-local pickers = require "telescope.pickers"
-local finders = require "telescope.finders"
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
 local conf = require("telescope.config").values
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
 local dropdown = require("telescope.themes").get_dropdown({})
 
 local items = {
-  { label = "camelCase",  value = "camel_case" },
+  { label = "camelCase", value = "camel_case" },
   { label = "snake_case", value = "snake_case" },
   { label = "PascalCase", value = "pascal_case" },
   { label = "kebab-case", value = "kebab_case" },
-  { label = "dot.case",   value = "dot_case" },
+  { label = "dot.case", value = "dot_case" },
   { label = "Title Case", value = "title_case" },
   { label = "CONST_CASE", value = "const_case" },
 }
@@ -28,22 +28,21 @@ local items = {
 --   )
 -- end
 
-
 local popup_menu = function()
   state.save_positions()
 
   local picker = pickers.new(dropdown, {
-    prompt_title = 'Change Case',
-    finder = finders.new_table {
+    prompt_title = "Change Case",
+    finder = finders.new_table({
       results = items,
       entry_maker = function(entry)
         return {
           value = entry.value,
           display = entry.label,
-          ordinal = entry.label
+          ordinal = entry.label,
         }
-      end
-    },
+      end,
+    }),
     sorter = conf.generic_sorter({}),
     attach_mappings = function(prompt_bufnr)
       actions.select_default:replace(function()

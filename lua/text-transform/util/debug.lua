@@ -1,9 +1,9 @@
 local D = {}
 
 local function is_debug()
-  return _G.TextTransform ~= nil and
-      _G.TextTransform.config ~= nil and
-      _G.TextTransform.config.debug
+  return _G.TextTransform ~= nil
+    and _G.TextTransform.config ~= nil
+    and _G.TextTransform.config.debug
 end
 
 ---prints only if debug is true.
