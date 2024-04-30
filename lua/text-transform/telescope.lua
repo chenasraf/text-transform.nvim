@@ -1,4 +1,3 @@
-local TextTransform = require("text-transform.main")
 local state = require("text-transform.state")
 
 local pickers = require("telescope.pickers")
@@ -7,6 +6,8 @@ local conf = require("telescope.config").values
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local dropdown = require("telescope.themes").get_dropdown({})
+
+local TextTransform = {}
 
 local items = {
   { label = "camelCase", value = "camel_case" },
@@ -33,7 +34,7 @@ local items = {
 ---
 --- The cursor positions/ranges are saved before opening the menu and restored once a selection is
 --- made.
-local popup_menu = function()
+function TextTransform.popup()
   state.save_positions()
 
   local picker = pickers.new(dropdown, {
@@ -66,4 +67,4 @@ local popup_menu = function()
   end)
 end
 
-return popup_menu
+return TextTransform

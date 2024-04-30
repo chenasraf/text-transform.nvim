@@ -139,8 +139,8 @@ or a given modified state, if passed as the first argument
 
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                                  *popup_menu()*
-                                 `popup_menu`()
+                                                         *TextTransform.popup()*
+                            `TextTransform.popup`()
 Pops up a telescope menu, containing the available case transformers.
 When a transformer is selected, the cursor position/range/columns will be used to replace the
 words around the cursor or inside the selection.

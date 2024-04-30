@@ -2,6 +2,7 @@ local utils = require("text-transform.util")
 local tt = require("text-transform.transformers")
 local replacers = require("text-transform.replacers")
 local state = require("text-transform.state")
+local telescope = require("text-transform.telescope")
 
 local TextTransform = {}
 
@@ -12,6 +13,6 @@ end
 merge(tt)
 merge(replacers)
 merge(state)
--- TextTransform.state = state
+merge(telescope)
 
 return TextTransform
