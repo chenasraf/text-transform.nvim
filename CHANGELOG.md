@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/chenasraf/text-transform.nvim/compare/v0.5.0...v0.5.1) (2024-04-30)
+
+
+### Bug Fixes
+
+* exports ([657bda1](https://github.com/chenasraf/text-transform.nvim/commit/657bda14789b907911157c4f34e8a088c1e00d15))
+
 ## [0.5.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.4.0...v0.5.0) (2024-04-30)
 
 
