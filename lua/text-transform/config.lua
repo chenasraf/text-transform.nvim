@@ -1,4 +1,5 @@
 local telescope_popup = require("text-transform.telescope")
+local commands = require("text-transform.commands")
 local D = require("text-transform.util.debug")
 local utils = require("text-transform.util")
 local TextTransform = {}
@@ -10,21 +11,33 @@ local TextTransform = {}
 TextTransform.options = {
   -- Prints useful logs about what event are triggered, and reasons actions are executed.
   debug = false,
-  -- Keymap to trigger the transform.
+  -- Keymap configurations
   keymap = {
-    -- Normal mode keymap.
-    ["n"] = "<Leader>~",
-    -- Visual mode keymap.
-    ["v"] = "<Leader>~",
+    -- Keymap to open the telescope popup. Set to `false` or `nil` to disable keymapping
+    -- You can always customize your own keymapping manually.
+    telescope_popup = {
+      -- Opens the popup in normal mode
+      ["n"] = "<Leader>~",
+      -- Opens the popup in visual/visual block modes
+      ["v"] = "<Leader>~",
+    },
   },
 }
 
 local function init()
   local o = TextTransform.options
   D.log("config", "Initializing TextTransform with %s", utils.dump(o))
+  commands.init_commands()
 
-  vim.keymap.set("n", o.keymap.n, telescope_popup, { silent = true })
-  vim.keymap.set("v", o.keymap.v, telescope_popup, { silent = true })
+  if o.keymap.telescope_popup then
+    local keys = o.keymap.telescope_popup
+    if keys.n then
+      vim.keymap.set("n", keys.n, telescope_popup, { silent = true })
+    end
+    if keys.v then
+      vim.keymap.set("v", keys.v, telescope_popup, { silent = true })
+    end
+  end
 end
 
 --- Define your text-transform setup.
