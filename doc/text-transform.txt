@@ -50,69 +50,69 @@ Assumes that the each selection is 1 character and operates on the whole word un
 
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                                 *fn.to_words()*
-                            `fn.to_words`({string})
+                                                       *transformers.to_words()*
+                       `transformers.to_words`({string})
 Splits a string into words.
 @param string string
 @return table
 
 ------------------------------------------------------------------------------
-                                                          *fn.transform_words()*
-           `fn.transform_words`({words}, {with_word_cb}, {separator})
+                                                *transformers.transform_words()*
+      `transformers.transform_words`({words}, {with_word_cb}, {separator})
 Transforms a table of strings into a string using a callback and separator.
 The callback is called with the word, the index, and the table of words.
 The separator is added between each word.
 
-@param words table of strings
+@param words string|table string or table of strings
 @param with_word_cb function (word: string, index: number, words: table) -> string
 @param separator string|nil (optional)
 @return string
 
 ------------------------------------------------------------------------------
-                                                            *fn.to_camel_case()*
-                          `fn.to_camel_case`({string})
+                                                  *transformers.to_camel_case()*
+                     `transformers.to_camel_case`({string})
 Transforms a string into camelCase.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                            *fn.to_snake_case()*
-                          `fn.to_snake_case`({string})
+                                                  *transformers.to_snake_case()*
+                     `transformers.to_snake_case`({string})
 Transfroms a string into snake_case.
 @param string any
 @return string
 
 ------------------------------------------------------------------------------
-                                                           *fn.to_pascal_case()*
-                         `fn.to_pascal_case`({string})
+                                                 *transformers.to_pascal_case()*
+                    `transformers.to_pascal_case`({string})
 Transforms a string into PascalCase.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                            *fn.to_title_case()*
-                          `fn.to_title_case`({string})
+                                                  *transformers.to_title_case()*
+                     `transformers.to_title_case`({string})
 Transforms a string into Title Case.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                            *fn.to_kebab_case()*
-                          `fn.to_kebab_case`({string})
+                                                  *transformers.to_kebab_case()*
+                     `transformers.to_kebab_case`({string})
 Transforms a string into kebab-case.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                              *fn.to_dot_case()*
-                           `fn.to_dot_case`({string})
+                                                    *transformers.to_dot_case()*
+                      `transformers.to_dot_case`({string})
 Transforms a string into dot.case.
 @param string string
 @return string
 
 ------------------------------------------------------------------------------
-                                                            *fn.to_const_case()*
-                          `fn.to_const_case`({string})
+                                                  *transformers.to_const_case()*
+                     `transformers.to_const_case`({string})
 Transforms a string into CONSTANT_CASE.
 @param string string
 @return string
