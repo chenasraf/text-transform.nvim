@@ -65,7 +65,7 @@ Snippet
 -- stable version
 require("lazy").setup({
   "chenasraf/text-transform.nvim",
-  version = "*",
+  version = "*", -- or: tag = "stable"
   dependencies = {
     -- for Telescope popup
     'nvim-telescope/telescope.nvim',
@@ -75,7 +75,7 @@ require("lazy").setup({
 -- dev version
 require("lazy").setup({
   "chenasraf/text-transform.nvim",
-  tag = "dev",
+  branch = "develop",
   dependencies = {
     -- for Telescope popup
     'nvim-telescope/telescope.nvim',
@@ -101,7 +101,7 @@ use { "chenasraf/text-transform.nvim",
 }
 -- dev version
 use { "chenasraf/text-transform.nvim",
-  tag = "dev",
+  branch = "develop",
 }
 ```
 
@@ -126,7 +126,7 @@ Plug "chenasraf/text-transform.nvim", {
 }
 -- dev version
 Plug "chenasraf/text-transform.nvim", {
-  "tag": "dev",
+  "branch": "develop",
 }
 ```
 
