@@ -38,12 +38,18 @@ with `my_var` or vice versa? This plugin is for you!
 
 ## 🔽 Installation
 
-<div align="center">
+<div>
 <table>
 <thead>
 <tr>
-<th>Package manager</th>
-<th>Snippet</th>
+<th>
+<img width="221" height="1"/>
+Package manager
+</th>
+<th>
+<img width="661" height="1"/>
+Snippet
+</th>
 </tr>
 </thead>
 <tbody>
@@ -57,9 +63,25 @@ with `my_var` or vice versa? This plugin is for you!
 
 ```lua
 -- stable version
-require("lazy").setup({{ "chenasraf/text-transform.nvim", version = "*" }})
+require("lazy").setup({
+  "chenasraf/text-transform.nvim",
+  version = "*",
+  dependencies = {
+    -- for Telescope popup
+    'nvim-telescope/telescope.nvim',
+    'nvim-lua/plenary.nvim',
+  },
+})
 -- dev version
-require("lazy").setup({ "chenasraf/text-transform.nvim", tag = "dev" })
+require("lazy").setup({
+  "chenasraf/text-transform.nvim",
+  tag = "dev",
+  dependencies = {
+    -- for Telescope popup
+    'nvim-telescope/telescope.nvim',
+    'nvim-lua/plenary.nvim',
+  },
+})
 ```
 
 </td>
@@ -74,9 +96,13 @@ require("lazy").setup({ "chenasraf/text-transform.nvim", tag = "dev" })
 
 ```lua
 -- stable version
-use { "chenasraf/text-transform.nvim", tag = "stable" }
+use { "chenasraf/text-transform.nvim",
+  tag = "stable",
+}
 -- dev version
-use { "chenasraf/text-transform.nvim", tag = "dev" }
+use { "chenasraf/text-transform.nvim",
+  tag = "dev",
+}
 ```
 
 </td>
@@ -89,11 +115,19 @@ use { "chenasraf/text-transform.nvim", tag = "dev" }
 </td>
 <td>
 
-```lua
+```vim
+-- Dependencies - for Telescope popup
+Plug "nvim-telescope/telescope.nvim"
+Plug "nvim-lua/plenary.nvim"
+
 -- stable version
-Plug "chenasraf/text-transform.nvim", { "tag": "stable" }
+Plug "chenasraf/text-transform.nvim", {
+  "tag": "stable",
+}
 -- dev version
-Plug "chenasraf/text-transform.nvim", { "tag": "dev" }
+Plug "chenasraf/text-transform.nvim", {
+  "tag": "dev",
+}
 ```
 
 </td>
