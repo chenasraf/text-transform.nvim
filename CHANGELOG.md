@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.5.1...v0.6.0) (2024-05-02)
+
+
+### Features
+
+* enable/disable specific replacers ([fbb89b1](https://github.com/chenasraf/text-transform.nvim/commit/fbb89b1b44dfb9b57cd241b7c574665cce7dab10))
+
 ## [0.5.1](https://github.com/chenasraf/text-transform.nvim/compare/v0.5.0...v0.5.1) (2024-04-30)
 
 
