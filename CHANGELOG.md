@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.6.0...v0.7.0) (2024-05-03)
+
+
+### Features
+
+* sort telescope by usage frequency ([f83f2af](https://github.com/chenasraf/text-transform.nvim/commit/f83f2afafdfbbcb986ca1c6d3db062cd3b964c62))
+
 ## [0.6.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.5.1...v0.6.0) (2024-05-02)
 
 
