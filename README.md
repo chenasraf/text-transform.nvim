@@ -98,10 +98,20 @@ require("lazy").setup({
 -- stable version
 use { "chenasraf/text-transform.nvim",
   tag = "stable",
+  requires = {
+    -- for Telescope popup
+    'nvim-telescope/telescope.nvim',
+    'nvim-lua/plenary.nvim',
+  }
 }
 -- dev version
 use { "chenasraf/text-transform.nvim",
   branch = "develop",
+  requires = {
+    -- for Telescope popup
+    'nvim-telescope/telescope.nvim',
+    'nvim-lua/plenary.nvim',
+  }
 }
 ```
 
