@@ -1,12 +1,15 @@
+local D = require("text-transform.util.debug")
 local state = require("text-transform.state")
 local replacers = require("text-transform.replacers")
 
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
-local conf = require("telescope.config").values
+local telescope_conf = require("telescope.config").values
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local dropdown = require("telescope.themes").get_dropdown({})
+local Sorter = require("telescope.sorters").Sorter
+local generic_sorter = telescope_conf.generic_sorter()
 
 local TextTransform = {}
 
@@ -20,25 +23,77 @@ local items = {
   { label = "CONST_CASE", value = "const_case" },
 }
 
--- local default_frequency = {
---   camel_case = 7,
---   snake_case = 6,
---   pascal_case = 5,
---   kebab_case = 4,
---   dot_case = 3,
---   title_case = 2,
---   const_case = 1,
--- }
---
--- local frequency_file = vim.fn.stdpath("config") .. "/text-transform-frequency.json"
--- local frequency
--- if vim.fn.filereadable(frequency_file) == 0 then
---   frequency = default_frequency
---   vim.fn.writefile({ vim.fn.json_encode(frequency) }, frequency_file)
--- else
---   frequency = vim.fn.json_decode(vim.fn.readfile(frequency_file))
--- end
+local default_frequency = {
+  camel_case = 1,
+  snake_case = 1,
+  pascal_case = 1,
+  kebab_case = 1,
+  dot_case = 1,
+  title_case = 1,
+  const_case = 1,
+}
 
+local frequency_file = vim.fn.stdpath("config") .. "/text-transform-frequency.json"
+local frequency
+
+local function load_frequency()
+  if frequency then
+    return frequency
+  end
+  if vim.fn.filereadable(frequency_file) == 0 then
+    frequency = default_frequency
+    vim.fn.writefile({ vim.fn.json_encode(frequency) }, frequency_file)
+  else
+    frequency = vim.fn.json_decode(vim.fn.readfile(frequency_file))
+  end
+  D.log("telescope", "frequency loaded: %s", vim.inspect(frequency))
+  return frequency
+end
+
+local function inc_frequency(name)
+  frequency[name] = (frequency[name] or 0) + 1
+  D.log("telescope", "new frequency: %s %d", name, frequency[name])
+  vim.fn.writefile({ vim.fn.json_encode(frequency) }, frequency_file)
+end
+
+local function entry_maker(entry)
+  return {
+    value = entry.value,
+    display = entry.label,
+    ordinal = entry.label,
+    frequency = frequency[entry.value] or 1,
+  }
+end
+
+local frequency_sorter = Sorter:new({
+  ---@diagnostic disable-next-line: unused-local
+  scoring_function = function(self, prompt, line)
+    local entry
+    for _, item in ipairs(items) do
+      if item.label == line then
+        entry = entry_maker(item)
+        break
+      end
+    end
+    -- Basic filtering based on prompt matching, non-matching items score below 0 to exclude them
+    local basic_score = generic_sorter:score(prompt, entry) or 0
+    -- D.log("telescope", "basic_score: %s", basic_score)
+    if basic_score < 0 then
+      return basic_score
+    end
+
+    -- D.log("telescope", "entry: %s", vim.inspect(entry))
+    -- D.log("telescope", "prompt: %s", prompt)
+    -- Calculate score based on frequency, higher frequency should have lower score
+    local freq_score = (entry.frequency or 1) -- Multiply by -1 because we want higher frequency to have lower score
+
+    -- D.log("telescope", "freq_score: %s", freq_score)
+    D.log("telescope", "%s final_score: %s", line, 99999999 - freq_score * 100 + basic_score)
+
+    -- Combine scores, with frequency having the primary influence if present
+    return 99999999 - freq_score * 100 + basic_score -- Division to ensure frequency has a higher weight
+  end,
+})
 ---@diagnostic disable-next-line: unused-local
 -- for _i, k in pairs(default_ordered_keys) do
 --   local v = map[k]
@@ -56,9 +111,11 @@ local items = {
 --- made.
 function TextTransform.popup()
   state.save_positions()
+  load_frequency()
 
   local filtered = {}
-  local config = _G.TextTransform.options
+  print(vim.inspect(_G.TextTransform.config))
+  local config = _G.TextTransform.config
 
   for _, item in ipairs(items) do
     if not config.replacers[item.value] or not config.replacers[item.value].enabled then
@@ -72,19 +129,13 @@ function TextTransform.popup()
     prompt_title = "Change Case",
     finder = finders.new_table({
       results = items,
-      entry_maker = function(entry)
-        return {
-          value = entry.value,
-          display = entry.label,
-          ordinal = entry.label,
-          -- ordinal = frequency[entry.value] or 0,
-        }
-      end,
+      entry_maker = entry_maker,
     }),
-    sorter = conf.generic_sorter({}),
+    sorter = frequency_sorter,
     attach_mappings = function(prompt_bufnr)
       actions.select_default:replace(function()
         local selection = action_state.get_selected_entry()
+        inc_frequency(selection.value)
         actions.close(prompt_bufnr)
         vim.schedule(function()
           replacers.replace_selection(selection.value)
