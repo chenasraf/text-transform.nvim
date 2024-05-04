@@ -141,7 +141,7 @@ function TextTransform.get_visual_selection_details()
   D.log(
     "replacers",
     "Getting visual selection details - mode: %s, is_visual: %s, is_block: %s",
-    state.positions.mode,
+    vim.inspect(state.positions),
     utils.is_visual_mode(),
     utils.is_block_visual_mode()
   )
