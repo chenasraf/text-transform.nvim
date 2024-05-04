@@ -112,13 +112,20 @@ local sorter_map = {
 --   )
 -- end
 
+local function select(selection)
+  vim.schedule(function()
+    replacers.replace_selection(selection.value)
+    state.restore_positions()
+  end)
+end
+
 --- Pops up a telescope menu, containing the available case transformers.
 --- When a transformer is selected, the cursor position/range/columns will be used to replace the
 --- words around the cursor or inside the selection.
 ---
 --- The cursor positions/ranges are saved before opening the menu and restored once a selection is
 --- made.
-function TextTransform.popup()
+function TextTransform.telescope_popup()
   state.save_positions()
 
   local filtered = {}
@@ -149,10 +156,7 @@ function TextTransform.popup()
         local selection = action_state.get_selected_entry()
         inc_frequency(selection.value)
         actions.close(prompt_bufnr)
-        vim.schedule(function()
-          replacers.replace_selection(selection.value)
-          state.restore_positions()
-        end)
+        select(selection)
       end)
       return true
     end,
@@ -160,6 +164,32 @@ function TextTransform.popup()
   vim.schedule(function()
     picker:find()
   end)
+end
+
+function TextTransform.select_popup()
+  state.save_positions()
+
+  vim.ui.select(items, {
+    prompt = "Change Case",
+    format_item = function(item)
+      return item.label
+    end,
+  }, function(choice)
+    if not choice then
+      return
+    end
+    local item = entry_maker(choice)
+    select(item)
+  end)
+end
+
+function TextTransform.show_popup()
+  local config = _G.TextTransform.config
+  if config.popup_type == "telescope" then
+    TextTransform.telescope_popup()
+  else
+    TextTransform.select_popup()
+  end
 end
 
 return TextTransform

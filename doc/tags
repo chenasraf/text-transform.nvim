@@ -2,13 +2,13 @@ TextTransform.enable()	text-transform.txt	/*TextTransform.enable()*
 TextTransform.get_visual_selection_details()	text-transform.txt	/*TextTransform.get_visual_selection_details()*
 TextTransform.init_commands()	text-transform.txt	/*TextTransform.init_commands()*
 TextTransform.options	text-transform.txt	/*TextTransform.options*
-TextTransform.popup()	text-transform.txt	/*TextTransform.popup()*
 TextTransform.replace_columns()	text-transform.txt	/*TextTransform.replace_columns()*
 TextTransform.replace_selection()	text-transform.txt	/*TextTransform.replace_selection()*
 TextTransform.replace_word()	text-transform.txt	/*TextTransform.replace_word()*
 TextTransform.restore_positions()	text-transform.txt	/*TextTransform.restore_positions()*
 TextTransform.save_positions()	text-transform.txt	/*TextTransform.save_positions()*
 TextTransform.setup()	text-transform.txt	/*TextTransform.setup()*
+TextTransform.telescope_popup()	text-transform.txt	/*TextTransform.telescope_popup()*
 TextTransform.to_camel_case()	text-transform.txt	/*TextTransform.to_camel_case()*
 TextTransform.to_const_case()	text-transform.txt	/*TextTransform.to_const_case()*
 TextTransform.to_dot_case()	text-transform.txt	/*TextTransform.to_dot_case()*

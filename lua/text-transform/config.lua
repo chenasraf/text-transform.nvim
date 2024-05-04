@@ -1,4 +1,4 @@
-local telescope = require("text-transform.telescope")
+local popup = require("text-transform.popup")
 local commands = require("text-transform.commands")
 local D = require("text-transform.util.debug")
 local utils = require("text-transform.util")
@@ -40,6 +40,10 @@ TextTransform.options = {
   --- Sort the replacers in the popup.
   --- Possible values: 'frequency', 'name'
   sort_by = "frequency",
+
+  --- The popup type to show.
+  --- Possible values: 'telescope', 'select'
+  popup_type = "telescope",
 }
 
 local function init()
@@ -50,10 +54,10 @@ local function init()
   if o.keymap.telescope_popup then
     local keys = o.keymap.telescope_popup
     if keys.n then
-      vim.keymap.set("n", keys.n, telescope.popup, { silent = true })
+      vim.keymap.set("n", keys.n, popup.show_popup, { silent = true, desc = "Change Case" })
     end
     if keys.v then
-      vim.keymap.set("v", keys.v, telescope.popup, { silent = true })
+      vim.keymap.set("v", keys.v, popup.show_popup, { silent = true, desc = "Change Case" })
     end
   end
 end

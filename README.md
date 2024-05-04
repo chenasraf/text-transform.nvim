@@ -138,7 +138,11 @@ require("text-transform").setup({
 
   --- Sort the replacers in the popup.
   --- Possible values: 'frequency', 'name'
-  sort_by = 'frequency',
+  sort_by = "frequency",
+
+  --- The popup type to show.
+  --- Possible values: 'telescope', 'select'
+  popup_type = 'telescope'
 })
 ```
 

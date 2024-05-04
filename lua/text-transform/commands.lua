@@ -1,6 +1,6 @@
 local state = require("text-transform.state")
 local replacers = require("text-transform.replacers")
-local telescope = require("text-transform.telescope")
+local popup = require("text-transform.popup")
 local TextTransform = {}
 
 --- Initializes user commands
@@ -23,8 +23,12 @@ function TextTransform.init_commands()
     end, {})
   end
 
-  vim.api.nvim_create_user_command("TtTelescope", telescope.popup, {})
-  vim.api.nvim_create_user_command("TextTransform", telescope.popup, {})
+  -- specific popups
+  vim.api.nvim_create_user_command("TtTelescope", popup.telescope_popup, {})
+  vim.api.nvim_create_user_command("TtSelect", popup.select_popup, {})
+
+  -- auto popup by config
+  vim.api.nvim_create_user_command("TextTransform", popup.show_popup, {})
 end
 
 return TextTransform
