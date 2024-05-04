@@ -55,14 +55,17 @@ T["setup()"]["sets exposed methods and default options value"] = function()
 end
 
 T["setup()"]["overrides default values"] = function()
-  child.lua([[require('text-transform').setup({
+  helpers.init_plugin(
+    child,
+    [[{
         -- write all the options with a value different than the default ones
         debug = true,
         keymap = {
           ["v"] = "<leader>c",
           ["n"] = "<leader>c",
         },
-    })]])
+    }]]
+  )
 
   -- assert the value, and the type
   eq_type_config(child, "debug", "boolean")

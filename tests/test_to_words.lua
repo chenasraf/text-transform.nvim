@@ -24,7 +24,7 @@ local T = MiniTest.new_set({
 })
 
 local function test_string(child, str)
-  child.lua([[require('text-transform').setup()]])
+  helpers.init_plugin(child)
   child.lua([[result = require('text-transform').to_words("]] .. str .. [[")]])
 end
 
