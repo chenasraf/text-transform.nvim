@@ -46,6 +46,10 @@ Default values:
     --- Sort the replacers in the popup.
     --- Possible values: 'frequency', 'name'
     sort_by = "frequency",
+
+    --- The popup type to show.
+    --- Possible values: 'telescope', 'select'
+    popup_type = "telescope",
   }
 
   local function init()
@@ -56,10 +60,10 @@ Default values:
     if o.keymap.telescope_popup then
       local keys = o.keymap.telescope_popup
       if keys.n then
-        vim.keymap.set("n", keys.n, telescope.popup, { silent = true })
+        vim.keymap.set("n", keys.n, popup.show_popup, { silent = true, desc = "Change Case" })
       end
       if keys.v then
-        vim.keymap.set("v", keys.v, telescope.popup, { silent = true })
+        vim.keymap.set("v", keys.v, popup.show_popup, { silent = true, desc = "Change Case" })
       end
     end
   end
@@ -76,6 +80,18 @@ Parameters ~
 
 Usage ~
 `require("text-transform").setup()` (add `{}` with your |TextTransform.options| table)
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                               *TextTransform.telescope_popup()*
+                       `TextTransform.telescope_popup`()
+Pops up a telescope menu, containing the available case transformers.
+When a transformer is selected, the cursor position/range/columns will be used to replace the
+words around the cursor or inside the selection.
+
+The cursor positions/ranges are saved before opening the menu and restored once a selection is
+made.
 
 
 ==============================================================================
@@ -146,18 +162,6 @@ Save the current cursor position, mode, and visual selection ranges
                    `TextTransform.restore_positions`({state})
 Restore the cursor position, mode, and visual selection ranges saved using `save_position()`,
 or a given modified state, if passed as the first argument
-
-
-==============================================================================
-------------------------------------------------------------------------------
-                                                         *TextTransform.popup()*
-                            `TextTransform.popup`()
-Pops up a telescope menu, containing the available case transformers.
-When a transformer is selected, the cursor position/range/columns will be used to replace the
-words around the cursor or inside the selection.
-
-The cursor positions/ranges are saved before opening the menu and restored once a selection is
-made.
 
 
 ==============================================================================
