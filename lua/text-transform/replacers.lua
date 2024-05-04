@@ -138,10 +138,14 @@ end
 --- This allows to treat all ranges equally and allows to work on each selection without knowing
 --- the full information around the selection logic.
 function TextTransform.get_visual_selection_details()
+  if not state.positions then
+    D.log("replacers", "No positions saved")
+    return {}
+  end
   D.log(
     "replacers",
     "Getting visual selection details - mode: %s, is_visual: %s, is_block: %s",
-    vim.inspect(state.positions),
+    state.positions.mode,
     utils.is_visual_mode(),
     utils.is_block_visual_mode()
   )
