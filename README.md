@@ -38,114 +38,45 @@ with `my_var` or vice versa? This plugin is for you!
 
 ## 🔽 Installation
 
-<div>
-<table>
-<thead>
-<tr>
-<th>
-<img width="221" height="1"/>
-Package manager
-</th>
-<th>
-<img width="661" height="1"/>
-Snippet
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-[folke/lazy.nvim](https://github.com/folke/lazy.nvim)
-
-</td>
-<td>
+### [Lazy](https://github.com/folke/lazy.nvim)
 
 ```lua
--- stable version
 require("lazy").setup({
   "chenasraf/text-transform.nvim",
+  -- stable version
   version = "*", -- or: tag = "stable"
-  dependencies = {
-    -- for Telescope popup
-    'nvim-telescope/telescope.nvim',
-    'nvim-lua/plenary.nvim',
-  },
-})
--- dev version
-require("lazy").setup({
-  "chenasraf/text-transform.nvim",
-  branch = "develop",
-  dependencies = {
-    -- for Telescope popup
-    'nvim-telescope/telescope.nvim',
-    'nvim-lua/plenary.nvim',
-  },
+  -- dev version
+  -- branch = "develop",
+  -- for Telescope popup
+  dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
 })
 ```
 
-</td>
-</tr>
-<tr>
-<td>
-
-[wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
-
-</td>
-<td>
+### [Packer](https://github.com/wbthomason/packer.nvim)
 
 ```lua
--- stable version
 use { "chenasraf/text-transform.nvim",
+  -- stable version
   tag = "stable",
-  requires = {
-    -- for Telescope popup
-    'nvim-telescope/telescope.nvim',
-    'nvim-lua/plenary.nvim',
-  }
-}
--- dev version
-use { "chenasraf/text-transform.nvim",
-  branch = "develop",
-  requires = {
-    -- for Telescope popup
-    'nvim-telescope/telescope.nvim',
-    'nvim-lua/plenary.nvim',
-  }
+  -- dev version
+  -- branch = "develop",
+  -- for Telescope popup
+  requires = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
 }
 ```
 
-</td>
-</tr>
-<tr>
-<td>
-
-[junegunn/vim-plug](https://github.com/junegunn/vim-plug)
-
-</td>
-<td>
+### [Plug](https://github.com/junegunn/vim-plug)
 
 ```vim
--- Dependencies - for Telescope popup
-Plug "nvim-telescope/telescope.nvim"
-Plug "nvim-lua/plenary.nvim"
+" Dependencies - for Telescope popup
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/plenary.nvim'
 
--- stable version
-Plug "chenasraf/text-transform.nvim", {
-  "tag": "stable",
-}
--- dev version
-Plug "chenasraf/text-transform.nvim", {
-  "branch": "develop",
-}
+" stable version
+Plug 'chenasraf/text-transform.nvim', { 'tag': 'stable' }
+" dev version
+Plug 'chenasraf/text-transform.nvim', { 'branch': 'develop' }
 ```
-
-</td>
-</tr>
-
-</tbody>
-</table>
-</div>
 
 ## 🚀 Getting started
 
@@ -215,16 +146,16 @@ require("text-transform").setup({
 
 The following commands are available for your use in your own mappings or for reference.
 
-| Command                            | Description                                                                                            |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `:TtTelescope` \| `:TextTransform` | Pops up a Telescope window with the available converters which will directly act on the selected text. |
-| `:TtCamel`                         | Replaces selection with `camelCase`.                                                                   |
-| `:TtConst`                         | Replaces selection with `CONST_CASE`.                                                                  |
-| `:TtDot`                           | Replaces selection with `dot.case`.                                                                    |
-| `:TtKebab`                         | Replaces selection with `kebab-case`.                                                                  |
-| `:TtPascal`                        | Replaces selection with `PascalCase`.                                                                  |
-| `:TtSnake`                         | Replaces selection with `snake_case`.                                                                  |
-| `:TtTitle`                         | Replaces selection with `Title Case`.                                                                  |
+| Command                            | Description                                                                                                            |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `:TtTelescope` \| `:TextTransform` | Pop up a Telescope window with all the transformers, which will directly act on the selected text or highlighted word. |
+| `:TtCamel`                         | Replace selection/word with `camelCase`.                                                                               |
+| `:TtSnake`                         | Replace selection/word with `snake_case`.                                                                              |
+| `:TtPascal`                        | Replace selection/word with `PascalCase`.                                                                              |
+| `:TtConst`                         | Replace selection/word with `CONST_CASE`.                                                                              |
+| `:TtDot`                           | Replace selection/word with `dot.case`.                                                                                |
+| `:TtKebab`                         | Replace selection/word with `kebab-case`.                                                                              |
+| `:TtTitle`                         | Replace selection/word with `Title Case`.                                                                              |
 
 ## ⌨️⌨️ Keymaps
 
@@ -254,17 +185,16 @@ You can also create custom mappings to specific case conversions or to the Teles
 
 ```lua
 -- Trigger telescope popup
-local telescope = require('text-transform.telescope')
-vim.keymap.set("n", "<leader>~~", telescope.popup, { silent = true })
+vim.keymap.set("n", "<leader>~~", ":TtTelescope", { silent = true, desc = "Transform Text" })
 
 -- Trigger case converters directly
-vim.keymap.set({ "n", "v" }, "<leader>Ccc", ":TtCamel",  { silent = true })
-vim.keymap.set({ "n", "v" }, "<leader>Cco", ":TtConst",  { silent = true })
-vim.keymap.set({ "n", "v" }, "<leader>Cdo", ":TtDot",    { silent = true })
-vim.keymap.set({ "n", "v" }, "<leader>Cke", ":TtKebab",  { silent = true })
-vim.keymap.set({ "n", "v" }, "<leader>Cpa", ":TtPascal", { silent = true })
-vim.keymap.set({ "n", "v" }, "<leader>Csn", ":TtSnake",  { silent = true })
-vim.keymap.set({ "n", "v" }, "<leader>Ctt", ":TtTitle",  { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>Ccc", ":TtCamel",  { silent = true, desc = "To camelCase" })
+vim.keymap.set({ "n", "v" }, "<leader>Csn", ":TtSnake",  { silent = true, desc = "To snake_case" })
+vim.keymap.set({ "n", "v" }, "<leader>Cpa", ":TtPascal", { silent = true, desc = "To PascalCase" })
+vim.keymap.set({ "n", "v" }, "<leader>Cco", ":TtConst",  { silent = true, desc = "To CONST_CASE" })
+vim.keymap.set({ "n", "v" }, "<leader>Cdo", ":TtDot",    { silent = true, desc = "To dot.case" })
+vim.keymap.set({ "n", "v" }, "<leader>Cke", ":TtKebab",  { silent = true, desc = "To kebab-case" })
+vim.keymap.set({ "n", "v" }, "<leader>Ctt", ":TtTitle",  { silent = true, desc = "To Title Case" })
 ```
 
 ## 💁🏻 Contributing
