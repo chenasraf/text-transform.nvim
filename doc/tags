@@ -8,7 +8,6 @@ TextTransform.replace_word()	text-transform.txt	/*TextTransform.replace_word()*
 TextTransform.restore_positions()	text-transform.txt	/*TextTransform.restore_positions()*
 TextTransform.save_positions()	text-transform.txt	/*TextTransform.save_positions()*
 TextTransform.setup()	text-transform.txt	/*TextTransform.setup()*
-TextTransform.telescope_popup()	text-transform.txt	/*TextTransform.telescope_popup()*
 TextTransform.to_camel_case()	text-transform.txt	/*TextTransform.to_camel_case()*
 TextTransform.to_const_case()	text-transform.txt	/*TextTransform.to_const_case()*
 TextTransform.to_dot_case()	text-transform.txt	/*TextTransform.to_dot_case()*
@@ -20,5 +19,6 @@ TextTransform.to_words()	text-transform.txt	/*TextTransform.to_words()*
 TextTransform.toggle()	text-transform.txt	/*TextTransform.toggle()*
 TextTransform.transform_words()	text-transform.txt	/*TextTransform.transform_words()*
 find_word_boundaries()	text-transform.txt	/*find_word_boundaries()*
+telescope.telescope_popup()	text-transform.txt	/*telescope.telescope_popup()*
 utils.dump()	text-transform.txt	/*utils.dump()*
 utils.merge()	text-transform.txt	/*utils.merge()*
