@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.8.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.7.0...v0.8.0) (2024-05-04)
+
+
+### Features
+
+* allow sorter selection in config ([6863e0e](https://github.com/chenasraf/text-transform.nvim/commit/6863e0e9a66b5592fbba2aea7a07760465844cf7))
+
+
+### Bug Fixes
+
+* frequency sort ([733f26f](https://github.com/chenasraf/text-transform.nvim/commit/733f26fef61b050ae8f62582e3f9c03268f8e835))
+* user commands ([be9c119](https://github.com/chenasraf/text-transform.nvim/commit/be9c119ee23f1e93a5bd537c01f55e11d2607180))
+
 ## [0.7.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.6.0...v0.7.0) (2024-05-03)
 
 
