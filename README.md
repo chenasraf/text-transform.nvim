@@ -47,7 +47,7 @@ require("lazy").setup({
   version = "*", -- or: tag = "stable"
   -- dev version
   -- branch = "develop",
-  -- for Telescope popup
+  -- Optional - for Telescope popup
   dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
 })
 ```
@@ -60,7 +60,7 @@ use { "chenasraf/text-transform.nvim",
   tag = "stable",
   -- dev version
   -- branch = "develop",
-  -- for Telescope popup
+  -- Optional - for Telescope popup
   requires = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' }
 }
 ```
@@ -68,7 +68,7 @@ use { "chenasraf/text-transform.nvim",
 ### [Plug](https://github.com/junegunn/vim-plug)
 
 ```vim
-" Dependencies - for Telescope popup
+" Dependencies - optional for Telescope popup
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim'
 
@@ -77,6 +77,12 @@ Plug 'chenasraf/text-transform.nvim', { 'tag': 'stable' }
 " dev version
 Plug 'chenasraf/text-transform.nvim', { 'branch': 'develop' }
 ```
+
+If you decide not to use Telescope, you can ignore the dependencies. In that case, be sure to change
+your config with `popup_type = 'select'` so that TextTransform never tries to load Telescope.
+
+It falls back to `vim.ui.select()` instead, which may or may not still be Telescope behind the
+scenes, or something else; depending on your setup.
 
 ## 🚀 Getting started
 
