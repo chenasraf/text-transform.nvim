@@ -24,8 +24,14 @@ function TextTransform.init_commands()
   end
 
   -- specific popups
-  vim.api.nvim_create_user_command("TtTelescope", popup.telescope_popup, {})
-  vim.api.nvim_create_user_command("TtSelect", popup.select_popup, {})
+  vim.api.nvim_create_user_command("TtTelescope", function()
+    local telescope = require("text-transform.telescope")
+    telescope.telescope_popup()
+  end, {})
+  vim.api.nvim_create_user_command("TtSelect", function()
+    local select = require("text-transform.select")
+    select.select_popup()
+  end, {})
 
   -- auto popup by config
   vim.api.nvim_create_user_command("TextTransform", popup.show_popup, {})
