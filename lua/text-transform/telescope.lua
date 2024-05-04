@@ -75,9 +75,10 @@ local frequency_sorter = Sorter:new({
         break
       end
     end
+    D.log("telescope", "prompt %s line %s", prompt, line)
     -- Basic filtering based on prompt matching, non-matching items score below 0 to exclude them
-    local basic_score = generic_sorter:score(prompt, entry) or 0
-    -- D.log("telescope", "basic_score: %s", basic_score)
+    local basic_score = (generic_sorter:scoring_function(prompt, line) or 0)
+    D.log("telescope", "%s basic_score: %s", entry.value, basic_score)
     if basic_score < 0 then
       return basic_score
     end
@@ -85,13 +86,15 @@ local frequency_sorter = Sorter:new({
     -- D.log("telescope", "entry: %s", vim.inspect(entry))
     -- D.log("telescope", "prompt: %s", prompt)
     -- Calculate score based on frequency, higher frequency should have lower score
-    local freq_score = (entry.frequency or 1) -- Multiply by -1 because we want higher frequency to have lower score
+    local freq_score = (entry.frequency or 1) * 10
 
-    -- D.log("telescope", "freq_score: %s", freq_score)
-    D.log("telescope", "%s final_score: %s", line, 99999999 - freq_score * 100 + basic_score)
+    D.log("telescope", "freq_score: %s", freq_score)
+
+    local final_score = 999999999 - freq_score + basic_score
+    D.log("telescope", "%s final_score: %s", line, final_score)
 
     -- Combine scores, with frequency having the primary influence if present
-    return 99999999 - freq_score * 100 + basic_score -- Division to ensure frequency has a higher weight
+    return final_score
   end,
 })
 ---@diagnostic disable-next-line: unused-local
