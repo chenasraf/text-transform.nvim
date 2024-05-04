@@ -84,18 +84,6 @@ Usage ~
 
 ==============================================================================
 ------------------------------------------------------------------------------
-                                               *TextTransform.telescope_popup()*
-                       `TextTransform.telescope_popup`()
-Pops up a telescope menu, containing the available case transformers.
-When a transformer is selected, the cursor position/range/columns will be used to replace the
-words around the cursor or inside the selection.
-
-The cursor positions/ranges are saved before opening the menu and restored once a selection is
-made.
-
-
-==============================================================================
-------------------------------------------------------------------------------
                                                         *find_word_boundaries()*
                   `find_word_boundaries`({line}, {start_col})
 Finds the boundaries of the surrounding word around `start_col` within `line`.
@@ -162,6 +150,18 @@ Save the current cursor position, mode, and visual selection ranges
                    `TextTransform.restore_positions`({state})
 Restore the cursor position, mode, and visual selection ranges saved using `save_position()`,
 or a given modified state, if passed as the first argument
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                   *telescope.telescope_popup()*
+                         `telescope.telescope_popup`()
+Pops up a telescope menu, containing the available case transformers.
+When a transformer is selected, the cursor position/range/columns will be used to replace the
+words around the cursor or inside the selection.
+
+The cursor positions/ranges are saved before opening the menu and restored once a selection is
+made.
 
 
 ==============================================================================
