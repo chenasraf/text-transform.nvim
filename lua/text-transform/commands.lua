@@ -1,3 +1,4 @@
+local state = require("text-transform.state")
 local replacers = require("text-transform.replacers")
 local telescope = require("text-transform.telescope")
 local TextTransform = {}
@@ -17,6 +18,7 @@ function TextTransform.init_commands()
 
   for cmd, transformer_name in pairs(map) do
     vim.api.nvim_create_user_command(cmd, function()
+      state.save_positions()
       replacers.replace_selection(transformer_name)
     end, {})
   end
