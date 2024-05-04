@@ -46,6 +46,7 @@ TextTransform.options = {
   popup_type = "telescope",
 }
 
+--- @internal
 local function init()
   local o = TextTransform.options
   D.log("config", "Initializing TextTransform with %s", utils.dump(o))

@@ -52,23 +52,12 @@ Default values:
     popup_type = "telescope",
   }
 
-  local function init()
-    local o = TextTransform.options
-    D.log("config", "Initializing TextTransform with %s", utils.dump(o))
-    commands.init_commands()
-
-    if o.keymap.telescope_popup then
-      local keys = o.keymap.telescope_popup
-      if keys.n then
-        vim.keymap.set("n", keys.n, popup.show_popup, { silent = true, desc = "Change Case" })
-      end
-      if keys.v then
-        vim.keymap.set("v", keys.v, popup.show_popup, { silent = true, desc = "Change Case" })
-      end
-    end
-  end
-
 <
+
+------------------------------------------------------------------------------
+                                                                        *init()*
+                                    `init`()
+@internal
 
 ------------------------------------------------------------------------------
                                                          *TextTransform.setup()*

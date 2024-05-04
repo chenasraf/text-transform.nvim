@@ -19,6 +19,7 @@ TextTransform.to_words()	text-transform.txt	/*TextTransform.to_words()*
 TextTransform.toggle()	text-transform.txt	/*TextTransform.toggle()*
 TextTransform.transform_words()	text-transform.txt	/*TextTransform.transform_words()*
 find_word_boundaries()	text-transform.txt	/*find_word_boundaries()*
+init()	text-transform.txt	/*init()*
 telescope.telescope_popup()	text-transform.txt	/*telescope.telescope_popup()*
 utils.dump()	text-transform.txt	/*utils.dump()*
 utils.merge()	text-transform.txt	/*utils.merge()*
