@@ -97,6 +97,12 @@ local frequency_sorter = Sorter:new({
     return final_score
   end,
 })
+
+local sorter_map = {
+  frequency = frequency_sorter,
+  name = generic_sorter,
+}
+
 ---@diagnostic disable-next-line: unused-local
 -- for _i, k in pairs(default_ordered_keys) do
 --   local v = map[k]
@@ -114,11 +120,14 @@ local frequency_sorter = Sorter:new({
 --- made.
 function TextTransform.popup()
   state.save_positions()
-  load_frequency()
 
   local filtered = {}
-  print(vim.inspect(_G.TextTransform.config))
   local config = _G.TextTransform.config
+  local sorter = sorter_map[config.sort_by] or generic_sorter
+
+  if config.sort_by == "frequency" then
+    load_frequency()
+  end
 
   for _, item in ipairs(items) do
     if not config.replacers[item.value] or not config.replacers[item.value].enabled then
@@ -134,7 +143,7 @@ function TextTransform.popup()
       results = items,
       entry_maker = entry_maker,
     }),
-    sorter = frequency_sorter,
+    sorter = sorter,
     attach_mappings = function(prompt_bufnr)
       actions.select_default:replace(function()
         local selection = action_state.get_selected_entry()
