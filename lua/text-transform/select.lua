@@ -4,6 +4,7 @@ local state = require("text-transform.state")
 local select = {}
 
 function select.select_popup()
+  common.load_frequency()
   state.save_positions()
 
   vim.ui.select(common.items, {
@@ -18,15 +19,6 @@ function select.select_popup()
     local item = common.entry_maker(choice)
     common.select(item)
   end)
-end
-
-function select.show_popup()
-  local config = _G.TextTransform.config
-  if config.popup_type == "telescope" then
-    select.telescope_popup()
-  else
-    select.select_popup()
-  end
 end
 
 return select
