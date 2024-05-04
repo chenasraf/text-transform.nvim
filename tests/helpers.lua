@@ -162,4 +162,9 @@ Helpers.new_child_neovim = function()
   return child
 end
 
+function Helpers.init_plugin(child, config)
+  config = config or ""
+  child.lua([[require('text-transform').setup(]] .. config .. [[)]])
+end
+
 return Helpers
