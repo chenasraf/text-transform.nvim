@@ -156,16 +156,18 @@ require("text-transform").setup({
 
 The following commands are available for your use in your own mappings or for reference.
 
-| Command                            | Description                                                                                                            |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `:TtTelescope` \| `:TextTransform` | Pop up a Telescope window with all the transformers, which will directly act on the selected text or highlighted word. |
-| `:TtCamel`                         | Replace selection/word with `camelCase`.                                                                               |
-| `:TtSnake`                         | Replace selection/word with `snake_case`.                                                                              |
-| `:TtPascal`                        | Replace selection/word with `PascalCase`.                                                                              |
-| `:TtConst`                         | Replace selection/word with `CONST_CASE`.                                                                              |
-| `:TtDot`                           | Replace selection/word with `dot.case`.                                                                                |
-| `:TtKebab`                         | Replace selection/word with `kebab-case`.                                                                              |
-| `:TtTitle`                         | Replace selection/word with `Title Case`.                                                                              |
+| Command          | Description                                                                                                            |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `:TextTransform` | Pop up a either a Telescope window or a selection popup, depending on the `popup_type` config.                         |
+| `:TtTelescope`   | Pop up a Telescope window with all the transformers, which will directly act on the selected text or highlighted word. |
+| `:TtSelect`      | Pop up a selection popup with all the transformers, which will directly act on the selected text or highlighted word.  |
+| `:TtCamel`       | Replace selection/word with `camelCase`.                                                                               |
+| `:TtSnake`       | Replace selection/word with `snake_case`.                                                                              |
+| `:TtPascal`      | Replace selection/word with `PascalCase`.                                                                              |
+| `:TtConst`       | Replace selection/word with `CONST_CASE`.                                                                              |
+| `:TtDot`         | Replace selection/word with `dot.case`.                                                                                |
+| `:TtKebab`       | Replace selection/word with `kebab-case`.                                                                              |
+| `:TtTitle`       | Replace selection/word with `Title Case`.                                                                              |
 
 ## ⌨️⌨️ Keymaps
 
