@@ -9,13 +9,14 @@ local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local dropdown = require("telescope.themes").get_dropdown({})
 local Sorter = require("telescope.sorters").Sorter
-local generic_sorter = telescope_conf.generic_sorter()
 
 local telescope = {}
 
 local frequency_sorter = Sorter:new({
   ---@diagnostic disable-next-line: unused-local
   scoring_function = function(self, prompt, line)
+    local generic_sorter = telescope_conf.generic_sorter()
+    generic_sorter:init()
     local entry
     for _, item in ipairs(common.items) do
       if item.label == line then
@@ -23,29 +24,31 @@ local frequency_sorter = Sorter:new({
         break
       end
     end
-    D.log("telescope", "prompt %s line %s", prompt, line)
+    D.log("frequency_sorter", "entry %s", vim.inspect(entry))
+    D.log("frequency_sorter", "prompt %s line %s", prompt, line)
     -- Basic filtering based on prompt matching, non-matching items score below 0 to exclude them
-    local basic_score = (generic_sorter:scoring_function(prompt, line) or 0)
-    D.log("telescope", "%s basic_score: %s", entry.value, basic_score)
+    local basic_score = (generic_sorter:scoring_function(prompt, line) or 1)
+    D.log("frequency_sorter", "%s basic_score: %s", entry.value, basic_score)
     if basic_score < 0 then
       return basic_score
     end
 
-    -- D.log("telescope", "entry: %s", vim.inspect(entry))
-    -- D.log("telescope", "prompt: %s", prompt)
+    -- D.log("frequency_sorter", "entry: %s", vim.inspect(entry))
+    -- D.log("frequency_sorter", "prompt: %s", prompt)
     -- Calculate score based on frequency, higher frequency should have lower score
     local freq_score = (entry.frequency or 1) * 10
 
-    D.log("telescope", "freq_score: %s", freq_score)
+    D.log("frequency_sorter", "freq_score: %s", freq_score)
 
     local final_score = 999999999 - freq_score + basic_score
-    D.log("telescope", "%s final_score: %s", line, final_score)
+    D.log("frequency_sorter", "%s final_score: %s", line, final_score)
 
     -- Combine scores, with frequency having the primary influence if present
     return final_score
   end,
 })
 
+local generic_sorter = telescope_conf.generic_sorter()
 local sorter_map = {
   frequency = frequency_sorter,
   name = generic_sorter,
@@ -69,7 +72,7 @@ function telescope.telescope_popup()
   end
 
   for _, item in ipairs(common.items) do
-    if not config.replacers[item.value] or not config.replacers[item.value].enabled then
+    if config.replacers[item.value] and not config.replacers[item.value].enabled then
       goto continue
     end
     table.insert(filtered, item)
