@@ -1,7 +1,7 @@
+TextTransform.config	text-transform.txt	/*TextTransform.config*
 TextTransform.enable()	text-transform.txt	/*TextTransform.enable()*
 TextTransform.get_visual_selection_details()	text-transform.txt	/*TextTransform.get_visual_selection_details()*
 TextTransform.init_commands()	text-transform.txt	/*TextTransform.init_commands()*
-TextTransform.options	text-transform.txt	/*TextTransform.options*
 TextTransform.replace_columns()	text-transform.txt	/*TextTransform.replace_columns()*
 TextTransform.replace_selection()	text-transform.txt	/*TextTransform.replace_selection()*
 TextTransform.replace_word()	text-transform.txt	/*TextTransform.replace_word()*

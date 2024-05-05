@@ -8,7 +8,7 @@ local TextTransform = {}
 ---
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
-TextTransform.options = {
+TextTransform.config = {
   --- Prints information about internals of the plugin. Very verbose, only useful for debugging.
   debug = false,
   --- Keymap configurations
@@ -48,7 +48,7 @@ TextTransform.options = {
 
 --- @internal
 local function init()
-  local o = TextTransform.options
+  local o = TextTransform.config
   D.log("config", "Initializing TextTransform with %s", utils.dump(o))
   commands.init_commands()
 
@@ -71,7 +71,7 @@ end
 function TextTransform.setup(options)
   options = options or {}
 
-  TextTransform.options = utils.merge(TextTransform.options, options)
+  TextTransform.config = utils.merge(TextTransform.config, options)
 
   if vim.api.nvim_get_vvar("vim_did_enter") == 0 then
     vim.defer_fn(function()
@@ -81,7 +81,7 @@ function TextTransform.setup(options)
     init()
   end
 
-  return TextTransform.options
+  return TextTransform.config
 end
 
 return TextTransform
