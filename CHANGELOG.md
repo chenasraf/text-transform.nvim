@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.9.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.8.0...v0.9.0) (2024-05-05)
+
+
+### Features
+
+* non-telescope popup ([bb177a3](https://github.com/chenasraf/text-transform.nvim/commit/bb177a3360372f3fd40c82da71a13f1db59d3d9e))
+
+
+### Bug Fixes
+
+* commands ([eaf84d8](https://github.com/chenasraf/text-transform.nvim/commit/eaf84d857d860828cbb5af96887a24c2ab99f8e8))
+* error on select ([168552b](https://github.com/chenasraf/text-transform.nvim/commit/168552b4259672fe918b1f3baeed787548e8fd03))
+* range commands ([ecd4d6b](https://github.com/chenasraf/text-transform.nvim/commit/ecd4d6bbbcd45231f2e8ea00961f076ff56dd1e7))
+* sorter init ([ea38606](https://github.com/chenasraf/text-transform.nvim/commit/ea38606a28f2308a37b301ebb4c56e2bd584b459))
+
 ## [0.8.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.7.0...v0.8.0) (2024-05-04)
 
 
