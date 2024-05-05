@@ -1,14 +1,15 @@
--- local D = require("text-transform.util.debug")
-local util = require("text-transform.util")
+local D = require("text-transform.utils.debug")
+local util = require("text-transform.utils")
 local state = require("text-transform.state")
 local replacers = require("text-transform.replacers")
 local popup = require("text-transform.popup")
-local common = require("text-transform.popup_common")
-local TextTransform = {}
+local common = require("text-transform.popup.common")
+
+local commands = {}
 
 --- Initializes user commands
 --- @private
-function TextTransform.init_commands()
+function commands.init_commands()
   local map = {
     TtCamel = "camel_case",
     TtConst = "const_case",
@@ -40,11 +41,11 @@ function TextTransform.init_commands()
 
   -- specific popups
   vim.api.nvim_create_user_command("TtTelescope", function()
-    local telescope = require("text-transform.telescope")
+    local telescope = require("text-transform.popup.telescope")
     telescope.telescope_popup()
   end, opts("Change Case with Telescope"))
   vim.api.nvim_create_user_command("TtSelect", function()
-    local select = require("text-transform.select")
+    local select = require("text-transform.popup.select")
     select.select_popup()
   end, opts("Change Case with Select"))
 
@@ -52,4 +53,20 @@ function TextTransform.init_commands()
   vim.api.nvim_create_user_command("TextTransform", popup.show_popup, opts("Change Case"))
 end
 
-return TextTransform
+--- Initializes user keymaps
+--- @private
+function commands.init_keymaps()
+  local keymaps = _G.TextTransform.config.keymap
+  D.log("init_keymaps", "Initializing keymaps, config %s", vim.inspect(_G.TextTransform))
+  if keymaps.telescope_popup then
+    local keys = keymaps.telescope_popup
+    if keys.n then
+      vim.keymap.set("n", keys.n, popup.show_popup, { silent = true, desc = "Change Case" })
+    end
+    if keys.v then
+      vim.keymap.set("v", keys.v, popup.show_popup, { silent = true, desc = "Change Case" })
+    end
+  end
+end
+
+return commands

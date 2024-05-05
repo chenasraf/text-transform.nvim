@@ -1,58 +1,11 @@
-local D = require("text-transform.util.debug")
-
-local function ensure_config()
-  -- when the config is not set to the global object, we set it
-  if _G.TextTransform.config == nil then
-    _G.TextTransform.config = require("text-transform.config").config
-  end
-end
+local D = require("text-transform.utils.debug")
 
 -- methods
 local state = {
-  -- Boolean determining if the plugin is enabled or not.
-  enabled = false,
   -- A table containing cursor position and visual selection details,
   -- saved using `save_position()` and can be restored using `restore_positions()`
   positions = nil,
 }
-
---- Toggle the plugin by calling the `enable`/`disable` methods respectively.
---- @private
-function state.toggle()
-  if state.enabled then
-    return state.disable()
-  end
-
-  return state.enable()
-end
-
---- Enables the plugin
---- @private
-function state.enable()
-  ensure_config()
-
-  if state.enabled then
-    return state
-  end
-
-  state.enabled = true
-  return state
-end
-
----Disables the plugin and reset the internal state.
----@private
-function state.disable()
-  ensure_config()
-
-  if not state.enabled then
-    return state
-  end
-
-  -- reset the state
-  state.enabled = false
-  state.positions = nil
-  return state
-end
 
 local function get_mode_type(mode)
   -- classify mode as either visual, line, block or normal
@@ -80,8 +33,17 @@ local function capture_part(start_sel, end_sel, return_type)
   return { sel[1], l, sel[3], sel[4] }
 end
 
+function state.is_block_visual_mode()
+  return state.positions.mode == "block"
+  -- return vim.fn.mode() == "V" or vim.fn.mode() == "\22"
+end
+
+function state.is_visual_mode()
+  return state.positions.mode == "visual"
+  -- return vim.fn.mode() == 'v'
+end
+
 --- Save the current cursor position, mode, and visual selection ranges
---- @private
 function state.save_positions()
   local buf = vim.api.nvim_get_current_buf()
   local mode_info = vim.api.nvim_get_mode()

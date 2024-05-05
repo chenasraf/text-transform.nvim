@@ -1,8 +1,14 @@
-local common = require("text-transform.popup_common")
+local common = require("text-transform.popup.common")
 local state = require("text-transform.state")
 
 local select = {}
 
+--- Pops up a selection menu, containing the available case transformers.
+--- When a transformer is selected, the cursor position/range/columns will be used to replace the
+--- words around the cursor or inside the selection.
+---
+--- The cursor positions/ranges are saved before opening the menu and restored once a selection is
+--- made.
 function select.select_popup()
   common.load_frequency()
   state.save_positions()

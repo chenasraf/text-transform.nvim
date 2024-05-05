@@ -1,4 +1,4 @@
-local D = require("text-transform.util.debug")
+local D = require("text-transform.utils.debug")
 local state = require("text-transform.state")
 local replacers = require("text-transform.replacers")
 

@@ -1,5 +1,5 @@
 local M = require("text-transform.main")
-local utils = require("text-transform.util")
+local utils = require("text-transform.utils")
 
 local TextTransform = {}
 
