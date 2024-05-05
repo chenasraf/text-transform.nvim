@@ -1,4 +1,4 @@
-local popup = {}
+local TextTransform = {}
 
 --- Pops up a selection menu, containing the available case transformers.
 --- When a transformer is selected, the cursor position/range/columns will be used to replace the
@@ -6,7 +6,7 @@ local popup = {}
 ---
 --- The cursor positions/ranges are saved before opening the menu and restored once a selection is
 --- made.
-function popup.show_popup()
+function TextTransform.show_popup()
   local config = _G.TextTransform.config
   if config.popup_type == "telescope" then
     local telescope = require("text-transform.popup.telescope")
@@ -17,4 +17,4 @@ function popup.show_popup()
   end
 end
 
-return popup
+return TextTransform

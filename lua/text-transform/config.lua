@@ -1,18 +1,18 @@
 local commands = require("text-transform.commands")
 local D = require("text-transform.utils.debug")
 local utils = require("text-transform.utils")
-local config = {}
+local TextTransform = {}
 
 local function ensure_config()
   -- when the config is not set to the global object, we set it
   if _G.TextTransform.config == nil then
-    _G.TextTransform.config = config.config
+    _G.TextTransform.config = TextTransform.config
   end
 end
 
 local function init()
   ensure_config()
-  local o = config.config
+  local o = TextTransform.config
   D.log("config", "Initializing TextTransform with %s", vim.inspect(o))
   commands.init_commands()
   commands.init_keymaps()
@@ -22,7 +22,7 @@ end
 ---
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
-config.config = {
+TextTransform.config = {
   --- Prints information about internals of the plugin. Very verbose, only useful for debugging.
   debug = false,
   --- Keymap configurations
@@ -65,10 +65,10 @@ config.config = {
 ---@param options table Module config table. See |TextTransform.options|.
 ---
 ---@usage `require("text-transform").setup()` (add `{}` with your |TextTransform.options| table)
-function config.setup(options)
+function TextTransform.setup(options)
   options = options or {}
 
-  config.config = utils.merge(config.config, options)
+  TextTransform.config = utils.merge(TextTransform.config, options)
 
   if vim.api.nvim_get_vvar("vim_did_enter") == 0 then
     vim.defer_fn(function()
@@ -78,7 +78,7 @@ function config.setup(options)
     init()
   end
 
-  return config.config
+  return TextTransform.config
 end
 
-return config
+return TextTransform
