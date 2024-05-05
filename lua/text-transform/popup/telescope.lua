@@ -10,7 +10,7 @@ local action_state = require("telescope.actions.state")
 local dropdown = require("telescope.themes").get_dropdown({})
 local Sorter = require("telescope.sorters").Sorter
 
-local telescope = {}
+local TextTransform = {}
 
 local frequency_sorter = Sorter:new({
   ---@diagnostic disable-next-line: unused-local
@@ -60,7 +60,7 @@ local sorter_map = {
 ---
 --- The cursor positions/ranges are saved before opening the menu and restored once a selection is
 --- made.
-function telescope.telescope_popup()
+function TextTransform.telescope_popup()
   state.save_positions()
 
   local filtered = {}
@@ -101,4 +101,4 @@ function telescope.telescope_popup()
   end)
 end
 
-return telescope
+return TextTransform

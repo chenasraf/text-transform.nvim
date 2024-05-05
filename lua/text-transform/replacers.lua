@@ -1,9 +1,8 @@
 local D = require("text-transform.utils.debug")
 local state = require("text-transform.state")
-local utils = require("text-transform.utils")
 local t = require("text-transform.transformers")
 
-local replacers = {}
+local TextTransform = {}
 
 --- Finds the boundaries of the surrounding word around `start_col` within `line`.
 --- @param line number
@@ -37,7 +36,7 @@ end
 --- @param end_line number The ending line
 --- @param end_col number The ending column
 --- @param transform_name string The transformer name
-function replacers.replace_range(start_line, start_col, end_line, end_col, transform_name)
+function TextTransform.replace_range(start_line, start_col, end_line, end_col, transform_name)
   D.log("replace_range", "Replacing range with %s", transform_name)
   local transform = t["to_" .. transform_name]
   local lines = vim.fn.getline(start_line, end_line) --- @type any
@@ -69,7 +68,7 @@ end
 ---
 --- @param transform_name string The transformer name
 --- @param position table|nil A table containing the position of the word to replace
-function replacers.replace_word(transform_name, position)
+function TextTransform.replace_word(transform_name, position)
   D.log("replace_word", "Replacing word with %s", transform_name)
   local word, line, col, start_col, end_col
   if not position then
@@ -87,7 +86,7 @@ function replacers.replace_word(transform_name, position)
   if not position then
     vim.cmd("normal ciw" .. transformed)
   else
-    replacers.replace_range(line, start_col, line, end_col, transform_name)
+    TextTransform.replace_range(line, start_col, line, end_col, transform_name)
   end
 end
 
@@ -95,11 +94,11 @@ end
 --- Assumes that the each selection is 1 character and operates on the whole word under each cursor.
 ---
 --- @param transform_name string The transformer name
-function replacers.replace_columns(transform_name)
-  local selections = replacers.get_visual_selection_details()
+function TextTransform.replace_columns(transform_name)
+  local selections = TextTransform.get_visual_selection_details()
   D.log("replace_columns", "Replacing columns with %s", transform_name)
   for _, sel in ipairs(selections) do
-    replacers.replace_word(transform_name, { 0, sel.start_line, sel.start_col, 0 })
+    TextTransform.replace_word(transform_name, { 0, sel.start_line, sel.start_col, 0 })
   end
 end
 
@@ -108,11 +107,11 @@ end
 --- range replacement functions.
 ---
 --- @param transform_name string The transformer name
-function replacers.replace_selection(transform_name)
+function TextTransform.replace_selection(transform_name)
   D.log("replace_selection", "Replacing selection with %s", transform_name)
   -- determine if cursor is a 1-width column across multiple lines  or a normal selection
   -- local start_line, start_col, end_line, end_col = unpack(vim.fn.getpos("'<"))
-  local selections = replacers.get_visual_selection_details()
+  local selections = TextTransform.get_visual_selection_details()
 
   D.log("replace_selection", "Selections: %s", vim.inspect(selections))
   local is_multiline = #selections > 1
@@ -132,12 +131,12 @@ function replacers.replace_selection(transform_name)
   )
 
   if is_single_cursor then
-    replacers.replace_word(transform_name)
+    TextTransform.replace_word(transform_name)
   elseif is_column then
-    replacers.replace_columns(transform_name)
+    TextTransform.replace_columns(transform_name)
   else
     for _, sel in pairs(selections) do
-      replacers.replace_range(
+      TextTransform.replace_range(
         sel.start_line,
         sel.start_col,
         sel.end_line,
@@ -153,22 +152,22 @@ end
 ---
 --- This allows to treat all ranges equally and allows to work on each selection without knowing
 --- the full information around the selection logic.
-function replacers.get_visual_selection_details()
-  if not state.positions then
+function TextTransform.get_visual_selection_details()
+  if not state.state.positions then
     D.log("get_visual_selection_details", "No positions saved")
     return {}
   end
   D.log(
     "get_visual_selection_details",
     "Getting visual selection details - mode: %s, is_visual: %s, is_block: %s",
-    state.positions.mode,
+    state.state.positions.mode,
     state.is_visual_mode(),
     state.is_block_visual_mode()
   )
 
   -- Get the start and end positions of the selection
-  local start_pos = state.positions.visual_start
-  local end_pos = state.positions.visual_end
+  local start_pos = state.state.positions.visual_start
+  local end_pos = state.state.positions.visual_end
   local start_line, start_col = start_pos[2], start_pos[3]
   local end_line, end_col = end_pos[2], end_pos[3]
 
@@ -231,4 +230,4 @@ function replacers.get_visual_selection_details()
   end
 end
 
-return replacers
+return TextTransform

@@ -5,11 +5,11 @@ local replacers = require("text-transform.replacers")
 local popup = require("text-transform.popup")
 local common = require("text-transform.popup.common")
 
-local commands = {}
+local TextTransform = {}
 
 --- Initializes user commands
 --- @private
-function commands.init_commands()
+function TextTransform.init_commands()
   local map = {
     TtCamel = "camel_case",
     TtConst = "const_case",
@@ -36,6 +36,9 @@ function commands.init_commands()
     vim.api.nvim_create_user_command(cmd, function()
       state.save_positions()
       replacers.replace_selection(transformer_name)
+      vim.schedule(function()
+        state.restore_positions()
+      end)
     end, opts("Change to " .. item))
   end
 
@@ -55,7 +58,7 @@ end
 
 --- Initializes user keymaps
 --- @private
-function commands.init_keymaps()
+function TextTransform.init_keymaps()
   local keymaps = _G.TextTransform.config.keymap
   D.log("init_keymaps", "Initializing keymaps, config %s", vim.inspect(_G.TextTransform))
   if keymaps.telescope_popup then
@@ -69,4 +72,4 @@ function commands.init_keymaps()
   end
 end
 
-return commands
+return TextTransform

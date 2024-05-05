@@ -1,21 +1,21 @@
 local D = require("text-transform.utils.debug")
 -- local utils = require("text-transform.utils")
 
-local transformers = {}
+local TextTransform = {}
 
-transformers.WORD_BOUNDRY = "[%_%-%s%.]"
+TextTransform.WORD_BOUNDRY = "[%_%-%s%.]"
 
 --- Splits a string into words.
 --- @param string string
 --- @return table
-function transformers.to_words(string)
+function TextTransform.to_words(string)
   local words = {}
   local word = ""
   local last_is_upper = false
   local last_is_digit = false
   for i = 1, #string do
     local char = string:sub(i, i)
-    if char:match(transformers.WORD_BOUNDRY) then
+    if char:match(TextTransform.WORD_BOUNDRY) then
       if word ~= "" then
         table.insert(words, word:lower())
       end
@@ -64,9 +64,9 @@ end
 --- @param with_word_cb function (word: string, index: number, words: table) -> string
 --- @param separator string|nil (optional)
 --- @return string
-function transformers.transform_words(words, with_word_cb, separator)
+function TextTransform.transform_words(words, with_word_cb, separator)
   if type(words) ~= "table" then
-    words = transformers.to_words(words)
+    words = TextTransform.to_words(words)
   end
   local out = ""
   for i, word in ipairs(words) do
@@ -83,8 +83,8 @@ end
 --- Transforms a string into camelCase.
 --- @param string string
 --- @return string
-function transformers.to_camel_case(string)
-  return transformers.transform_words(string, function(word, i)
+function TextTransform.to_camel_case(string)
+  return TextTransform.transform_words(string, function(word, i)
     if i == 1 then
       return word:lower()
     end
@@ -95,8 +95,8 @@ end
 --- Transfroms a string into snake_case.
 --- @param string any
 --- @return string
-function transformers.to_snake_case(string)
-  return transformers.transform_words(string, function(word, i)
+function TextTransform.to_snake_case(string)
+  return TextTransform.transform_words(string, function(word, i)
     if i == 1 then
       return word:lower()
     end
@@ -107,16 +107,16 @@ end
 --- Transforms a string into PascalCase.
 --- @param string string
 --- @return string
-function transformers.to_pascal_case(string)
-  local cc = transformers.to_camel_case(string)
+function TextTransform.to_pascal_case(string)
+  local cc = TextTransform.to_camel_case(string)
   return cc:sub(1, 1):upper() .. cc:sub(2)
 end
 
 --- Transforms a string into Title Case.
 --- @param string string
 --- @return string
-function transformers.to_title_case(string)
-  return transformers.transform_words(string, function(word)
+function TextTransform.to_title_case(string)
+  return TextTransform.transform_words(string, function(word)
     return word:sub(1, 1):upper() .. word:sub(2):lower()
   end, " ")
 end
@@ -124,8 +124,8 @@ end
 --- Transforms a string into kebab-case.
 --- @param string string
 --- @return string
-function transformers.to_kebab_case(string)
-  return transformers.transform_words(string, function(word)
+function TextTransform.to_kebab_case(string)
+  return TextTransform.transform_words(string, function(word)
     return word:lower()
   end, "-")
 end
@@ -133,8 +133,8 @@ end
 --- Transforms a string into dot.case.
 --- @param string string
 --- @return string
-function transformers.to_dot_case(string)
-  return transformers.transform_words(string, function(word)
+function TextTransform.to_dot_case(string)
+  return TextTransform.transform_words(string, function(word)
     return word:lower()
   end, ".")
 end
@@ -142,10 +142,10 @@ end
 --- Transforms a string into CONSTANT_CASE.
 --- @param string string
 --- @return string
-function transformers.to_const_case(string)
-  return transformers.transform_words(string, function(word)
+function TextTransform.to_const_case(string)
+  return TextTransform.transform_words(string, function(word)
     return word:upper()
   end, "_")
 end
 
-return transformers
+return TextTransform
