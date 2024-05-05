@@ -1,5 +1,5 @@
-local common = require("text-transform.popup_common")
-local D = require("text-transform.util.debug")
+local common = require("text-transform.popup.common")
+local D = require("text-transform.utils.debug")
 local state = require("text-transform.state")
 
 local pickers = require("telescope.pickers")

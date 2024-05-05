@@ -1,4 +1,3 @@
-local state = require("text-transform.state")
 local utils = {}
 
 --- Merges two tables into one. Same as `vim.tbl_extend("keep", t1, t2)`.
@@ -11,23 +10,6 @@ local utils = {}
 --- @return table
 function utils.merge(t1, t2)
   return vim.tbl_extend("force", t1, t2)
-end
-
---- Dumps the object into a string.
---- @param obj any
---- @return string
-function utils.dump(obj)
-  return vim.inspect(obj)
-end
-
-function utils.is_block_visual_mode()
-  return state.positions.mode == "block"
-  -- return vim.fn.mode() == "V" or vim.fn.mode() == "\22"
-end
-
-function utils.is_visual_mode()
-  return state.positions.mode == "visual"
-  -- return vim.fn.mode() == 'v'
 end
 
 function utils.has_range(visual_start, visual_end)

@@ -1,3 +1,4 @@
+local MiniTest = require("mini.test")
 -- partially imported from https://github.com/echasnovski/mini.nvim
 local Helpers = {}
 

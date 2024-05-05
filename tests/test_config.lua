@@ -32,11 +32,6 @@ T["setup()"]["sets exposed methods and default options value"] = function()
   -- global object that holds your plugin information
   eq_type_global(child, "_G.TextTransform", "table")
 
-  -- public methods
-  eq_type_global(child, "_G.TextTransform.toggle", "function")
-  eq_type_global(child, "_G.TextTransform.disable", "function")
-  eq_type_global(child, "_G.TextTransform.enable", "function")
-
   -- config
   eq_type_global(child, "_G.TextTransform.config", "table")
 

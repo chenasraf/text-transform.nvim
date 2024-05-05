@@ -43,7 +43,7 @@ T["popups"]["telescope exposes telescope_popup"] = function()
 
   eq_type_global(child, "_G.TextTransform.telescope_popup", "nil")
 
-  child.lua([[Telescope = require('text-transform.telescope')]])
+  child.lua([[Telescope = require('text-transform.popup.telescope')]])
 
   eq_type_global(child, "Telescope.telescope_popup", "function")
 end
@@ -55,7 +55,7 @@ T["popups"]["select exposes select_popup"] = function()
 
   eq_type_global(child, "_G.TextTransform.select_popup", "nil")
 
-  child.lua([[Select = require('text-transform.select')]])
+  child.lua([[Select = require('text-transform.popup.select')]])
 
   eq_type_global(child, "Select.select_popup", "function")
 end
