@@ -8,7 +8,7 @@ local function ensure_config()
 end
 
 -- methods
-local TextTransform = {
+local state = {
   -- Boolean determining if the plugin is enabled or not.
   enabled = false,
   -- A table containing cursor position and visual selection details,
@@ -18,40 +18,40 @@ local TextTransform = {
 
 --- Toggle the plugin by calling the `enable`/`disable` methods respectively.
 --- @private
-function TextTransform.toggle()
-  if TextTransform.enabled then
-    return TextTransform.disable()
+function state.toggle()
+  if state.enabled then
+    return state.disable()
   end
 
-  return TextTransform.enable()
+  return state.enable()
 end
 
 --- Enables the plugin
 --- @private
-function TextTransform.enable()
+function state.enable()
   ensure_config()
 
-  if TextTransform.enabled then
-    return TextTransform
+  if state.enabled then
+    return state
   end
 
-  TextTransform.enabled = true
-  return TextTransform
+  state.enabled = true
+  return state
 end
 
 ---Disables the plugin and reset the internal state.
 ---@private
-function TextTransform.disable()
+function state.disable()
   ensure_config()
 
-  if not TextTransform.enabled then
-    return TextTransform
+  if not state.enabled then
+    return state
   end
 
   -- reset the state
-  TextTransform.enabled = false
-  TextTransform.positions = nil
-  return TextTransform
+  state.enabled = false
+  state.positions = nil
+  return state
 end
 
 local function get_mode_type(mode)
@@ -62,6 +62,10 @@ local function get_mode_type(mode)
     ["\22"] = "block",
   }
   return mode_map[mode] or "normal"
+end
+
+function state.has_range(visual_start, visual_end)
+  return visual_start and visual_end and visual_start[2] ~= visual_end[2]
 end
 
 local function capture_part(start_sel, end_sel, return_type)
@@ -78,7 +82,7 @@ end
 
 --- Save the current cursor position, mode, and visual selection ranges
 --- @private
-function TextTransform.save_positions()
+function state.save_positions()
   local buf = vim.api.nvim_get_current_buf()
   local mode_info = vim.api.nvim_get_mode()
   local mode = get_mode_type(mode_info.mode)
@@ -92,8 +96,13 @@ function TextTransform.save_positions()
   D.log("save_positions", "Saved mode %s, cursor %s", mode, vim.inspect(pos))
 
   if mode == "visual" or mode == "line" or mode == "block" then
-    if mode == "block" then -- for block visual mode
-      D.log("save_positions", "Visual mode is block, %s", vim.inspect({ visual_start, visual_end }))
+    if state.has_range(visual_start, visual_end) then -- for ranges
+      D.log(
+        "save_positions",
+        "Visual range, mode is %s, %s",
+        mode,
+        vim.inspect({ visual_start, visual_end })
+      )
       -- Adjust the positions to correctly capture the entire block
       visual_start = capture_part(visual_start, visual_end, "start")
       visual_end = capture_part(visual_start, visual_end, "end")
@@ -106,7 +115,7 @@ function TextTransform.save_positions()
     )
   end
 
-  local state = {
+  local positions = {
     buf = buf,
     mode = mode,
     pos = pos,
@@ -114,32 +123,37 @@ function TextTransform.save_positions()
     visual_end = visual_end,
   }
 
-  D.log("save_positions", "State: %s", vim.inspect(state))
-  TextTransform.positions = state
-  return state
+  D.log("save_positions", "State: %s", vim.inspect(positions))
+  state.positions = positions
+  return positions
 end
 
 --- Restore the cursor position, mode, and visual selection ranges saved using `save_position()`,
 --- or a given modified state, if passed as the first argument
-function TextTransform.restore_positions(state)
-  state = state or TextTransform.positions
-  vim.api.nvim_set_current_buf(state.buf)
-  vim.fn.setpos(".", state.pos)
-  D.log("restore_positions", "Restored mode %s, cursor %s", state.mode, vim.inspect(state.pos))
+function state.restore_positions(new_state)
+  new_state = new_state or new_state.positions
+  vim.api.nvim_set_current_buf(new_state.buf)
+  vim.fn.setpos(".", new_state.pos)
+  D.log(
+    "restore_positions",
+    "Restored mode %s, cursor %s",
+    new_state.mode,
+    vim.inspect(new_state.pos)
+  )
 
   -- Attempt to restore visual mode accurately
   if
-    (state.mode == "visual" or state.mode == "block")
-    and state.visual_start
-    and state.visual_end
+    (new_state.mode == "visual" or new_state.mode == "block")
+    and new_state.visual_start
+    and new_state.visual_end
   then
-    vim.fn.setpos("'<", state.visual_start)
-    vim.fn.setpos("'>", state.visual_end)
+    vim.fn.setpos("'<", new_state.visual_start)
+    vim.fn.setpos("'>", new_state.visual_end)
     local command = "normal! gv"
     vim.cmd(command)
-    D.log("restore_positions", [[Restored visual mode %s using "%s"]], state.mode, command)
+    D.log("restore_positions", [[Restored visual mode %s using "%s"]], new_state.mode, command)
   end
-  TextTransform.positions = nil
+  new_state.positions = nil
 end
 
-return TextTransform
+return state

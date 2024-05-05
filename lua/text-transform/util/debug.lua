@@ -26,10 +26,10 @@ function D.log(scope, str, ...)
 
   print(
     string.format(
-      "[text-transform:%s %s in %s] > %s",
+      "%s [text-transform:%s in %s] > %s",
       os.date("%H:%M:%S"),
-      line,
       scope,
+      line,
       string.format(str, ...)
     )
   )

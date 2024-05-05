@@ -47,12 +47,12 @@ function TextTransform.to_words(string)
       -- Append current character to the current word
       word = word .. char
     end
-    D.log("transformers", "i %d char %s word %s words %s", i, char, word, utils.dump(words))
+    -- D.log("to_words", "i %d char %s word %s words %s", i, char, word, utils.dump(words))
   end
   if word ~= "" then
     table.insert(words, word:lower())
   end
-  D.log("transformers", "words %s", vim.inspect(words))
+  D.log("to_words", "words %s", vim.inspect(words))
   return words
 end
 
@@ -75,7 +75,7 @@ function TextTransform.transform_words(words, with_word_cb, separator)
       new_word = separator .. new_word
     end
     out = out .. new_word
-    D.log("transformers", "word %s (%d) new_word %s out %s", word, i, new_word, out)
+    D.log("transform_words", "word %s (%d) new_word %s out %s", word, i, new_word, out)
   end
   return out
 end
