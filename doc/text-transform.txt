@@ -8,13 +8,13 @@ Initializes user commands
 
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                         *TextTransform.options*
-                            `TextTransform.options`
+                                                          *TextTransform.config*
+                             `TextTransform.config`
 Your plugin configuration with its default values.
 
 Default values:
 >
-  TextTransform.options = {
+  TextTransform.config = {
     --- Prints information about internals of the plugin. Very verbose, only useful for debugging.
     debug = false,
     --- Keymap configurations

@@ -3,7 +3,7 @@ local D = require("text-transform.util.debug")
 local function ensure_config()
   -- when the config is not set to the global object, we set it
   if _G.TextTransform.config == nil then
-    _G.TextTransform.config = require("text-transform.config").options
+    _G.TextTransform.config = require("text-transform.config").config
   end
 end
 
@@ -64,6 +64,18 @@ local function get_mode_type(mode)
   return mode_map[mode] or "normal"
 end
 
+local function capture_part(start_sel, end_sel, return_type)
+  local l, sel
+  if return_type == "start" then
+    l = math.min(start_sel[2], end_sel[2])
+    sel = start_sel
+  else
+    l = math.max(start_sel[2], end_sel[2])
+    sel = end_sel
+  end
+  return { sel[1], l, sel[3], sel[4] }
+end
+
 --- Save the current cursor position, mode, and visual selection ranges
 --- @private
 function TextTransform.save_positions()
@@ -71,28 +83,23 @@ function TextTransform.save_positions()
   local mode_info = vim.api.nvim_get_mode()
   local mode = get_mode_type(mode_info.mode)
   local pos = vim.fn.getcurpos()
-  -- leave mode
+  -- leave mode, required to get the positions - they only register on mode leave
+  -- in case of visual mode
   local esc = vim.api.nvim_replace_termcodes("<esc>", true, false, true)
   vim.api.nvim_feedkeys(esc, "x", true)
   local visual_start = vim.fn.getpos("'<")
   local visual_end = vim.fn.getpos("'>")
-  D.log("popup_menu", "Saved mode %s, cursor %s", mode, vim.inspect(pos))
+  D.log("save_positions", "Saved mode %s, cursor %s", mode, vim.inspect(pos))
 
   if mode == "visual" or mode == "line" or mode == "block" then
     if mode == "block" then -- for block visual mode
-      D.log("popup_menu", "Visual mode is block, %s", vim.inspect({ visual_start, visual_end }))
+      D.log("save_positions", "Visual mode is block, %s", vim.inspect({ visual_start, visual_end }))
       -- Adjust the positions to correctly capture the entire block
-      visual_start = {
-        visual_start[1],
-        math.min(visual_start[2], visual_end[2]),
-        visual_start[3],
-        visual_start[4],
-      }
-      visual_end =
-        { visual_end[1], math.max(visual_start[2], visual_end[2]), visual_end[3], visual_end[4] }
+      visual_start = capture_part(visual_start, visual_end, "start")
+      visual_end = capture_part(visual_start, visual_end, "end")
     end
     D.log(
-      "popup_menu",
+      "state",
       "Saved visual mode %s, cursor %s",
       mode,
       vim.inspect({ visual_start, visual_end })
@@ -107,7 +114,7 @@ function TextTransform.save_positions()
     visual_end = visual_end,
   }
 
-  D.log("popup_menu", "State: %s", vim.inspect(state))
+  D.log("save_positions", "State: %s", vim.inspect(state))
   TextTransform.positions = state
   return state
 end
@@ -118,7 +125,7 @@ function TextTransform.restore_positions(state)
   state = state or TextTransform.positions
   vim.api.nvim_set_current_buf(state.buf)
   vim.fn.setpos(".", state.pos)
-  D.log("popup_menu", "Restored mode %s, cursor %s", state.mode, vim.inspect(state.pos))
+  D.log("restore_positions", "Restored mode %s, cursor %s", state.mode, vim.inspect(state.pos))
 
   -- Attempt to restore visual mode accurately
   if
@@ -130,7 +137,7 @@ function TextTransform.restore_positions(state)
     vim.fn.setpos("'>", state.visual_end)
     local command = "normal! gv"
     vim.cmd(command)
-    D.log("popup_menu", [[Restored visual mode %s using "%s"]], state.mode, command)
+    D.log("restore_positions", [[Restored visual mode %s using "%s"]], state.mode, command)
   end
   TextTransform.positions = nil
 end
