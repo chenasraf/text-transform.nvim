@@ -117,26 +117,26 @@ the full information around the selection logic.
 
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                        *TextTransform.toggle()*
-                            `TextTransform.toggle`()
+                                                                *state.toggle()*
+                                `state.toggle`()
 Toggle the plugin by calling the `enable`/`disable` methods respectively.
 @private
 
 ------------------------------------------------------------------------------
-                                                        *TextTransform.enable()*
-                            `TextTransform.enable`()
+                                                                *state.enable()*
+                                `state.enable`()
 Enables the plugin
 @private
 
 ------------------------------------------------------------------------------
-                                                *TextTransform.save_positions()*
-                        `TextTransform.save_positions`()
+                                                        *state.save_positions()*
+                            `state.save_positions`()
 Save the current cursor position, mode, and visual selection ranges
 @private
 
 ------------------------------------------------------------------------------
-                                             *TextTransform.restore_positions()*
-                   `TextTransform.restore_positions`({state})
+                                                     *state.restore_positions()*
+                     `state.restore_positions`({new_state})
 Restore the cursor position, mode, and visual selection ranges saved using `save_position()`,
 or a given modified state, if passed as the first argument
 

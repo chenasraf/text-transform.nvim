@@ -30,4 +30,8 @@ function utils.is_visual_mode()
   -- return vim.fn.mode() == 'v'
 end
 
+function utils.has_range(visual_start, visual_end)
+  return visual_start and visual_end and visual_start[2] ~= visual_end[2]
+end
+
 return utils

@@ -1,3 +1,4 @@
+-- local D = require("text-transform.util.debug")
 local state = require("text-transform.state")
 local replacers = require("text-transform.replacers")
 local popup = require("text-transform.popup")
@@ -16,22 +17,24 @@ function TextTransform.init_commands()
     TtTitle = "title_case",
   }
 
+  local cmdopts = { range = true, force = true }
+
   for cmd, transformer_name in pairs(map) do
     vim.api.nvim_create_user_command(cmd, function()
       state.save_positions()
       replacers.replace_selection(transformer_name)
-    end, {})
+    end, cmdopts)
   end
 
   -- specific popups
   vim.api.nvim_create_user_command("TtTelescope", function()
     local telescope = require("text-transform.telescope")
     telescope.telescope_popup()
-  end, {})
+  end, cmdopts)
   vim.api.nvim_create_user_command("TtSelect", function()
     local select = require("text-transform.select")
     select.select_popup()
-  end, {})
+  end, cmdopts)
 
   -- auto popup by config
   vim.api.nvim_create_user_command("TextTransform", popup.show_popup, {})

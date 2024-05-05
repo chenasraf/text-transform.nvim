@@ -1,12 +1,9 @@
 TextTransform.config	text-transform.txt	/*TextTransform.config*
-TextTransform.enable()	text-transform.txt	/*TextTransform.enable()*
 TextTransform.get_visual_selection_details()	text-transform.txt	/*TextTransform.get_visual_selection_details()*
 TextTransform.init_commands()	text-transform.txt	/*TextTransform.init_commands()*
 TextTransform.replace_columns()	text-transform.txt	/*TextTransform.replace_columns()*
 TextTransform.replace_selection()	text-transform.txt	/*TextTransform.replace_selection()*
 TextTransform.replace_word()	text-transform.txt	/*TextTransform.replace_word()*
-TextTransform.restore_positions()	text-transform.txt	/*TextTransform.restore_positions()*
-TextTransform.save_positions()	text-transform.txt	/*TextTransform.save_positions()*
 TextTransform.setup()	text-transform.txt	/*TextTransform.setup()*
 TextTransform.to_camel_case()	text-transform.txt	/*TextTransform.to_camel_case()*
 TextTransform.to_const_case()	text-transform.txt	/*TextTransform.to_const_case()*
@@ -16,10 +13,13 @@ TextTransform.to_pascal_case()	text-transform.txt	/*TextTransform.to_pascal_case
 TextTransform.to_snake_case()	text-transform.txt	/*TextTransform.to_snake_case()*
 TextTransform.to_title_case()	text-transform.txt	/*TextTransform.to_title_case()*
 TextTransform.to_words()	text-transform.txt	/*TextTransform.to_words()*
-TextTransform.toggle()	text-transform.txt	/*TextTransform.toggle()*
 TextTransform.transform_words()	text-transform.txt	/*TextTransform.transform_words()*
 find_word_boundaries()	text-transform.txt	/*find_word_boundaries()*
 init()	text-transform.txt	/*init()*
+state.enable()	text-transform.txt	/*state.enable()*
+state.restore_positions()	text-transform.txt	/*state.restore_positions()*
+state.save_positions()	text-transform.txt	/*state.save_positions()*
+state.toggle()	text-transform.txt	/*state.toggle()*
 telescope.telescope_popup()	text-transform.txt	/*telescope.telescope_popup()*
 utils.dump()	text-transform.txt	/*utils.dump()*
 utils.merge()	text-transform.txt	/*utils.merge()*
