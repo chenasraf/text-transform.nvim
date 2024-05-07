@@ -24,7 +24,8 @@ popup_common.default_frequency = {
   const_case = 1,
 }
 
-local frequency_file = vim.fn.stdpath("config") .. "/text-transform-frequency.json"
+local cache_dir = vim.fn.stdpath("cache")
+local frequency_file = cache_dir .. "/text-transform-frequency.json"
 local frequency
 
 function popup_common.load_frequency()
