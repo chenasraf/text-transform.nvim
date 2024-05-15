@@ -6,12 +6,6 @@ local function is_debug()
     and _G.TextTransform.config.debug
 end
 
----prints only if debug is true.
----
----@param scope string: the scope from where this function is called.
----@param str string: the formatted string.
----@param ... any: the arguments of the formatted string.
----@private
 function D.log(scope, str, ...)
   if not is_debug() then
     return
@@ -35,11 +29,6 @@ function D.log(scope, str, ...)
   )
 end
 
----prints the table if debug is true.
----
----@param table table: the table to print.
----@param indent number?: the default indent value, starts at 0.
----@private
 function D.tprint(table, indent)
   if not is_debug() then
     return

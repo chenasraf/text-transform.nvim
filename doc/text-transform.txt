@@ -1,19 +1,5 @@
 ==============================================================================
 ------------------------------------------------------------------------------
-                                                 *TextTransform.init_commands()*
-                        `TextTransform.init_commands`()
-Initializes user commands
-@private
-
-------------------------------------------------------------------------------
-                                                  *TextTransform.init_keymaps()*
-                         `TextTransform.init_keymaps`()
-Initializes user keymaps
-@private
-
-
-==============================================================================
-------------------------------------------------------------------------------
                                                           *TextTransform.config*
                              `TextTransform.config`
 Your plugin configuration with its default values.
@@ -77,9 +63,11 @@ Usage ~
                                                         *find_word_boundaries()*
                   `find_word_boundaries`({line}, {start_col})
 Finds the boundaries of the surrounding word around `start_col` within `line`.
-@param line number
-@param start_col number
-@return number start_col, number end_col
+Parameters ~
+{line} `(number)`
+{start_col} `(number)`
+Return ~
+`(number)` start_col, number end_col
 
 ------------------------------------------------------------------------------
                                                  *TextTransform.replace_range()*
@@ -87,11 +75,12 @@ Finds the boundaries of the surrounding word around `start_col` within `line`.
 Replace the range between the given positions with the given transform.
 Acts on the lines between the given positions, replacing the text between the given columns.
 
-@param start_line number The starting line
-@param start_col number The starting column
-@param end_line number The ending line
-@param end_col number The ending column
-@param transform_name string The transformer name
+Parameters ~
+{start_line} `(number)` The starting line
+{start_col} `(number)` The starting column
+{end_line} `(number)` The ending line
+{end_col} `(number)` The ending column
+{transform_name} `(string)` The transformer name
 
 ------------------------------------------------------------------------------
                                                   *TextTransform.replace_word()*
@@ -100,8 +89,9 @@ Replace the word under the cursor with the given transform.
 If `position` is provided, replace the word under the given position.
 Otherwise, attempts to find the word under the cursor.
 
-@param transform_name string The transformer name
-@param position table|nil A table containing the position of the word to replace
+Parameters ~
+{transform_name} `(string)` The transformer name
+{position} `(table|nil)` A table containing the position of the word to replace
 
 ------------------------------------------------------------------------------
                                                *TextTransform.replace_columns()*
@@ -109,7 +99,8 @@ Otherwise, attempts to find the word under the cursor.
 Replaces each column in visual block mode selection with the given transform.
 Assumes that the each selection is 1 character and operates on the whole word under each cursor.
 
-@param transform_name string The transformer name
+Parameters ~
+{transform_name} `(string)` The transformer name
 
 ------------------------------------------------------------------------------
                                              *TextTransform.replace_selection()*
@@ -118,7 +109,8 @@ Replaces a selection with the given transform. This function attempts to infer t
 type based on the cursor positiono and visual selections, and passes information to relevant
 range replacement functions.
 
-@param transform_name string The transformer name
+Parameters ~
+{transform_name} `(string)` The transformer name
 
 ------------------------------------------------------------------------------
                                   *TextTransform.get_visual_selection_details()*
@@ -148,8 +140,10 @@ or a given modified state, if passed as the first argument
                                                       *TextTransform.to_words()*
                        `TextTransform.to_words`({string})
 Splits a string into words.
-@param string string
-@return table
+Parameters ~
+{string} `(string)`
+Return ~
+`(table)`
 
 ------------------------------------------------------------------------------
                                                *TextTransform.transform_words()*
@@ -158,59 +152,75 @@ Transforms a table of strings into a string using a callback and separator.
 The callback is called with the word, the index, and the table of words.
 The separator is added between each word.
 
-@param words string|table string or table of strings
-@param with_word_cb function (word: string, index: number, words: table) -> string
-@param separator string|nil (optional)
-@return string
+Parameters ~
+{words} `(string|table)` string or table of strings
+{with_word_cb} `(function)` (word: string, index: number, words: table) -> string
+{separator} `(string|nil)` (optional)
+Return ~
+`(string)`
 
 ------------------------------------------------------------------------------
                                                  *TextTransform.to_camel_case()*
                     `TextTransform.to_camel_case`({string})
 Transforms a string into camelCase.
-@param string string
-@return string
+Parameters ~
+{string} `(string)`
+Return ~
+`(string)`
 
 ------------------------------------------------------------------------------
                                                  *TextTransform.to_snake_case()*
                     `TextTransform.to_snake_case`({string})
 Transfroms a string into snake_case.
-@param string any
-@return string
+Parameters ~
+{string} `(any)`
+Return ~
+`(string)`
 
 ------------------------------------------------------------------------------
                                                 *TextTransform.to_pascal_case()*
                     `TextTransform.to_pascal_case`({string})
 Transforms a string into PascalCase.
-@param string string
-@return string
+Parameters ~
+{string} `(string)`
+Return ~
+`(string)`
 
 ------------------------------------------------------------------------------
                                                  *TextTransform.to_title_case()*
                     `TextTransform.to_title_case`({string})
 Transforms a string into Title Case.
-@param string string
-@return string
+Parameters ~
+{string} `(string)`
+Return ~
+`(string)`
 
 ------------------------------------------------------------------------------
                                                  *TextTransform.to_kebab_case()*
                     `TextTransform.to_kebab_case`({string})
 Transforms a string into kebab-case.
-@param string string
-@return string
+Parameters ~
+{string} `(string)`
+Return ~
+`(string)`
 
 ------------------------------------------------------------------------------
                                                    *TextTransform.to_dot_case()*
                      `TextTransform.to_dot_case`({string})
 Transforms a string into dot.case.
-@param string string
-@return string
+Parameters ~
+{string} `(string)`
+Return ~
+`(string)`
 
 ------------------------------------------------------------------------------
                                                  *TextTransform.to_const_case()*
                     `TextTransform.to_const_case`({string})
 Transforms a string into CONSTANT_CASE.
-@param string string
-@return string
+Parameters ~
+{string} `(string)`
+Return ~
+`(string)`
 
 
 ==============================================================================
@@ -258,9 +268,11 @@ Mutates the first table.
 
 TODO accept multiple tables to merge
 
-@param t1 table
-@param t2 table
-@return table
+Parameters ~
+{t1} `(table)`
+{t2} `(table)`
+Return ~
+`(table)`
 
 
  vim:tw=78:ts=8:noet:ft=help:norl:

@@ -5,9 +5,9 @@ local TextTransform = {}
 ---
 --- TODO accept multiple tables to merge
 ---
---- @param t1 table
---- @param t2 table
---- @return table
+---@param t1 table
+---@param t2 table
+---@return table
 function TextTransform.merge(t1, t2)
   return vim.tbl_extend("force", t1, t2)
 end
