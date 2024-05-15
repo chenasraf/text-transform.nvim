@@ -5,9 +5,9 @@ local t = require("text-transform.transformers")
 local TextTransform = {}
 
 --- Finds the boundaries of the surrounding word around `start_col` within `line`.
---- @param line number
---- @param start_col number
---- @return number start_col, number end_col
+---@param line number
+---@param start_col number
+---@return number start_col, number end_col
 local function find_word_boundaries(line, start_col)
   local line_text = vim.fn.getline(line)
   -- dashes, underscores, and periods are considered part of a word
@@ -31,15 +31,15 @@ end
 --- Replace the range between the given positions with the given transform.
 --- Acts on the lines between the given positions, replacing the text between the given columns.
 ---
---- @param start_line number The starting line
---- @param start_col number The starting column
---- @param end_line number The ending line
---- @param end_col number The ending column
---- @param transform_name string The transformer name
+---@param start_line number The starting line
+---@param start_col number The starting column
+---@param end_line number The ending line
+---@param end_col number The ending column
+---@param transform_name string The transformer name
 function TextTransform.replace_range(start_line, start_col, end_line, end_col, transform_name)
   D.log("replace_range", "Replacing range with %s", transform_name)
   local transform = t["to_" .. transform_name]
-  local lines = vim.fn.getline(start_line, end_line) --- @type any
+  local lines = vim.fn.getline(start_line, end_line) ---@type any
   local transformed = {}
   if #lines == 1 then
     local line = lines[1]
@@ -66,8 +66,8 @@ end
 --- If `position` is provided, replace the word under the given position.
 --- Otherwise, attempts to find the word under the cursor.
 ---
---- @param transform_name string The transformer name
---- @param position table|nil A table containing the position of the word to replace
+---@param transform_name string The transformer name
+---@param position table|nil A table containing the position of the word to replace
 function TextTransform.replace_word(transform_name, position)
   D.log("replace_word", "Replacing word with %s", transform_name)
   local word, line, col, start_col, end_col
@@ -93,7 +93,7 @@ end
 --- Replaces each column in visual block mode selection with the given transform.
 --- Assumes that the each selection is 1 character and operates on the whole word under each cursor.
 ---
---- @param transform_name string The transformer name
+---@param transform_name string The transformer name
 function TextTransform.replace_columns(transform_name)
   local selections = TextTransform.get_visual_selection_details()
   D.log("replace_columns", "Replacing columns with %s", transform_name)
@@ -106,7 +106,7 @@ end
 --- type based on the cursor positiono and visual selections, and passes information to relevant
 --- range replacement functions.
 ---
---- @param transform_name string The transformer name
+---@param transform_name string The transformer name
 function TextTransform.replace_selection(transform_name)
   D.log("replace_selection", "Replacing selection with %s", transform_name)
   -- determine if cursor is a 1-width column across multiple lines  or a normal selection
