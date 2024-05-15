@@ -7,8 +7,6 @@ local common = require("text-transform.popup.common")
 
 local TextTransform = {}
 
---- Initializes user commands
---- @private
 function TextTransform.init_commands()
   local map = {
     TtCamel = "camel_case",
@@ -56,8 +54,6 @@ function TextTransform.init_commands()
   vim.api.nvim_create_user_command("TextTransform", popup.show_popup, opts("Change Case"))
 end
 
---- Initializes user keymaps
---- @private
 function TextTransform.init_keymaps()
   local keymaps = _G.TextTransform.config.keymap
   D.log("init_keymaps", "Initializing keymaps, config %s", vim.inspect(_G.TextTransform))

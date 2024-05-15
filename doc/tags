@@ -1,7 +1,5 @@
 TextTransform.config	text-transform.txt	/*TextTransform.config*
 TextTransform.get_visual_selection_details()	text-transform.txt	/*TextTransform.get_visual_selection_details()*
-TextTransform.init_commands()	text-transform.txt	/*TextTransform.init_commands()*
-TextTransform.init_keymaps()	text-transform.txt	/*TextTransform.init_keymaps()*
 TextTransform.merge()	text-transform.txt	/*TextTransform.merge()*
 TextTransform.replace_columns()	text-transform.txt	/*TextTransform.replace_columns()*
 TextTransform.replace_range()	text-transform.txt	/*TextTransform.replace_range()*
