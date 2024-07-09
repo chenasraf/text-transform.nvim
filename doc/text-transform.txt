@@ -5,7 +5,7 @@
 Your plugin configuration with its default values.
 
 Default values:
->
+>lua
   TextTransform.config = {
     --- Prints information about internals of the plugin. Very verbose, only useful for debugging.
     debug = false,
@@ -45,7 +45,6 @@ Default values:
   }
 
 <
-
 ------------------------------------------------------------------------------
                                                          *TextTransform.setup()*
                         `TextTransform.setup`({options})
