@@ -1,5 +1,5 @@
 local D = require("text-transform.utils.debug")
-local state = require("text-transform.state")
+local S = require("text-transform.state")
 local t = require("text-transform.transformers")
 
 local TextTransform = {}
@@ -153,32 +153,32 @@ end
 --- This allows to treat all ranges equally and allows to work on each selection without knowing
 --- the full information around the selection logic.
 function TextTransform.get_visual_selection_details()
-  if not state.state.positions then
+  if not S.state.positions.pos then
     D.log("get_visual_selection_details", "No positions saved")
     return {}
   end
   D.log(
     "get_visual_selection_details",
     "Getting visual selection details - mode: %s, is_visual: %s, is_block: %s",
-    state.state.positions.mode,
-    state.is_visual_mode(),
-    state.is_block_visual_mode()
+    S.state.mode,
+    S.is_visual_mode(),
+    S.is_block_visual_mode()
   )
 
   -- Get the start and end positions of the selection
-  local start_pos = state.state.positions.visual_start
-  local end_pos = state.state.positions.visual_end
+  local start_pos = S.state.positions.visual_start
+  local end_pos = S.state.positions.visual_end
   local start_line, start_col = start_pos[2], start_pos[3]
   local end_line, end_col = end_pos[2], end_pos[3]
 
   -- Check if currently in visual mode; if not, return the cursor position
   if
-    not state.is_visual_mode()
-    and not state.is_block_visual_mode()
-    and not state.has_range(start_pos, end_pos)
+    not S.is_visual_mode()
+    and not S.is_block_visual_mode()
+    and not S.has_range(start_pos, end_pos)
   then
-    local pos = state.positions.pos
-    D.log("get_visual_selection_details", "Returning single cursor position")
+    D.log("get_visual_selection_details", "Returning single cursor position: " .. vim.inspect(S))
+    local pos = S.state.positions.pos
     return {
       {
         start_line = pos[2],
@@ -196,7 +196,7 @@ function TextTransform.get_visual_selection_details()
   end
 
   -- If it's block visual mode, return table for each row
-  if state.is_block_visual_mode() or state.has_range(start_pos, end_pos) then
+  if S.is_block_visual_mode() or S.has_range(start_pos, end_pos) then
     local block_selection = {}
     for line = start_line, end_line do
       if start_col == end_col then
