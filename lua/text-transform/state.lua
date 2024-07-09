@@ -6,7 +6,8 @@ local TextTransform = {
   state = {
     -- A table containing cursor position and visual selection details,
     -- saved using `save_position()` and can be restored using `restore_positions()`
-    positions = nil,
+    --@type {buf: number, mode: string, pos: table, visual_start: table, visual_end: table}
+    positions = {},
   },
 }
 
@@ -119,7 +120,7 @@ function TextTransform.restore_positions(positions)
     D.log("restore_positions", [[Restored visual mode %s using "%s"]], positions.mode, command)
   end
 
-  TextTransform.state.positions = nil
+  TextTransform.state.positions = {}
 end
 
 return TextTransform
