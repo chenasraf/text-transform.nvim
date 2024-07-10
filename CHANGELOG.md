@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://github.com/chenasraf/text-transform.nvim/compare/v0.9.0...v0.9.1) (2024-07-10)
+
+
+### Bug Fixes
+
+* normal mode transforms ([d7dd1c4](https://github.com/chenasraf/text-transform.nvim/commit/d7dd1c4dd7e4ccd2da1458e5fb9a6653ad4e5e17))
+
 ## [0.9.0](https://github.com/chenasraf/text-transform.nvim/compare/v0.8.0...v0.9.0) (2024-05-05)
 
 
